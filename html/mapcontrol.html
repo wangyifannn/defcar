@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../assets/js/laydate.js"></script>
+
+    <link href="../css/mapcontrol.css" rel="stylesheet">
+    <!--<style>
+        /*body {
+            background: #F5F3F0;
+        }*/
+    </style>-->
+</head>
+
+<body>
+    <div class="mapcontrol">
+        <div class="controlnav">
+            <p>车辆管理系统 <img class="uparrow" src="../img/map/uparrow.png" alt=""></p>
+        </div>
+        <div class="control_box">
+
+            <div class="controlbody">
+                <div class="current curr_btn">
+                    <img src="../img/map/control.png" alt="">
+                    <span>
+                    实时监控
+                   </span>
+                </div>
+
+                <div class="current guiji_btn">
+                    <img src="../img/map/guiji.png" alt="">
+                    <span>
+                    轨迹查询
+                    </span>
+                </div>
+                <div class="pointerTabLeft"></div>
+            </div>
+            <div class="controlfoot">
+                <div class="controlbox footbox">
+                    <div class="search_input_box input_box">
+                        <input class="search_input" type="text" name="" value="" placeholder="请输入关键字">
+                        <label for="" class="search_icon"><img src="../img/map/search.png" alt=""></label>
+                    </div>
+                </div>
+                <div class="guijibox footbox">
+                    <div class="date_input_box input_box">
+                        <!--<input class="date_input" type="date" name="" value="">-->
+                        <input class="date_input" onClick="laydate()">
+                    </div>
+                    <div class="search_input_box input_box">
+                        <input class="search_input" type="text" name="" value="" placeholder="请输入关键字">
+                        <label for="" class="search_icon"><img src="../img/map/search.png" alt=""></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="../assets/js/jquery.min.js">
+</script>
+<script>
+    $(".uparrow").click(function() {
+        $(".control_box").slideToggle("slow");
+    })
+    $(".controlbox").show();
+    $(".guijibox").hide();
+    $(".curr_btn").click(function() {
+        $(".controlbox").show();
+        $(".guijibox").hide();
+        $(".pointerTabLeft").removeClass("pointerTabRight");
+    })
+    $(".guiji_btn").click(function() {
+        console.log("guiji");
+        $(".guijibox").show();
+        $(".controlbox").hide();
+        $(".pointerTabLeft").addClass("pointerTabRight");
+
+    })
+</script>
+
+</html>

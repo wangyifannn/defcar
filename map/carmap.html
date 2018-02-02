@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }
+        
+        p {
+            margin-left: 5px;
+            font-size: 14px;
+        }
+        /*标题*/
+        
+        .map_title {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            /*left: 40%;*/
+        }
+        /*搜索*/
+        
+        .search-map {
+            position: absolute;
+            top: 60px;
+            left: 100px;
+            /*border: 1px solid red;*/
+            height: 38px;
+        }
+        
+        #suggestId {
+            box-sizing: border-box;
+            width: 300px;
+            background: white;
+            border: 0;
+            border-left: 10px solid transparent;
+            border-right: 27px solid transparent;
+            line-height: 20px;
+            font-size: 16px;
+            height: 100%;
+            color: #333;
+            outline: none;
+            border-radius: 2px 0 0 2px;
+            /*margin-top: 20px;*/
+        }
+        
+        .search-btn {
+            box-sizing: border-box;
+            border: 0;
+            width: 70px;
+            height: 100%;
+            font-size: 23px;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            display: inline-block;
+            background: #1B6DDA;
+            margin-left: -3px;
+            position: absolute;
+            top: 0px;
+            left: 302px;
+        }
+        
+        .search-btn img {
+            width: 25px;
+            /*border: 1px solid red;*/
+            height: 25px;
+            margin-top: 7px;
+        }
+        /*位置信息框*/
+        
+        .point_content {
+            border-radius: 5px;
+            /*width: 200px;*/
+            /*height: 100px;*/
+        }
+        
+        .point_content p {
+            font-size: 12px;
+            line-height: 7px;
+        }
+        /*信息框样式*/
+        
+        .BMap_simple_bubble_pop {
+            border-radius: 10px;
+        }
+        
+        .BMap_pop {
+            /*top: 90px !important;*/
+            /*border: 11px solid red;*/
+            /*border-radius: 10px;*/
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qIVEmOSVWxsby5OEWwm6UIbEfHKEDcZz"></script>
+    <!--多点聚合-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <title>全国主要城市车辆数量</title>
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <div class="map_title">
+        全国主要城市车辆数量
+    </div>
+    <div id="r-result" class="search-map">
+        <input type="text" id="suggestId" placeholder="请输入搜索车辆编号" />
+        <div class="search-btn" id="search-btn">
+            <img src="../img/map/search.png" alt="">
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    // 百度地图API功能	
+    map = new BMap.Map("allmap");
+    // map.centerAndZoom(new BMap.Point(116.417854, 39.921988), 15);
+    map.centerAndZoom(new BMap.Point(104.114129, 37.550339), 5);
+    // map.addControl(new BMap.NavigationControl()); // 添加平移缩放控件
+    map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用
+
+    var data_info = [
+        [116.417854, 39.921988, "北京市东城区王府井大街88号乐天银泰百货八层", "02020", "王先生"],
+        [116.406605, 39.921585, "北京市东城区东华门大街", "02060", "王息生"],
+        [108.95, 34.27, "西安", " 2920", "王xx生"],
+        [110.18, 36.87, "延安", "62020", "王想生"],
+        [108.43, 34.5, "礼泉", "12020", "成先生"],
+        [116.443, 39.92, "北京朝阳", "12020", "贾先生"],
+        [121.481387, 31.238281, "上海市", "22020", "里先生"],
+        [115.859929, 28.778893, "江西农业大学", "99200", "李先生"],
+        [123.464557, 41.801445, "沈阳市", "88020", "郑先生"],
+        [120.481387, 39.238281, "上海市", "77020", "陈先生"],
+        [113.62445, 34.75681, "郑州", "26020", "白先生"],
+        [111.741271, 40.845715, "内蒙古", "52020", "何先生"],
+        [87.566397, 43.847787, "乌鲁木齐", "42020", "季先生"],
+        [91.125049, 29.660634, "布达拉宫", "32020", "冯先生"]
+    ];
+    var myIcon = new BMap.Icon("../img/map/30redcar.png", new BMap.Size(30, 57));
+    var opts = {
+        width: 80, // 信息窗口宽度
+        height: 100, // 信息窗口高度
+        // title: sContent,
+        enableMessage: true //设置允许信息窗发送短息
+    };
+    var markers = [];
+    for (var i = 0; i < data_info.length; i++) {
+        var marker = new BMap.Marker(new BMap.Point(data_info[i][0], data_info[i][1]), {
+            icon: myIcon
+        }); // 创建标注
+        var Addresss = data_info[i][2]; //点击标注点显示提示框信息
+        var carid = data_info[i][3]; //点击标注点显示提示框信息
+        var drivername = data_info[i][4]; //点击标注点显示提示框信息
+        var showInfo = "<div class='point_content'>地址：" + Addresss + "<br/>" + "车辆编号:" + carid + "<br/>驾驶员：" + drivername + "<br/>车牌号:" + 1 + "</div>";
+        markers.push(marker);
+        addClickHandler(showInfo, marker);
+        // console.log(showInfo);
+    }
+
+    //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点
+    var markerClusterer = new BMapLib.MarkerClusterer(map, {
+        markers: markers
+    });
+
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function(e) {
+            openInfo(content, e);
+            // top值
+            // var BMapPop = document.getElementsByClassName("BMap_pop")[0];
+            // console.log(BMapPop.style.getPropertyValue(top));
+            // console.log($(".BMap_pop").css("top"));
+            // $(".BMap_pop").css({
+            //     "top": $(".BMap_pop").css("top") - 10
+            // })
+        });
+    }
+
+    function openInfo(content, e) {
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象 
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
+    }
+
+    // 个性化地图
+    var styleJson = [
+        // 
+        {
+            'featureType': 'water',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#d1d1d1'
+            }
+        }, {
+            'featureType': 'land',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#f3f3f3'
+            }
+        }, {
+            'featureType': 'railway',
+            'elementType': 'all',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'highway',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#fdfdfd'
+            }
+        }, {
+            'featureType': 'highway',
+            'elementType': 'labels',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'arterial',
+            'elementType': 'geometry',
+            'stylers': {
+                'color': '#fefefe'
+            }
+        }, {
+            'featureType': 'arterial',
+            'elementType': 'geometry.fill',
+            'stylers': {
+                'color': '#fefefe'
+            }
+        }, {
+            'featureType': 'poi',
+            'elementType': 'all',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'green',
+            'elementType': 'all',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'subway',
+            'elementType': 'all',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'manmade',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#d1d1d1'
+            }
+        }, {
+            'featureType': 'local',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#d1d1d1'
+            }
+        }, {
+            'featureType': 'arterial',
+            'elementType': 'labels',
+            'stylers': {
+                'visibility': 'off'
+            }
+        }, {
+            'featureType': 'boundary',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#fefefe'
+            }
+        }, {
+            'featureType': 'building',
+            'elementType': 'all',
+            'stylers': {
+                'color': '#d1d1d1'
+            }
+        }, {
+            'featureType': 'label',
+            'elementType': 'labels.text.fill',
+            'stylers': {
+                'color': '#999999'
+            }
+        }
+    ]
+    map.setMapStyle({
+        styleJson: styleJson
+    });
+</script>

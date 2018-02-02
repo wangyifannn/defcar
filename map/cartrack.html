@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../css/mapcontrol.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="whole">
+        <div class="wrap">
+            <div id="mapcontainer"></div>
+            <div class="mapcontrol">
+                <div class="controlnav">
+                    <p>车辆管理系统 <img class="uparrow" src="../img/map/uparrow.png" alt=""></p>
+                </div>
+                <div class="control_box">
+
+                    <div class="controlbody">
+                        <div class="current curr_btn">
+                            <img src="../img/map/control.png" alt="">
+                            <span>
+                    实时监控
+                   </span>
+                        </div>
+
+                        <div class="current guiji_btn">
+                            <img src="../img/map/guiji.png" alt="">
+                            <span>
+                    轨迹查询
+                    </span>
+                        </div>
+                        <div class="pointerTabLeft"></div>
+                    </div>
+                    <div class="controlfoot">
+                        <div class="controlbox footbox">
+                            <div class="search_input_box input_box">
+                                <input class="search_input" type="text" name="" value="" placeholder="请输入关键字">
+                                <label for="" class="search_icon"><img src="../img/map/search_blue.png" alt=""></label>
+                            </div>
+                        </div>
+                        <div class="guijibox footbox">
+                            <div class="date_input_box input_box">
+                                <input class="date_input" placeholder="请选择日期" onClick="laydate()">
+                            </div>
+                            <div class="search_input_box input_box">
+                                <input class="search_input" type="text" name="" value="" placeholder="请输入车辆编号">
+                                <label for="" class="search_icon"><img src="../img/map/search_blue.png" alt=""></label>
+                            </div>
+                            <div class="controlRight">
+                                <button>轨迹回放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qIVEmOSVWxsby5OEWwm6UIbEfHKEDcZz"></script>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/laydate.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+                var car1 = [
+                    ["113.208619", "23.170208", "广州", "装车", "2016-12-05 19:47:03"],
+                    ["112.622218", "26.979794", "", "装车", "2016-12-05 19:47:03"],
+                    ["113.006332", "28.263503", "长沙", "当前位置", "2016-12-05 19:47:03"],
+                    ["111.731111", "40.842", , "呼和浩特", "暂未到达目的地"]
+                ];
+                var car2 = [
+                    ["120.230199", "30.215376", "", "装车", "2016-12-05 19:47:03"],
+                    ["108.945456", "34.366566", "西安", "当前位置", "2016-12-05 19:47:03"],
+                    ["87.504831", "43.937895", , "乌鲁木齐", "暂未到达目的地"]
+                ];
+                var mp = new BMap.Map("mapcontainer", {
+                    enableMapClick: false
+                });
+
+                mp.centerAndZoom(new BMap.Point(50.633088, 34.745758), 5);
+                // mp.centerAndZoom(new BMap.Point(108.945456, 34.366566), 5);
+
+                mp.enableScrollWheelZoom();
+                currentLocation(["113.006332", "28.263503"], car1);
+                currentLocation(["108.945456", "34.366566"], car2);
+                //标注当前车辆坐标位置
+                function currentLocation(curPosArr, carArr) {
+                    var curPt = new BMap.Point(curPosArr[0], curPosArr[1]); //当前位置
+                    var curIcon = new BMap.Icon("../img/map/working.png", new BMap.Size(28, 20));
+                    var curMarker = new BMap.Marker(curPt, {
+                        icon: curIcon
+                    });
+                    mp.addOverlay(curMarker);
+                    var isDraw = false; //是否已经绘制过路线
+                    curMarker.onclick = function() {
+                        drawPath(carArr, isDraw);
+                        isDraw = true;
+                    }
+                };
+                //绘制路线
+                function drawPath(carArr, isDraw) {
+                    if (isDraw) { //若绘制过路线  返回 false
+                        return false;
+                    };
+                    var pointArr = [];
+                    var ptNum = 0;
+                    var driving = new BMap.DrivingRoute(mp); //创建驾车实例
+                    // 复杂的自定义覆盖物
+                    function ComplexCustomOverlay(point, state, time) {
+                        this._point = point;
+                        this.state = state;
+                        this.time = time;
+                    };
+                    ComplexCustomOverlay.prototype = new BMap.Overlay();
+                    ComplexCustomOverlay.prototype.initialize = function(map) {
+                        this._map = map;
+                        var div = this._div = document.createElement("div");
+                        $(div).addClass('state-wrap');
+                        var str = '<div class="logistics-wrap">';
+                        str += '<div class="logistics-state">' + this.state + '</div>';
+                        str += '<div class="logistics-time">' + this.time + '</div>';
+                        str += '</div>';
+                        div.innerHTML = str;
+                        mp.getPanes().labelPane.appendChild(div);
+                        var he = div.offsetHeight;
+                        this._he = he; //当前div的高度
+                        return div;
+                    };
+                    ComplexCustomOverlay.prototype.draw = function() {
+                        var map = this._map;
+                        var pixel = map.pointToOverlayPixel(this._point);
+                        this._div.style.left = pixel.x - 24 + "px";
+                        this._div.style.top = pixel.y - this._he + 5 + "px";
+                    };
+                    /*自定义复杂覆盖物结束*/
+                    for (var i = 0, len = carArr.length; i < len; i++) {
+                        var point = new BMap.Point(carArr[i][0], carArr[i][1]);
+                        pointArr[i] = point;
+                        var myIcon = new BMap.Icon("../img/map/50greencar.png", new BMap.Size(9, 9));
+                        var marker = new BMap.Marker(point, {
+                            icon: myIcon
+                        }); // 创建标注
+                        mp.addOverlay(marker); // 将标注添加到地图中    
+                        //此处解决在for循环中添加事件总是执行最后一个的情况，传入参数并且立即执行
+                        (function(point, state, time) {
+                            var myComOverlay = new ComplexCustomOverlay(point, state, time);
+                            mp.addOverlay(myComOverlay);
+                            marker.onclick = function() { //给各个点添加点击事件，显示、隐藏自定义复杂物
+                                if (myComOverlay.isVisible()) {
+                                    myComOverlay.hide();
+                                } else {
+                                    myComOverlay.show();
+                                }
+                            }
+                        })(point, carArr[i][3], carArr[i][4]);
+                    };
+                    var len = pointArr.length - 1;
+                    initRoute(ptNum);
+
+                    function initRoute(num) {
+                        driving.search(pointArr[num], pointArr[num + 1]);
+                        driving.setSearchCompleteCallback(function() {
+                            var plan = driving.getResults().getPlan(0);
+                            var pts = plan.getRoute(0).getPath();
+                            var lineCor = ptNum == (len - 1) ? 'red' : "#1aea0a";
+                            var lineSty = ptNum == (len - 1) ? 'dashed' : "solid";
+                            var polyline = new BMap.Polyline(pts, {
+                                strokeColor: lineCor,
+                                strokeWeight: 3,
+                                strokeOpacity: 0.8,
+                                strokeStyle: lineSty
+                            });
+                            mp.addOverlay(polyline);
+                            //查找下两个点
+                            ptNum++;
+                            if (ptNum < len) {
+                                initRoute(ptNum);
+                            }
+                        });
+                    };
+                    mp.setViewport(pointArr); //自动调整视野
+                };
+            })
+            //
+    </script>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script>
+        $(".uparrow").click(function() {
+            $(".control_box").slideToggle("slow");
+        })
+        $(".controlbox").show();
+        $(".guijibox").hide();
+        $(".curr_btn").click(function() {
+            $(".controlbox").show();
+            $(".guijibox").hide();
+            $(".pointerTabLeft").removeClass("pointerTabRight");
+        })
+        $(".guiji_btn").click(function() {
+            console.log("guiji");
+            $(".guijibox").show();
+            $(".controlbox").hide();
+            $(".pointerTabLeft").addClass("pointerTabRight");
+
+        })
+    </script>
+</body>
+
+</html>

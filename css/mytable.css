@@ -1,0 +1,140 @@
+/*表格样式*/
+
+.table-responsive {
+    padding-top: 50px;
+}
+
+table {
+    border: 2px solid #C7C7C7;
+}
+
+.keep-open .dropdown-menu {
+    background: #074587;
+}
+
+.btn {
+    font-size: 10px;
+    padding: 3px 9px;
+}
+
+.table-hover>tbody>tr:hover {
+    background-color: #DBDBDB;
+    cursor: pointer;
+}
+
+.fixed-table-container tbody .selected td {
+    background-color: #337AB7;
+}
+
+.pull-right .form-control {
+    height: 22px;
+}
+
+.import-mdoel_select {
+    position: absolute;
+    left: 70px;
+    top: 0px;
+}
+
+.fixed-table-pagination .pagination a {
+    padding: 1px 5px;
+}
+
+.fixed-table-container tbody td {
+    /*/*border-left: 1px solid white;*/
+    /*border-right: 1px solid white;*/
+    border: 2px solid #C7C7C7;
+}
+
+.fixed-table-container thead tr {
+    background: #DBDBDB;
+    border-bottom: 3px solid #C7C7C7;
+    /*border: 2px solid #C7C7C7;*/
+}
+
+.fixed-table-container thead th {
+    /*border: 1px solid blue;*/
+    border: 2px solid #C7C7C7;
+    /*border-left: 1px solid white;
+    border-right: 1px solid white;*/
+}
+
+.btn-primary {
+    background: #1471EE;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    /*background: #1471EE;*/
+    background: #1A1D3E;
+}
+
+.table-responsive h3 {
+    /*color: #1471EE;*/
+    margin-top: -2px;
+}
+
+.pagination-info,
+.page-list {
+    color: black;
+}
+
+.form-control {
+    width: 85%;
+}
+
+input.form-control {
+    background: white;
+}
+
+
+/*用户列表*/
+
+#toolbar_userList {
+    position: absolute;
+    top: -45px;
+    left: 0px;
+}
+
+#userList {
+    top: 20px;
+}
+
+.add_boxs {
+    display: none;
+}
+
+.add_box .form-control {
+    width: 343px;
+}
+
+.add_boxs .form-group label {
+    color: #1A1D3E;
+}
+
+.mybtn {
+    width: 70px;
+    border-radius: 20px;
+    height: 26px;
+    line-height: 26px;
+    border: none;
+    background: #1A1D3E;
+    color: white;
+    outline: none;
+}
+
+.my_remove {
+    position: absolute;
+    top: 15px;
+    color: #1A1D3E;
+    cursor: pointer;
+    right: 10px;
+}
+
+.add_box_form {
+    width: 700px;
+}

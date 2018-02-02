@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>系统日志</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/mytable.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <script src="../assets/js/jquery-1.11.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: #494A5F;
+        }
+    </style>
+
+    <!--<script src="../js/cartable.js"></script>-->
+</head>
+
+<body>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table id="table4" data-toggle="table" data-url="../json/datatable.json" data-show-export="true" data-toolbar="#toolbar4" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
+                data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                <div id="toolbar4" class="toolbar" style="display: inline-block">
+                    <h3>系统日志</h3>
+                    <!--<span>导出模式：</span>
+                    <select class="form-control import-mdoel_select">
+                                                    <option value="">导出当前页数据</option>
+                                                    <option value="all">导出全部数据</option>
+                                                    <option value="selected">导出选中数据</option>
+                                                </select>-->
+                </div>
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>
+                        <th data-field="id" data-align="center" data-width="8%" data-height="10">编号</th>
+                        <th data-field="carid" data-align="center" data-width="10%">审批类型</th>
+                        <th data-field="color" data-align="center" data-width="10%">审批人</th>
+                        <th data-field="brand" data-align="center" data-width="8%">审批结果</th>
+                        <th data-field="cat" data-align="center" data-width="10%">审批日期</th>
+                        <th data-field="operate" data-align="center" data-width="10%" data-events=operateEvents data-formatter=operateFormatter>操作 </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/FileSaver.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/extensions/export/bootstrap-table-export.js"></script>
+<script type="text/javascript" src="../js/tableExport.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script>
+
+</html>
