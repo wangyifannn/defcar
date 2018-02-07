@@ -189,13 +189,12 @@
 }
 
 .sidebar-wrapper .sidebar-menu ul li a i {
-    margin-right: 10px;
-    font-size: 14px;
+    font-size: 15px;
     background: #0c1119;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
+    width: 28px;
+    height: 15px;
+    line-height: 15px;
+    /*text-align: center;*/
     border-radius: 4px;
 }
 

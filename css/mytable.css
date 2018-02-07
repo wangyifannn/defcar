@@ -105,7 +105,15 @@ input.form-control {
 }
 
 .add_boxs {
-    display: none;
+    /*display: none;*/
+}
+
+.tablelistbox {
+    /*display: none;*/
+}
+
+.add_boxs {
+    display: inline-block;
 }
 
 .add_box .form-control {
@@ -137,4 +145,16 @@ input.form-control {
 
 .add_box_form {
     width: 700px;
+}
+
+
+/*门岗是否合法*/
+
+#sentrytable th:last-child {
+    color: red;
+}
+
+#sentrytable td:last-child {
+    color: green;
+    font-weight: bold;
 }

@@ -88,10 +88,10 @@ console.log(isFF());
 console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
-    // <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
-
+    // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
+
+$("#userList .form-horizontal").hide();
 
 //用户管理模块： 用户列表
 $.ajax({
@@ -105,9 +105,22 @@ $.ajax({
             console.log(res);
             createTable("#userList", "toolbar_userList", res, true, true, "uid");
             var addbtn = document.getElementById("add_button");
+            // 點擊添加用戶按鈕
             addbtn.onclick = function() {
-                $(".form-horizontal").show();
+                $(".rightbox").hide();
+                $("#userList .form-horizontal").show();
             };
+            // 取消添加用戶表單
+            $(".my_remove_btn").click(function() {
+                console.log("ss");
+                $("#userList .form-horizontal").hide();
+                $(".rightbox").show();
+            });
+            // 重置按鈕
+            $(".my_reset_btn").click(function() {
+                // $("#userList .form-horizontal:input").val("");
+            })
+
         },
         "error": function(res) {
             console.log(res);
