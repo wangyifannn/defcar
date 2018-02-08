@@ -44,25 +44,26 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul id="myTab" class="ul_box">
-                        <!--主页-->
-                        <li class="active li1">
-                            <a href="#carmap" data-toggle="tab"><img class="carmapicon" src="./img/index/carmapblue.png" alt="">车辆地图
-                            </a>
-                        </li>
-                        <!--门岗-->
-                        <li class="sentry">
-                            <a href="#sentry" data-toggle="tab"><i class="glyphicon glyphicon-home"></i>门岗
-                            </a>
-                        </li>
-                        <!--车辆管理-->
+                        <!--gps-->
                         <li class="sidebar-dropdown">
-                            <a class="sidebar_dropdown_hover" href="#"><img src="./img/index/carManage.png" alt=""><span>车辆管理</span><span class="badge">3</span>
+                            <a href="#"><img class="carmapicon" src="./img/index/carmapblue.png" alt=""><span class="text_blue">GPS</span><span class="badge">2</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+                                    <li><a href="#carmap" data-toggle="tab" class="text_blue">车辆地图</a> </li>
                                     <li><a href="#carTrack" data-toggle="tab">车辆轨迹</a> </li>
-                                    <li><a href="#carList" data-toggle="tab">车辆列表</a></li>
-                                    <li><a href="#carTypeIn" data-toggle="tab">车辆录入</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!--门岗-->
+                        <li class="sidebar-dropdown">
+                            <a class="sidebar_dropdown_hover" href="#"><img src="./img/index/home.png" alt=""> <span>门岗</span><span class="badge">2</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li><a href="#driverList" data-toggle="tab">驾驶员管理</a> </li>
+                                    <li><a href="#sentry" data-toggle="tab">车辆出入管理</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -72,9 +73,9 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="#carTrack" data-toggle="tab">车辆轨迹</a> </li>
                                     <li><a href="#carList" data-toggle="tab">车辆列表</a></li>
                                     <li><a href="#carTypeIn" data-toggle="tab">车辆录入</a></li>
+                                    <li><a href="#carCheck" data-toggle="tab">新车查验</a> </li>
                                 </ul>
                             </div>
                         </li>
@@ -91,7 +92,7 @@
                             </div>
                         </li>
                         <!--驾驶员管理-->
-                        <li class="sidebar-dropdown">
+                        <!--<li class="sidebar-dropdown">
                             <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/driver.png" alt=""><span>驾驶员管理</span><span class="badge">2</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -99,7 +100,7 @@
                                     <li><a href="#driverTypeIn" data-toggle="tab"><span>驾驶员录入</span></a></li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>-->
                         <!--维修管理-->
                         <li class="sidebar-dropdown">
                             <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/maintain.png" alt=""><span>维修管理</span><span class="badge">3</span></a>
@@ -117,7 +118,6 @@
                             <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/note.png" alt=""><span>日志管理</span><span class="badge">4</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <!--<li><a href="#systemLog" data-toggle="tab"><span>系统日志</span></a></li>-->
                                     <li><a href="#warningLog" data-toggle="tab"><span>告警日志</span></a></li>
                                     <li><a href="#dataLog" data-toggle="tab"><span>数据管理日志</span></a></li>
                                     <li><a href="#maintainLog" data-toggle="tab"><span>维修管理日志</span></a></li>
@@ -158,9 +158,9 @@
                         <div class="bread_left pull-left">
                         </div>
                         <div class="bread_right pull-right">
-                            <span><i class="glyphicon glyphicon-con"></i><img src="./img/index/config.png" alt=""> </span>
-                            <span><i class="glyphicon glyphicon-comment"></i><span class="label label-warning notification">3</span></span>
-                            <span><i class="glyphicon glyphicon-user"></i></span>
+                            <span><i class="glyphicon glyphicon-comment"></i><span class="label label-warning notification">3</span>我的消息</span>
+                            <span class="config-black"><img class="config_black" src="./img/index/config-black.png" alt="">设置</span>
+                            <span><i class="glyphicon glyphicon-user"></i>个人中心</span>
                         </div>
                     </div>
                     <!--主界面-->
@@ -195,6 +195,11 @@
                     <div class="tab-pane" id="carTrack">
                         <iframe class="iframebg" src="./map/cartrack.html" width="100%" height="800px" scrolling="no" frameborder="no" border="0"></iframe>
                     </div>
+                    <!--新车查验-->
+                    <div class="tab-pane" id="carCheck">
+                        新车查验
+                        <!--<iframe class="iframebg" src="./map/cartrack.html" width="100%" height="800px" scrolling="no" frameborder="no" border="0"></iframe>-->
+                    </div>
                     <div class="tab-pane" id="carList">
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -202,12 +207,6 @@
                                     data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
                                     <div id="toolbar" class="toolbar">
                                         <h3>车辆列表</h3>
-                                        <!--<span>导出模式：</span>
-                                        <select class="form-control import-mdoel_select">
-                                                    <option value="">导出当前页数据</option>
-                                                    <option value="all">导出全部数据</option>
-                                                    <option value="selected">导出选中数据</option>
-                                                </select>-->
                                     </div>
                                     <thead>
                                         <tr>
@@ -306,6 +305,7 @@
                                     data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
                                     <div id="toolbar2" class="toolbar">
                                         <h3>驾驶员列表</h3>
+                                        <a href="#driverTypeIn" data-toggle="tab" class="driveradd_btn"><button>驾驶员录入</button></a>
                                         <!--<span>导出模式：</span>
                                         <select class="form-control import-mdoel_select">
                                                     <option value="">导出当前页数据</option>
@@ -467,7 +467,6 @@
                                         <input type="email" class="form-control" id="inputEmail3" placeholder="购买日期">
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
                                     <div class="col-sm-8">

@@ -7,16 +7,57 @@ function loadingChange() {
     }
 }
 // e 页面懒加载
-// 菜单hover 
+// 菜单hover
 var orisrc = "";
 $(".sidebar_dropdown_hover").hover(function() {
-    orisrc = $(this).children("img").prop("src").split(".png")[0];
-    // console.log(orisrc); 
-    $(this).children("img").prop("src", orisrc + "blue.png");
+    console.log($(this).children()[0]);
+    orisrc = $($(this).children()[0]).prop("src").split(".png")[0];
+
+    if (orisrc.match("blue") == null) {
+        $(this).children("img").prop("src", orisrc + "blue.png");
+    } else {
+        $(this).children("img").prop("src", orisrc + ".png");
+    }
 }, function() {
-    $(this).children("img").prop("src",
-        orisrc + ".png");
+    if (orisrc.match("blue") == null) {
+        $(this).children("img").prop("src", orisrc + ".png");
+    } else {
+        console.log(orisrc);
+        var orisrc1 = orisrc.split("blue.png")[0];
+        console.log(orisrc1);
+        $(this).children("img").prop("src", orisrc1 + ".png");
+    }
 });
+// 子菜单hover 父级菜单颜色变蓝
+
+$(".sidebar-submenu ul li").mouseover(function() {
+    var sorisrc = $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].getAttribute("src").split(".png")[0];
+    // console.log(sorisrc);
+    // console.log(sorisrc.match("blue"));
+    if (sorisrc.match("blue") == null) {
+        // sorisrc = "";
+        // console.log(sorisrc);
+        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + "blue.png");
+    } else {
+        // console.log(sorisrc);
+        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + ".png");
+    }
+});
+
+$(".sidebar-submenu ul li").mouseout(function() {
+    var sorisrc = $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].getAttribute("src").split(".png")[0];
+    console.log(sorisrc);
+    console.log(sorisrc.match("blue"));
+    if (sorisrc.match("blue") == null) {
+        console.log(sorisrc);
+        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + ".png");
+    } else {
+        var orisrc1 = orisrc.split("blue.png")[0];
+        console.log(orisrc1);
+        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", orisrc1 + ".png");
+    }
+});
+
 // 解决侧边菜单点击 active失效问题
 
 // 面包屑导航
