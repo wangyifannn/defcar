@@ -374,6 +374,7 @@
         
         .maintain_progress .pro_status {
             width: 97%;
+            margin: 15px 0px;
             /*margin-left: 50px;*/
         }
         

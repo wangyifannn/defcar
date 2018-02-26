@@ -129,10 +129,10 @@ console.log(isFF());
 console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
-    // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
+    $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
 
-$("#userList .form-horizontal").hide();
+$("#user .form-horizontal").hide();
 
 //用户管理模块： 用户列表
 $.ajax({
@@ -149,12 +149,12 @@ $.ajax({
             // 點擊添加用戶按鈕
             addbtn.onclick = function() {
                 $(".rightbox").hide();
-                $("#userList .form-horizontal").show();
+                $("#user .form-horizontal").show();
             };
             // 取消添加用戶表單
             $(".my_remove_btn").click(function() {
-                console.log("ss");
-                $("#userList .form-horizontal").hide();
+                // console.log("ss");
+                $("#user .form-horizontal").hide();
                 $(".rightbox").show();
             });
             // 重置按鈕

@@ -104,7 +104,7 @@
                             </div>                        </li>-->
                         <!--维修管理-->
                         <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/maintain.png" alt=""><span>维修管理</span><span class="badge">3</span></a>
+                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/maintain.png" alt=""><span>维修管理</span><span class="badge">5</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="#maintainList" data-toggle="tab"><span>维修列表</span></a></li>
@@ -494,23 +494,14 @@
                     <!--维修进度-->
                     <div class="tab-pane tableTypein" id="maintainProgress">
                         <div class="maintainbox">
-                            <h3>维修进度</h3>
+                            <h3>查询维修进度</h3>
                             <div class="searchprogresss">
                                 <label for="">车辆编号:</label>
                                 <input class="search_progresss_input" type="text" placeholder="请输入要查询的车辆编号">
                                 <button class="btn btn-default btn-primary">查询</button>
                             </div>
                             <div class="maintain_search_box">
-                                <div class="maintain_progress">
-                                    <img class="pro_status" src="../CarMangae0/img/index/maintain1.png" alt="">
-                                    <div class="pro_status_text">
-                                        <span>维修申请</span>
-                                        <span>维修审核</span>
-                                        <span>正在维修</span>
-                                        <span>维修完成</span>
-                                    </div>
-                                </div>
-                                <h3>维修车辆</h3>
+                                <h4>维修车辆</h4>
                                 <div class="maintain_car">
                                     <table class="table table-condensed">
                                         <tr>
@@ -527,8 +518,30 @@
                                         </tr>
                                     </table>
                                 </div>
+                                <div class="maintain_progress">
+                                    <img class="pro_status" src="./img/index/maintain1.png" alt="">
+                                    <div class="pro_status_text">
+                                        <span>维修申请</span>
+                                        <span>维修审核</span>
+                                        <span>正在维修</span>
+                                        <span>维修完成</span>
+                                    </div>
+                                </div>
                             </div>
+                            <h3>修改维修进度</h3>
+                            <div class="searchprogresss">
+                                <label for="">车辆编号:</label>
+                                <input class="search_progresss_input" type="text" placeholder="请输入要查询的车辆编号">
+                                <label for="">车辆编号:</label>
+                                <select name="" id="">
+                                    <option value="">维修申请</option>
+                                    <option value="">维修审核</option>
+                                    <option value="">正在维修</option>
+                                    <option value="">维修完成</option>
+                                </select>
 
+                                <button class="btn btn-default btn-primary">确认修改</button>
+                            </div>
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
                             <!--<img src="./img/pro.png" alt="">-->
                         </div>
@@ -804,13 +817,15 @@
                     <div class="tab-pane" id="user">
                         <div class="rightbox">
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <!--用户管理-->
                             <div class="tablelistbox">
                                 <table id="userList">
+                                    <!--<a href="#userTypeIn" data-toggle="tab" class="driveradd_btn"><button>添加用户</button></a>-->
                                 </table>
                             </div>
                         </div>
                         <form class="form-horizontal add_boxs">
-                            <i class="glyphicon glyphicon-remove my_remove my_remove_btn"></i>
+                            <!--<i class="glyphicon glyphicon-remove my_remove my_remove_btn"></i>-->
                             <div class="add_box_form">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">用户名</label>
