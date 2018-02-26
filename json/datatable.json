@@ -5,10 +5,10 @@
         "data": "2018.1-1",
         "status": "出车",
         "islegal": "合法",
-        "approvedata": "2天",
+        "approvedata": "雨刮器不动作，检修。",
         "brand": "别克",
-        "gpsid": "20180202",
-        "carid": "陕A370UX"
+        "gpsid": "维修间",
+        "carid": "2015-809"
     },
     {
         "id": 1,
@@ -17,7 +17,7 @@
         "data": "2018.1-1",
         "status": "出车",
         "islegal": "不合法",
-        "approvedata": "2天",
+        "approvedata": "更换副驾皮带轮，车辆是新车，未领标",
         "brand": "别克",
         "gpsid": "20180202",
         "carid": "陕A570UX"

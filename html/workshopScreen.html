@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>维修车间大屏</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/scrollscreen.css" />
+    <script type="text/javascript" language="javascript" src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/myslideup.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".line").slideUp();
+        })
+    </script>
+</head>
+
+<body>
+    <div class="maintainList">
+        <ul class="title">
+            <li>
+                <span>维修序号</span>
+                <span>维修编号</span>
+                <span>车牌号</span>
+                <span>维修状态</span>
+            </li>
+        </ul>
+        <ul class="line">
+            <li style="margin-top: 0px; ">
+                <span>01</span>
+                <span>01333829</span>
+                <span>陕A082232</span>
+                <span>维修中</span>
+            </li>
+        </ul>
+    </div>
+
+</body>
+
+<script>
+    $.ajax({
+        // "url": "http://192.168.1.222:8080/car-management/role/roleList.action",
+        // "type": "post",
+        "url": "../json/datatable.json",
+        "type": "get",
+        // "dataType": "jsonp", //数据类型为jsonp  
+        // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        "success": function(res) {
+            console.log(res);
+            var screenHtml = "";
+            for (var i = 0; i < res.length; i++) {
+                screenHtml += '<li style="margin-top:0px;"><span>' + res[i].id +
+                    '</span><span>' + res[i].name +
+                    '</span><span>' + res[i].status + '</span><span>' + res[i].islegal + '</span></li>';
+            }
+            $(".line").html(screenHtml);
+        },
+        "error": function(res) {
+            console.log(res);
+        }
+    })
+</script>
+
+</html>

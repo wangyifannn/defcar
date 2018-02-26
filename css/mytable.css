@@ -41,9 +41,11 @@ table {
 }
 
 .fixed-table-container tbody td {
-    /*/*border-left: 1px solid white;*/
-    /*border-right: 1px solid white;*/
     border: 2px solid #C7C7C7;
+}
+
+#maintainList table tbody td {
+    font-size: 11px;
 }
 
 .fixed-table-container thead tr {
@@ -89,6 +91,14 @@ table {
 
 input.form-control {
     background: white;
+}
+
+#maintainList table td:nth-child(7) {
+    background: #BFEBEB;
+}
+
+#maintainList table thead tr:nth-child(2) th:nth-child(3) {
+    background: #BFEBEB;
 }
 
 

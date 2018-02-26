@@ -10,7 +10,7 @@ function loadingChange() {
 // 菜单hover
 var orisrc = "";
 $(".sidebar_dropdown_hover").hover(function() {
-    console.log($(this).children()[0]);
+    // console.log($(this).children()[0]);
     orisrc = $($(this).children()[0]).prop("src").split(".png")[0];
 
     if (orisrc.match("blue") == null) {
@@ -22,9 +22,9 @@ $(".sidebar_dropdown_hover").hover(function() {
     if (orisrc.match("blue") == null) {
         $(this).children("img").prop("src", orisrc + ".png");
     } else {
-        console.log(orisrc);
+        // console.log(orisrc);
         var orisrc1 = orisrc.split("blue.png")[0];
-        console.log(orisrc1);
+        // console.log(orisrc1);
         $(this).children("img").prop("src", orisrc1 + ".png");
     }
 });
@@ -46,14 +46,14 @@ $(".sidebar-submenu ul li").mouseover(function() {
 
 $(".sidebar-submenu ul li").mouseout(function() {
     var sorisrc = $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].getAttribute("src").split(".png")[0];
-    console.log(sorisrc);
-    console.log(sorisrc.match("blue"));
+    // console.log(sorisrc);
+    // console.log(sorisrc.match("blue"));
     if (sorisrc.match("blue") == null) {
-        console.log(sorisrc);
+        // console.log(sorisrc);
         $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + ".png");
     } else {
         var orisrc1 = orisrc.split("blue.png")[0];
-        console.log(orisrc1);
+        // console.log(orisrc1);
         $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", orisrc1 + ".png");
     }
 });

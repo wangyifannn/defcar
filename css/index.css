@@ -354,3 +354,51 @@
             margin-right: 10px;
             margin-left: 10px;
         }
+        /*维修进度模块相关样式*/
+        
+        .searchprogresss {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .maintainbox {
+            width: 850px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        
+        .maintain_progress {
+            margin-bottom: 50px;
+            /*border: 1px solid red;*/
+        }
+        
+        .maintain_progress .pro_status {
+            width: 97%;
+            /*margin-left: 50px;*/
+        }
+        
+        .search_progresss_input {
+            margin-right: 20px;
+            height: 24px;
+            width: 322px;
+            border-radius: 5px;
+            font-size: 10px;
+            outline: none;
+            text-indent: 5px;
+        }
+        
+        .pro_status_text {
+            width: 100%;
+        }
+        
+        .pro_status_text span {
+            width: 100px;
+            /*border: 1px solid red;*/
+            display: inline-block;
+            text-align: center;
+            margin-left: 140px;
+        }
+        
+        .pro_status_text span:first-child {
+            margin-left: 0px;
+        }

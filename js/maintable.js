@@ -1,4 +1,5 @@
 var $tablescreen = $('#tablescreen');
+
 $(function() {
     $('#toolbar_tablescreen').find('select').change(function() {
         $tablescreen.bootstrapTable('destroy').bootstrapTable({

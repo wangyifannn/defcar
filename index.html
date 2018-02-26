@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/mytable.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/scrollscreen.css" />
+
     <script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/custom.js"></script>
@@ -99,8 +101,7 @@
                                     <li><a href="#driverList" data-toggle="tab"><span>驾驶员列表</span></a></li>
                                     <li><a href="#driverTypeIn" data-toggle="tab"><span>驾驶员录入</span></a></li>
                                 </ul>
-                            </div>
-                        </li>-->
+                            </div>                        </li>-->
                         <!--维修管理-->
                         <li class="sidebar-dropdown">
                             <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/maintain.png" alt=""><span>维修管理</span><span class="badge">3</span></a>
@@ -108,6 +109,7 @@
                                 <ul>
                                     <li><a href="#maintainList" data-toggle="tab"><span>维修列表</span></a></li>
                                     <li><a href="#maintainTypeIn" data-toggle="tab"><span>维修申请</span></a></li>
+                                    <li><a href="#maintainPeopleTypeIn" data-toggle="tab"><span>维修协调员填写</span></a></li>
                                     <li><a href="#maintainProgress" data-toggle="tab"><span>维修进度</span></a></li>
                                     <li><a href="#maintainScreen" data-toggle="tab"><span>维修车间大屏</span></a></li>
                                 </ul>
@@ -405,28 +407,11 @@
                     <!--e 驾驶员相关-->
 
                     <!--s 维修管理-->
-                    <!--维修列表-->
+                    <!--维修车间大屏-->
                     <div class="tab-pane" id="maintainScreen">
                         <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="table3" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar3" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar3" class="toolbar" style="display: inline-block">
-                                        <h3>维修车间大屏</h3>
-                                    </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">维修原因</th>
-                                            <th data-field="name" data-align="center" data-width="8%">申请人</th>
-                                            <th data-field="id" data-align="center" data-width="15%">申请日期</th>
-                                            <!--<th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsmain data-formatter=operateFormattermain>操作 </th>-->
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div class="maintainScreen">
+                                <iframe class="iframebgs" src="./html/workshopScreen.html" width="100%" height="800px" scrolling="no" frameborder="no" border="0"></iframe>
                             </div>
                         </div>
                     </div>
@@ -435,8 +420,6 @@
                         <div class="rightbox">
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
                             <form class="form-horizontal">
-                                <!--<img class="table_header" src="./img/index/table_header.png" alt="">-->
-                                <!--<h3>维修申请表</h3>-->
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
                                     <div class="col-sm-8">
@@ -444,27 +427,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">车牌号</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车牌号">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆停放地点">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">维修原因</label>
                                     <div class="col-sm-8">
                                         <input type="email" class="form-control" id="inputEmail3" placeholder="请输入维修原因">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">申请人</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入申请人">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">身份证号</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="购买日期">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -475,11 +446,40 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-8">
-                                        <div class="checkbox">
-                                            <label>
-                                        <input type="checkbox">同意相关条例
-                                        </label>
-                                        </div>
+                                        <button type="submit" class="btn btn-default btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <!--维修协调员填写-->
+                    <div class="tab-pane tableTypein" id="maintainPeopleTypeIn">
+                        <div class="rightbox">
+                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆编号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆停放地点">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">工作内容</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请填写工作内容">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="其他信息">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -493,13 +493,47 @@
                     </div>
                     <!--维修进度-->
                     <div class="tab-pane tableTypein" id="maintainProgress">
-                        <div class="rightbox">
+                        <div class="maintainbox">
                             <h3>维修进度</h3>
+                            <div class="searchprogresss">
+                                <label for="">车辆编号:</label>
+                                <input class="search_progresss_input" type="text" placeholder="请输入要查询的车辆编号">
+                                <button class="btn btn-default btn-primary">查询</button>
+                            </div>
+                            <div class="maintain_search_box">
+                                <div class="maintain_progress">
+                                    <img class="pro_status" src="../CarMangae0/img/index/maintain1.png" alt="">
+                                    <div class="pro_status_text">
+                                        <span>维修申请</span>
+                                        <span>维修审核</span>
+                                        <span>正在维修</span>
+                                        <span>维修完成</span>
+                                    </div>
+                                </div>
+                                <h3>维修车辆</h3>
+                                <div class="maintain_car">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>车辆编号</td>
+                                            <td>维修原因</td>
+                                            <td>申请日期</td>
+                                            <td>申请人</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1000-999</td>
+                                            <td>点火故障</td>
+                                            <td>2017-02-22</td>
+                                            <td>王先生</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
                             <!--<img src="./img/pro.png" alt="">-->
                         </div>
                     </div>
-                    <!--维修车间大屏-->
+                    <!--维修列表-->
                     <div class="tab-pane tableTypein" id="maintainList">
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -508,16 +542,6 @@
                                     <div id="toolbar_tablescreen" class="toolbar" style="display: inline-block">
                                         <h3>维修列表</h3>
                                     </div>
-                                    <thead>
-                                        <tr>
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">维修序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">状态</th>
-                                            <th data-field="id" data-align="center" data-width="15%">申请日期</th>
-                                            <th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsmainScreen data-formatter=operateFormattermainScreen>操作 </th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
@@ -870,7 +894,113 @@
 <script type="text/javascript" src="./js/tableExport.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script>
-
 <script type="text/javascript" src="./js/index.js"></script>
+<script>
+    // 维修列表
+    $("#tablescreen").bootstrapTable({
+        columns: [
+            [{
+                "title": "测试车辆维修列表",
+                "halign": "center",
+                "align": "center",
+                // 合并维修列表 表头的列单元
+                "colspan": 12
+            }],
+            [{
+                field: 'id',
+                title: "序号",
+                valign: "middle",
+                align: "center",
+                colspan: 1,
+                rowspan: 2,
+                width: "3%"
+
+            }, {
+                title: "送修申请表",
+                valign: "middle",
+                align: "center",
+                colspan: 5,
+                rowspan: 1
+            }, {
+                field: 'data',
+                title: "双方协商日期",
+                valign: "middle",
+                align: "center",
+                colspan: 1,
+                rowspan: 2,
+                width: "7%",
+                background: '#BFEBEB'
+            }, {
+                title: "维修协调员填写",
+                valign: "middle",
+                align: "center",
+                colspan: 5,
+                rowspan: 1
+            }],
+            [{
+                field: 'carid',
+                title: '车辆编号',
+                valign: "middle",
+                align: "center",
+                width: "7%"
+            }, {
+                field: 'gpsid',
+                title: '停放地点',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+            }, {
+                field: 'name',
+                title: '申请人',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+            }, {
+                field: 'mideaPercent',
+                title: '申请日期',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+            }, {
+                field: 'approvedata',
+                title: '备注',
+                valign: "middle",
+                align: "center",
+                width: "13%"
+            }, {
+                field: 'approvedata',
+                title: '工作内容',
+                valign: "middle",
+                align: "center",
+                width: "13%"
+            }, {
+                field: 'name',
+                title: '操作人',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+
+            }, {
+                field: 'data',
+                title: '完成日期',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+
+            }, {
+                field: 'gpsid',
+                title: '停放地点',
+                valign: "middle",
+                align: "center",
+                width: "8%"
+            }, {
+                field: 'panasonicNum',
+                title: '备注',
+                valign: "middle",
+                align: "center"
+            }]
+        ]
+    })
+</script>
 
 </html>
