@@ -13,19 +13,16 @@
        position: absolute;
        width: 100%;
        height: 100%;
-       /*1*/
        background: url("../img/login/login_bg1.jpg");
        background-size: 120% 120%;
        background-position-x: -100px;
-       /*2*/
-       /*background: url("../img/login/login_bg.jpg");
-       /*background-size: 130% 130%;*/
-       /*background-position-y: -50px;*/
-       /*background-position-x: -100px;*/
-       /*3*/
-       /*background: url("../img/login/login_bg2.jpg");
-       background-size: 120% 120%;
-       background-position-x: -300px;*/
+   }
+   
+   .logininfo_group {
+       text-align: center;
+       font-size: 12px;
+       margin-top: 5px;
+       /*display: none;*/
    }
    
    .header {
@@ -84,7 +81,7 @@
    .login_box {
        z-index: 10;
        width: 300px;
-       height: 310px;
+       /*height: 310px;*/
        border-radius: 10px;
        /*float: right;*/
        position: absolute;
@@ -92,6 +89,7 @@
        right: 230px;
        background: #EFF0F4;
        background-size: 100% 100%;
+       padding-bottom: 30px;
    }
    
    .box_title {
@@ -213,5 +211,5 @@
    /*input框自动填充为黄色的解决方法*/
    
    input:-webkit-autofill {
-       box-shadow: 0 0 0px 1000px #0A2257 inset;
+       box-shadow: 0 0 0px 1000px white inset;
    }

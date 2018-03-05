@@ -129,58 +129,29 @@ console.log(isFF());
 console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
-    $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
+    // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
+// 表单重置函数
+function formReset() {
+    $(':input', '.form-horizontal')
+        .not(':button, :submit, :reset, :hidden,:radio') // 去除不需要重置的input类型
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+};
 
-$("#user .form-horizontal").hide();
-
-//用户管理模块： 用户列表
-$.ajax({
-        // "url": "http://192.168.1.222:8080/car-management/user/userList.action",
-        "url": "./json/datatable.json",
-        "data": {},
-        "type": "post",
-        // "dataType": "jsonp", //数据类型为jsonp  
-        // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-        "success": function(res) {
-            console.log(res);
-            createTable("#userList", "toolbar_userList", res, true, true, "uid");
-            var addbtn = document.getElementById("add_button");
-            // 點擊添加用戶按鈕
-            addbtn.onclick = function() {
-                $(".rightbox").hide();
-                $("#user .form-horizontal").show();
-            };
-            // 取消添加用戶表單
-            $(".my_remove_btn").click(function() {
-                // console.log("ss");
-                $("#user .form-horizontal").hide();
-                $(".rightbox").show();
-            });
-            // 重置按鈕
-            $(".my_reset_btn").click(function() {
-                // $("#userList .form-horizontal:input").val("");
-            })
-
-        },
-        "error": function(res) {
-            console.log(res);
-        }
-    })
-    // 用户列表
-function createTable(boxname, toolbarid, res, ifpage, ifrefresh, id) {
+// 权限管理、用户管理、角色管理列表函数
+function createTable(boxname, toolbarid, res,
+    row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
+    row1name, row2name, row3name, row4name, row5name, row6name,
+    ifoperate, userOperateEventsDel, userOperateFormatterDel) {
     $(boxname).css({
         "position": "relative"
     });
-
-    // <h3>车辆管理日志</h3>
-    var addButton = ' <div id="' + toolbarid + '" class="toolbar" style="display: inline-block"><button id="add_button" class="mybtn">添加</button></div>';
-
-    $(boxname).append(addButton);
     $(boxname).bootstrapTable({
         data: res,
         toggle: table,
-        toolbar: toolbarid,
+        toolbar: "userlist_toolbar",
         pagination: ifpage, //是否显示分页（*）
         sortable: false, //是否启用排序
         sortOrder: "asc", //排序方式
@@ -194,57 +165,123 @@ function createTable(boxname, toolbarid, res, ifpage, ifrefresh, id) {
         minimumCountColumns: 2, //最少允许的列数
         clickToSelect: true, //是否启用点击选中行
         columns: [{
-            field: id,
-            title: '用户编号',
+            field: row1,
+            title: row1name,
             align: 'center',
             sortable: true
         }, {
-            field: 'nickname',
-            title: '昵称',
+            field: row2,
+            title: row2name,
             align: 'center',
             sortable: true
         }, {
-            field: 'username',
-            title: '用户名',
+            field: row3,
+            title: row3name,
             align: 'center',
             sortable: true
         }, {
-            field: 'telephone',
-            title: '电话',
+            field: row4,
+            title: row4name,
             align: 'center',
             sortable: true
         }, {
-            field: 'status',
-            title: '状态',
+            field: row5,
+            title: row5name,
             align: 'center',
             sortable: true
         }, {
-            field: 'createTime',
-            title: '创建日期',
+            field: row6,
+            title: row6name,
             align: 'center',
-            sortable: true
-        }]
+            sortable: true,
+            //获取日期列的值进行转换
+            formatter: function(value, row, index) {
+                return changeDateFormat(value)
+            }
+        }, {
+            field: 'operate',
+            title: '操作',
+            align: 'center',
+            events: userOperateEventsDel,
+            formatter: userOperateFormatterDel
+        }],
+        // 编辑更新用户信息
+        // onEditableSave: function(field, row, oldValue, $el) {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/Editable/Edit",
+        //         data: { strJson: JSON.stringify(row) },
+        //         success: function(data, status) {
+        //             if (status == "success") {
+        //                 alert("编辑成功");
+        //             }
+        //         },
+        //         error: function() {
+        //             alert("Error");
+        //         },
+        //         complete: function() {
+
+        //         }
+
+        //     });
+        // }
     });
+    // 隐藏表格中的某一列
+    if (!ifoperate) {
+        $(boxname).bootstrapTable('hideColumn', 'operate');
+    }
+}
+
+// $(".add_box").hide();
+//转换日期格式(时间戳转换为datetime格式)
+function changeDateFormat(cellval) {
+    var dateVal = cellval + "";
+    if (cellval != null) {
+        var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+        return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+    }
+}
+
+// 数据库 加载权限列表
+function loadrightsList(paramsid) {
+    $.ajax({
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
+        "type": "get",
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        "success": function(res) {
+            console.log(res);
+            var checkboxHtml = "";
+            for (var i = 0; i < res.length; i++) {
+                checkboxHtml += '<input name="rids" type="checkbox" value="' + res[i].name + '" rid="' + res[i].rid + '"><label>' + res[i].name + '</label>&nbsp;&nbsp;&nbsp;';
+            }
+            $(paramsid).html(checkboxHtml);
+        },
+        "error": function(res) {
+            console.log(res);
+        }
+    })
 }
 
 
-// $(".add_box").hide();
+// js数组删除某一项指定的值
+Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+    }
+    return -1;
+};
 
-//添加用户角色表单， 数据库加载角色列表
-// $.ajax({
-//     "url": "http://192.168.1.222:8080/car-management/role/roleList.action",
-//     "type": "post",
-//     "dataType": "jsonp", //数据类型为jsonp  
-//     "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-//     "success": function(res) {
-//         console.log(res);
-//         var checkboxHtml = "";
-//         for (var i = 0; i < res.length; i++) {
-//             checkboxHtml += '<input type="checkbox" name="" value="' + res[i].name + '"><label>' + res[i].name + '</label>&nbsp;&nbsp;&nbsp;';
-//         }
-//         $(".check_box").html(checkboxHtml);
-//     },
-//     "error": function(res) {
-//         console.log(res);
-//     }
-// })
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};

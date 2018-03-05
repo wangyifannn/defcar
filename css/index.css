@@ -35,12 +35,13 @@
         }
         
         .form-horizontal {
-            /*border: 1px solid red;*/
-            /*border: 2px solid #A1A2A4;*/
-            /*box-shadow: 1px 2px 35px #A1A2A4;*/
-            /*background: #FAFBFF;*/
-            margin-top: 40px;
-            /*padding-top: 40px;*/
+            margin-top: 90px;
+        }
+        
+        #role .form-horizontal {
+            width: 65%;
+            margin: 0 auto;
+            margin-top: 106px;
         }
         
         .form-horizontal h3 {
@@ -210,7 +211,7 @@
         }
         
         .form-group label {
-            color: #A1A2A4;
+            /*color: #A1A2A4;*/
         }
         
         .form-group input {
@@ -296,7 +297,7 @@
         /*位置信息框*/
         
         .rightbox {
-            width: 500px;
+            width: 85%;
             margin: 0 auto;
             /*border: 1px solid red;*/
             margin-top: 100px;
@@ -313,20 +314,13 @@
         textarea {
             overflow: auto;
         }
-        /*數據採集*/
+        /*数据采集*/
         
         .longDataBox {
             width: 90%;
             margin: 0 auto;
             margin-top: 50px;
         }
-        /*.longDataContent table {
-            border: 1px solid red;
-        }
-        
-        .longDataContent table tr td {
-            borde: 1px solid red !important;
-        }*/
         
         .sidebar-dropdown img,
         .carmapicon {
@@ -402,4 +396,35 @@
         
         .pro_status_text span:first-child {
             margin-left: 0px;
+        }
+        /*设置placeholder的颜色*/
+        
+         ::-webkit-input-placeholder {
+            /* WebKit browsers */
+            color: #666;
+            font-size: 13px;
+        }
+        
+         :-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: #666;
+            font-size: 13px;
+        }
+        
+         ::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: #666;
+            font-size: 13px;
+        }
+        
+         :-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            color: #666;
+            font-size: 13px;
+        }
+        /*input框自动填充为黄色的解决方法*/
+        
+        input:-webkit-autofill {
+            box-shadow: 0 0 0px 1000px white inset;
+            /*font-size: 13px;*/
         }

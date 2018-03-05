@@ -1,5 +1,9 @@
 /*表格样式*/
 
+* {
+    /*border: 1px solid red;*/
+}
+
 .table-responsive {
     padding-top: 50px;
 }
@@ -13,8 +17,69 @@ table {
 }
 
 .btn {
-    font-size: 10px;
-    padding: 3px 9px;
+    font-size: 12px;
+    padding: 3px 12px;
+}
+
+#carCheck .form-group,
+#carTypeIn .form-group {
+    width: 45% !important;
+    /*border: 1px solid red;*/
+}
+
+#carCheck .form-group,
+#carTypeIn .form-group {
+    display: inline-block;
+}
+
+#carCheck .form-group:nth-child(2n+1),
+#carTypeIn .form-group:nth-child(2n+1) {
+    margin-left: 40px;
+}
+
+.car_image {
+    line-height: 30px;
+}
+
+.car_image_check {
+    padding-top: 9px;
+}
+
+#carCheck .col-sm-5 input {
+    width: 125px;
+    vertical-align: middle;
+    margin: 0px 0px 0px 0px;
+}
+
+#carCheck span {
+    padding-top: 3px;
+    line-height: 30px;
+}
+
+#driverList,
+#carList {
+    position: relative;
+}
+
+.driveradd_btn button,
+.caradd_btn button {
+    background: #1A1D3E;
+    padding: 5px 7px;
+    color: white;
+    border: none;
+    position: absolute;
+    top: 43px;
+    outline: none;
+    font-size: 13px;
+    left: 160px;
+    border-radius: 10px;
+    /*margin: -10px 30px 0px 0px;*/
+}
+
+.form-group-btn {
+    /*text-align: right;*/
+    /*margin-right: 100px !important;*/
+    margin-top: 30px;
 }
 
 .table-hover>tbody>tr:hover {
@@ -61,6 +126,10 @@ table {
     border-right: 1px solid white;*/
 }
 
+.menulist_height {
+    line-height: 30px;
+}
+
 .btn-primary {
     background: #1471EE;
 }
@@ -101,6 +170,31 @@ input.form-control {
     background: #BFEBEB;
 }
 
+.role_check_box label,
+.role_menuList,
+.role_menuList label,
+#add_user_form .col-sm-8,
+#add_user_form .col-sm-8 label {
+    font-size: 13px;
+    color: #666 !important;
+}
+
+.sex-group {
+    margin-top: 7px;
+}
+
+#role .form-horizontal input,
+#add_user_form input {
+    color: #333;
+    vertical-align: middle;
+    margin: 0px 2px 0px 2px;
+}
+
+.role_check_box input {
+    vertical-align: middle;
+    margin: 0px 2px 0px 2px;
+}
+
 
 /*用户列表*/
 
@@ -114,12 +208,22 @@ input.form-control {
     display: inline-block;
 }
 
-#userList {
+#userList,
+#roleList,
+#rightsList,
+#menuList {
     top: 20px;
 }
 
-.add_boxs {
-    /*display: none;*/
+#rights .add_boxs,
+#role .add_boxs {
+    margin-top: 165px;
+}
+
+.role_check_box,
+.user_check_box {
+    margin-top: 7px;
+    vertical-align: middle;
 }
 
 .tablelistbox {
@@ -175,4 +279,8 @@ input.form-control {
 #sentrytable td:last-child {
     color: green;
     font-weight: bold;
+}
+
+.fixed-table-toolbar {
+    margin-top: -20px;
 }
