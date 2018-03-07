@@ -1,9 +1,5 @@
 /*表格样式*/
 
-* {
-    /*border: 1px solid red;*/
-}
-
 .table-responsive {
     padding-top: 50px;
 }
@@ -22,17 +18,19 @@ table {
 }
 
 #carCheck .form-group,
+#returncarCheck .form-group,
 #carTypeIn .form-group {
     width: 45% !important;
-    /*border: 1px solid red;*/
 }
 
 #carCheck .form-group,
+#returncarCheck .form-group,
 #carTypeIn .form-group {
     display: inline-block;
 }
 
 #carCheck .form-group:nth-child(2n+1),
+#returncarCheck .form-group:nth-child(2n+1),
 #carTypeIn .form-group:nth-child(2n+1) {
     margin-left: 40px;
 }
@@ -45,13 +43,15 @@ table {
     padding-top: 9px;
 }
 
-#carCheck .col-sm-5 input {
-    width: 125px;
+#carCheck .col-sm-5 input,
+#returncarCheck .col-sm-5 input {
+    width: 100px;
     vertical-align: middle;
     margin: 0px 0px 0px 0px;
 }
 
-#carCheck span {
+#carCheck span,
+#returncarCheck span {
     padding-top: 3px;
     line-height: 30px;
 }
@@ -77,8 +77,6 @@ table {
 }
 
 .form-group-btn {
-    /*text-align: right;*/
-    /*margin-right: 100px !important;*/
     margin-top: 30px;
 }
 
@@ -155,7 +153,7 @@ table {
 }
 
 .form-control {
-    width: 85%;
+    width: 80%;
 }
 
 input.form-control {

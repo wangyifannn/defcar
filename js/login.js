@@ -8,9 +8,9 @@ $(".vercode").click(function() {
 
 var pass = document.getElementsByClassName("pass_input")[0];
 var users = {};
+var successUser = {};
 $(document).ready(function() {
     // 获取 localStoage 的userinfo信息
-
     var local_user = window.localStorage.getItem("userinfo");
     local_user = JSON.parse(local_user);
     console.log(local_user);
@@ -38,8 +38,13 @@ $(document).ready(function() {
                 console.log(data);
                 if (data.ret == false) {
                     $(".logininfo_group").html(data.msg);
+                    successUser.flag = false;
                 } else {
                     $(".logininfo_group").html(data.msg);
+                    successUser.name = $(".user_input").val();
+                    successUser.pass = $(".pass_input").val();
+                    successUser.flag = true;
+                    window.localStorage.successUser = JSON.stringify(successUser);
                     window.location.href = "../index.html";
                 }
             }

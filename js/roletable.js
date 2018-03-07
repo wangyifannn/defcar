@@ -3,7 +3,10 @@ $("#role .form-horizontal").hide();
 loadrightsList(".role_check_box");
 var checkmenu_val = [];
 var role_check_val = [];
+loadRoleList();
 // 加载菜单列表
+
+
 $.ajax({
     "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
     "type": "get",
@@ -80,83 +83,89 @@ $.ajax({
         console.log(res);
     }
 });
-//加载 角色列表
-$.ajax({
-    "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
-    "type": "get",
-    "dataType": "jsonp", //数据类型为jsonp  
-    "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-    "success": function(res) {
-        console.log(res);
-        createTable("#roleList", "toolbar_roleList", res,
-            "rid", "name", "keyWord", "remark", "operator", "createTime", true, true,
-            "角色编号", "名称", "关键字", "备注", "创建人", "创建日期",
-            true, roleOperateEventsDel, roleOperateFormatterDel);
-        var addrolebtn = document.getElementById("btn_add_role");
-        // 点击添加用戶按鈕
-        addrolebtn.onclick = function() {
-            $("#role_list").hide();
-            $("#role .form-horizontal").show();
-            var role_checkobj = document.getElementsByName("rids");
-            var role_check_val = [];
-            console.log(role_checkobj);
-            for (k in role_checkobj) {
-                role_checkobj[k].onclick = function() {
-                    console.log(this.checked);
-                    if (this.checked) {
-                        // console.log(this.getAttribute("rid"));
-                        role_check_val.push(this.getAttribute("rid"));
-                    } else {
-                        if ($.inArray(this.getAttribute("rid"), role_check_val) != -1) {
-                            role_check_val.remove(this.getAttribute("rid"));
-                            console.log(role_check_val);
+
+function loadRoleList() {
+    //加载 角色列表
+    $.ajax({
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
+        "type": "get",
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        "success": function(res) {
+            console.log(res);
+            $('#roleList').bootstrapTable('destroy');
+            createTable("#roleList", "toolbar_roleList", res,
+                "rid", "name", "keyWord", "remark", "operator", "createTime", true, true,
+                "角色编号", "名称", "关键字", "备注", "创建人", "创建日期",
+                true, roleOperateEventsDel, roleOperateFormatterDel);
+            var addrolebtn = document.getElementById("btn_add_role");
+            // 点击添加用戶按鈕
+            addrolebtn.onclick = function() {
+                $("#role_list").hide();
+                $("#role .form-horizontal").show();
+                var role_checkobj = document.getElementsByName("rids");
+                var role_check_val = [];
+                console.log(role_checkobj);
+                for (k in role_checkobj) {
+                    role_checkobj[k].onclick = function() {
+                        console.log(this.checked);
+                        if (this.checked) {
+                            // console.log(this.getAttribute("rid"));
+                            role_check_val.push(this.getAttribute("rid"));
+                        } else {
+                            if ($.inArray(this.getAttribute("rid"), role_check_val) != -1) {
+                                role_check_val.remove(this.getAttribute("rid"));
+                                console.log(role_check_val);
+                            }
                         }
                     }
-                }
+                };
+
+                // 确认添加角色
+                $(".role_commit_btn").click(function() {
+                    console.log(checkmenu_val);
+                    console.log(role_check_val);
+                    console.log(checkmenu_val.toString());
+                    $.ajax({
+                        "url": "http://192.168.0.222:8080/car-management/role/addRole.action",
+                        "type": "get",
+                        "data": {
+                            "name": $("input[name='role_name']").val(),
+                            "keyWord": $("input[name='role_keywords']").val(),
+                            "remark": $("input[name='role_remark']").val(),
+                            "pids[]": role_check_val,
+                            "mids": checkmenu_val.toString()
+                        },
+                        "dataType": "jsonp", //数据类型为jsonp  
+                        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+                        "success": function(res) {
+                            console.log(res);
+
+                        },
+                        "error": function(res) {
+                            console.log(res);
+                        }
+                    })
+                });
+                // 返回用户列表
+                $(".removerole_btn").click(function() {
+                    $("#role .form-horizontal").hide();
+                    $("#role_list").show();
+                    loadRoleList();
+                });
+                // 重置按鈕
+                $(".resetrole_btn").click(function() {
+                    console.log("重置按钮");
+                    formReset();
+                });
             };
+        },
+        "error": function(res) {
+            console.log(res);
+        }
+    });
+}
 
-            // 确认添加角色
-            $(".role_commit_btn").click(function() {
-                console.log(checkmenu_val);
-                console.log(role_check_val);
-                console.log(checkmenu_val.toString());
-                $.ajax({
-                    "url": "http://192.168.0.222:8080/car-management/role/addRole.action",
-                    "type": "get",
-                    "data": {
-                        "name": $("input[name='role_name']").val(),
-                        "keyWord": $("input[name='role_keywords']").val(),
-                        "remark": $("input[name='role_remark']").val(),
-                        "pids[]": role_check_val,
-                        "mids": checkmenu_val.toString()
-                    },
-                    "dataType": "jsonp", //数据类型为jsonp  
-                    "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
-                    "success": function(res) {
-                        console.log(res);
-
-                    },
-                    "error": function(res) {
-                        console.log(res);
-                    }
-                })
-            });
-            // 返回用户列表
-            $(".removerole_btn").click(function() {
-                $("#role .form-horizontal").hide();
-                $("#role_list").show();
-            });
-            // 重置按鈕
-            $(".resetrole_btn").click(function() {
-                console.log("重置按钮");
-                formReset();
-            });
-        };
-    },
-    "error": function(res) {
-        console.log(res);
-    }
-});
 var $tableUserList = $('#roleList');
 
 function roleOperateFormatterDel(value, row, index) {

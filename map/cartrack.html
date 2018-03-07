@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <title></title>
     <link href="../css/mapcontrol.css" rel="stylesheet">
+    <style>
+        .liketips {
+            margin-top: 43px;
+            font-size: 13px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,36 +28,37 @@
                     <div class="controlbody">
                         <div class="current curr_btn">
                             <img src="../img/map/control.png" alt="">
-                            <span>
-                    实时监控
-                   </span>
+                            <span>实时监控</span>
                         </div>
-
                         <div class="current guiji_btn">
                             <img src="../img/map/guiji.png" alt="">
-                            <span>
-                    轨迹查询
-                    </span>
+                            <span>轨迹查询</span>
                         </div>
                         <div class="pointerTabLeft"></div>
                     </div>
                     <div class="controlfoot">
                         <div class="controlbox footbox">
                             <div class="search_input_box input_box">
-                                <input class="search_input" type="text" name="" value="" placeholder="请输入关键字">
-                                <label for="" class="search_icon"><img src="../img/map/search_blue.png" alt=""></label>
+                                <input class="search_input getsearchjson" type="text" name="" value="" placeholder="请输入要查询的车辆编号">
+                            </div>
+                            <div class="controlRight">
+                                <button id="track_playback_btn">搜索</button>
                             </div>
                         </div>
                         <div class="guijibox footbox">
                             <div class="date_input_box input_box">
-                                <input class="date_input" placeholder="请选择日期" onClick="laydate()">
+                                <input placeholder="开始日期" class="form-control layer-date mydata_input" id="startDate" name="startDate">
+                                <!--<input placeholder="请选择起始日期" class="laydate-icon timeUstyle stateUTime mydata_input" id="startDate" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">-->
+                            </div>
+                            <div class="date_input_box input_box">
+                                <input placeholder="结束日期" class="form-control layer-date mydata_input" id="endDate" name="endDate">
+                                <!--<input placeholder="请选择终止日期" class="laydate-icon timeUstyle stateUTime mydata_input" id="endDate" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">-->
                             </div>
                             <div class="search_input_box input_box">
                                 <input class="search_input" type="text" name="" value="" placeholder="请输入车辆编号">
-                                <label for="" class="search_icon"><img src="../img/map/search_blue.png" alt=""></label>
                             </div>
                             <div class="controlRight">
-                                <button>轨迹回放</button>
+                                <button id="track_playback_btn">轨迹回放</button>
                             </div>
                         </div>
                     </div>
@@ -61,6 +70,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qIVEmOSVWxsby5OEWwm6UIbEfHKEDcZz"></script>
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/laydate.js"></script>
+    <script src="../js/searchfull.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -187,11 +197,11 @@
     </script>
     <script src="../assets/js/jquery.min.js"></script>
     <script>
+        $(".guijibox").hide();
+        $(".controlbox").show();
         $(".uparrow").click(function() {
             $(".control_box").slideToggle("slow");
         })
-        $(".controlbox").show();
-        $(".guijibox").hide();
         $(".curr_btn").click(function() {
             $(".controlbox").show();
             $(".guijibox").hide();
@@ -202,7 +212,52 @@
             $(".guijibox").show();
             $(".controlbox").hide();
             $(".pointerTabLeft").addClass("pointerTabRight");
+        })
 
+        //    laydate日期联动控制
+        var start = {
+            elem: '#startDate',
+            format: 'YYYY-MM-DD hh:mm',
+            max: laydate.now(),
+            istime: false,
+            istoday: false,
+            choose: function(datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#endDate',
+            format: 'YYYY-MM-DD hh:mm',
+            max: laydate.now(),
+            istime: false, //是否开启时间选择
+            istoday: false,
+            isclear: true, //是否显示清空
+            issure: true, //是否显示确认
+            choose: function(datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+        //给input赋值
+        $('#startDate').val(laydate.now(-30, 'YYYY-MM-DD hh:mm'));
+        $('#endDate').val(laydate.now(0, 'YYYY-MM-DD hh:mm'));
+        // 点击轨迹回放按钮回放历史轨迹
+        $("#track_playback_btn").click(function() {
+            console.log($("#starttime_input").val());
+            // $.ajax({
+            //     url: "",
+            //     type: get,
+            //     data: {
+            //         "startTime": $("#startDate").val(),
+            //         "endTime": $("#endDate").val(),
+            //         "carid": $("#ecarid_input").val()
+            //     },
+            //     success: function(res) {
+            //         console.log(res);
+            //     }
+            // })
         })
     </script>
 </body>

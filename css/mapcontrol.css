@@ -174,11 +174,11 @@
  }
  
  .search_input {
-     width: 82%;
+     width: 92%;
      height: 28px;
      outline: none;
      border: none;
-     border-right: 1px solid #D2D2D2;
+     /*border-right: 1px solid #D2D2D2;*/
      position: absolute;
      left: 9px;
      top: 2px;
@@ -211,5 +211,15 @@
      outline: none;
      cursor: pointer;
      font-size: 10px;
+ }
+ 
+ .mydata_input {
+     width: 85%;
+     margin-left: 10px;
+     /*height: */
+     border: none !important;
+     height: 84%;
+     outline: none;
+     margin-top: 3px;
  }
  /*end 控件框结束*/

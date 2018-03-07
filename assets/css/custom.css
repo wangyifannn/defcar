@@ -131,6 +131,7 @@
 .sidebar-wrapper .sidebar-header .user-info .user-role {
     font-size: 12px;
     color: #929292;
+    margin: 3px 0px;
 }
 
 .sidebar-wrapper .sidebar-header .user-info .user-status {
