@@ -32,7 +32,7 @@ $.ajax({
         // console.log(MenuList);
         // 判断选择菜单 多选选项
         var menuobj = document.getElementsByName("mid");
-        console.log(menuobj);
+        // console.log(menuobj);
 
         for (k in menuobj) {
             menuobj[k].onclick = function() {
@@ -126,6 +126,7 @@ function loadRoleList() {
                     console.log(checkmenu_val);
                     console.log(role_check_val);
                     console.log(checkmenu_val.toString());
+                    console.log($("input[name='role_name']").val());
                     $.ajax({
                         "url": "http://192.168.0.222:8080/car-management/role/addRole.action",
                         "type": "get",
@@ -140,14 +141,19 @@ function loadRoleList() {
                         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
                         "success": function(res) {
                             console.log(res);
-
+                            if (res.ret) {
+                                $(".role_tips").html("添加成功，您可以返回角色列表进行查看");
+                            } else {
+                                $(".role_tips").html("添加失败，请联系管理员");
+                            }
                         },
                         "error": function(res) {
                             console.log(res);
+                            $(".role_tips").html("添加失败，请联系管理员");
                         }
                     })
                 });
-                // 返回用户列表
+                // 返回角色列表
                 $(".removerole_btn").click(function() {
                     $("#role .form-horizontal").hide();
                     $("#role_list").show();

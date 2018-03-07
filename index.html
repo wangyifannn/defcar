@@ -27,6 +27,25 @@
     <script type="text/javascript" src="./js/drivertable.js"></script>
     <script type="text/javascript" src="./js/maintable.js"></script>
     <script type="text/javascript" src="./assets/js/laydate.js"></script>
+    <script type="text/javascript" src="./assets/js/iconfont.js"></script>
+    <style type="text/css">
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+            font-size: 19px;
+            margin-right: 5px;
+            /*color: white;*/
+            /*color: #1B6DDA !important;*/
+        }
+        
+        .icon:hover {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,7 +74,11 @@
                     <ul id="myTab" class="ul_box">
                         <!--gps-->
                         <li class="sidebar-dropdown">
-                            <a href="#"><img class="carmapicon" src="./img/index/carmapblue.png" alt=""><span class="text_blue">GPS</span><span class="badge">2</span>
+                            <a href="#">
+                                <svg class="icon text_blue" aria-hidden="true">
+                                    <use xlink:href="#icon-ditu"></use>
+                                </svg>
+                                <span class="text_blue">GPS</span><span class="badge">2</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -73,7 +96,11 @@
                         <!--权限管理-->
 
                         <li class="sidebar-dropdown">
-                            <a class="sidebar_dropdown_hover" href="#"><img src="./img/index/home.png" alt=""> <span>门岗</span><span class="badge">2</span>
+                            <a class="sidebar_dropdown_hover" href="#">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-anquanmenhu"></use>
+                                </svg>
+                                <span>门岗</span><span class="badge">2</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -83,7 +110,11 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a class="sidebar_dropdown_hover" href="#"><img src="./img/index/carManage.png" alt=""><span>车辆管理</span><span class="badge">3</span>
+                            <a class="sidebar_dropdown_hover" href="#">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-cheliang"></use>
+                                </svg>
+                                <span>车辆管理</span><span class="badge">3</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
@@ -95,7 +126,11 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/data.png" alt=""><span>数据管理</span><span class="badge">4</span></a>
+                            <a href="#" class="sidebar_dropdown_hover">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-shuju"></use>
+                                </svg>
+                                <span>数据管理</span><span class="badge">4</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="#currentData" data-toggle="tab"><span>实时数据</span></a></li>
@@ -106,7 +141,11 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/maintain.png" alt=""><span>维修管理</span><span class="badge">5</span></a>
+                            <a href="#" class="sidebar_dropdown_hover">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-weixiu"></use>
+                                </svg>
+                                <span>维修管理</span><span class="badge">5</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="#maintainList" data-toggle="tab"><span>维修列表</span></a></li>
@@ -118,7 +157,11 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/note.png" alt=""><span>日志管理</span><span class="badge">4</span></a>
+                            <a href="#" class="sidebar_dropdown_hover">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-rizhi"></use>
+                                </svg>
+                                <span>日志管理</span><span class="badge">4</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="#warningLog" data-toggle="tab"><span>告警日志</span></a></li>
@@ -130,7 +173,11 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover"><img src="./img/index/rights.png" alt=""><span>权限管理</span><span class="badge">3</span></a>
+                            <a href="#" class="sidebar_dropdown_hover">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-quanxian"></use>
+                                </svg>
+                                <span>权限管理</span><span class="badge">3</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="#rights" data-toggle="tab"><span>权限授予</span></a></li>
@@ -1077,9 +1124,9 @@
                                         <button id="btn_add_rights" type="button" class="btn btn-default">
                                              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                                         </button>
-                                        <button id="btn_edit_rights" type="button" class="btn btn-default">
+                                        <!--<button id="btn_edit_rights" type="button" class="btn btn-default">
                                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                                        </button>
+                                        </button>-->
                                     </div>
                                 </table>
                             </div>
@@ -1111,6 +1158,11 @@
                                         <button type="button" class="btn btn-primary removerights_btn">返回</button>
                                     </div>
                                 </div>
+                                <div class="form-group from-group-tips">
+                                    <div class="col-sm-offset-4 col-sm-7">
+                                        <label for="" class="rights_tips"></label>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -1124,9 +1176,9 @@
                                         <button id="btn_add_role" type="button" class="btn btn-default">
                                              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                                         </button>
-                                        <button id="btn_edit_role" type="button" class="btn btn-default">
+                                        <!--<button id="btn_edit_role" type="button" class="btn btn-default">
                                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                                        </button>
+                                        </button>-->
                                     </div>
                                 </table>
                             </div>
@@ -1135,19 +1187,19 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">名称:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                                    <input type="text" name="role_name" class="form-control" id="inputEmail3" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">关键字:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                                    <input type="text" name="role_keywords" class="form-control" id="inputEmail3" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">描述:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="请输入备注信息">
+                                    <input type="text" name="role_remark" class="form-control" id="inputEmail3" placeholder="请输入备注信息">
                                 </div>
                             </div>
                             <div class="form-group form-group-checkbox">
@@ -1172,6 +1224,11 @@
                                     <button type="button" class="btn btn-primary removerole_btn">返回</button>
                                 </div>
                             </div>
+                            <div class="form-group from-group-tips">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <label for="" class="role_tips"></label>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <!--用户管理-->
@@ -1184,12 +1241,12 @@
                                         <button id="btn_add" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                         </button>
-                                        <button id="btn_edit" type="button" class="btn btn-default">
+                                        <!--<button id="btn_edit" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
                                         <button id="btn_delete" type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
+                        </button>-->
                                     </div>
                                 </table>
                             </div>
@@ -1253,6 +1310,11 @@
                                         <button type="button" class="btn btn-primary adduser_btn">提交</button>
                                         <button type="button" class="btn btn-primary my_reset_btn">重置</button>
                                         <button type="button" class="btn btn-primary my_remove_btn">返回</button>
+                                    </div>
+                                </div>
+                                <div class="form-group from-group-tips">
+                                    <div class="col-sm-offset-4 col-sm-7">
+                                        <label for="" class="user_tips"></label>
                                     </div>
                                 </div>
                             </div>
@@ -1478,11 +1540,21 @@
     console.log(islogin);
     islogin = JSON.parse(islogin);
     if (islogin != null && islogin.flag == true) {
-        console.log("已经登录成功");
-        console.log($(".user-name"));
-        console.log(islogin.name);
+        // console.log("已经登录成功");
+        // console.log($(".user-name"));
+        // console.log(islogin.name);
         $(".user-name").html(islogin.name);
-        //     location.href = "login.html";
+        $.ajax({
+                "url": "http://192.168.0.222:8080/car-management/user/UserInfo.action",
+                "type": "get",
+                "dataType": "jsonp", //数据类型为jsonp  
+                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+                "success": function(res) {
+                    console.log(res);
+                    $(".user-role").html(res[0].rolename);
+                }
+            })
+            //     location.href = "login.html";
     } else {
         console.log(islogin);
         console.log("没有登录");

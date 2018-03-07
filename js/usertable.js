@@ -70,9 +70,15 @@ function loadUserList() {
                         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
                         "success": function(res) {
                             console.log(res);
+                            if (res.ret) {
+                                $(".user_tips").html("添加成功，您可以返回用户列表进行查看");
+                            } else {
+                                $(".user_tips").html("添加失败，请联系管理员");
+                            }
                         },
                         "error": function(res) {
                             console.log(res);
+                            $(".user_tips").html("添加失败，请联系管理员");
                         }
                     })
                 });

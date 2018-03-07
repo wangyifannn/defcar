@@ -1,5 +1,5 @@
  jQuery(function($) {
-     console.log(".sidebar-dropdown > a");
+     //  console.log(".sidebar-dropdown > a");
      $(".sidebar-dropdown > a").click(function() {
          console.log(this);
          $(".sidebar-submenu").slideUp(250);
@@ -11,7 +11,6 @@
              $(this).next(".sidebar-submenu").slideDown(250);
              $(this).parent().addClass("active");
          }
-
      });
 
      $("#toggle-sidebar").click(function() {

@@ -47,7 +47,7 @@
              //这里我需要用到value和title两项，所以用data-value传递多一个参数，在回车或鼠标点击后赋值到相应的地方，以此完美地替代select 
              htmlcode += '<tr data-value="' + json[i].id + '"><td>' + json[i].name + '</td></tr>';
          }
-         htmlcode += "</tbody></table><span>请务必在此下拉框中选择</span>";
+         htmlcode += "</tbody></table><span>您可以在此下拉框中选择</span>";
          //把loading动态图替换成内容 
          $liketips.html(htmlcode);
      }, "json");

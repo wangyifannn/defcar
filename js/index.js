@@ -7,57 +7,6 @@ function loadingChange() {
     }
 }
 // e 页面懒加载
-// 菜单hover
-var orisrc = "";
-$(".sidebar_dropdown_hover").hover(function() {
-    // console.log($(this).children()[0]);
-    orisrc = $($(this).children()[0]).prop("src").split(".png")[0];
-
-    if (orisrc.match("blue") == null) {
-        $(this).children("img").prop("src", orisrc + "blue.png");
-    } else {
-        $(this).children("img").prop("src", orisrc + ".png");
-    }
-}, function() {
-    if (orisrc.match("blue") == null) {
-        $(this).children("img").prop("src", orisrc + ".png");
-    } else {
-        // console.log(orisrc);
-        var orisrc1 = orisrc.split("blue.png")[0];
-        // console.log(orisrc1);
-        $(this).children("img").prop("src", orisrc1 + ".png");
-    }
-});
-// 子菜单hover 父级菜单颜色变蓝
-
-$(".sidebar-submenu ul li").mouseover(function() {
-    var sorisrc = $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].getAttribute("src").split(".png")[0];
-    // console.log(sorisrc);
-    // console.log(sorisrc.match("blue"));
-    if (sorisrc.match("blue") == null) {
-        // sorisrc = "";
-        // console.log(sorisrc);
-        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + "blue.png");
-    } else {
-        // console.log(sorisrc);
-        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + ".png");
-    }
-});
-
-$(".sidebar-submenu ul li").mouseout(function() {
-    var sorisrc = $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].getAttribute("src").split(".png")[0];
-    // console.log(sorisrc);
-    // console.log(sorisrc.match("blue"));
-    if (sorisrc.match("blue") == null) {
-        // console.log(sorisrc);
-        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", sorisrc + ".png");
-    } else {
-        var orisrc1 = orisrc.split("blue.png")[0];
-        // console.log(orisrc1);
-        $(this).parent().parent().parent().children()[0].getElementsByTagName("img")[0].setAttribute("src", orisrc1 + ".png");
-    }
-});
-
 // 解决侧边菜单点击 active失效问题
 
 // 面包屑导航
@@ -113,7 +62,7 @@ $(".li1").click(function() {
 //点击注销按钮，进入登录页面
 $(".glyphicon-off").click(function() {
     // alert("a");
-    window.localStorage.clear;
+    window.localStorage.removeItem("successUser");
     window.location.href = "./html/login.html";
 });
 // 点击判断浏览器类型
@@ -129,7 +78,7 @@ console.log(isFF());
 console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
-    // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
+    $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
 // 表单重置函数
 function formReset() {

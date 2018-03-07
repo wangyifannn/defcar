@@ -35,9 +35,16 @@ function loadRightsList() {
                         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
                         "success": function(res) {
                             console.log(res);
+                            if (res.ret) {
+                                $(".rights_tips").html("添加成功，您可以返回权限列表进行查看");
+                            } else {
+                                $(".rights_tips").html("添加失败，请联系管理员");
+                            }
                         },
                         "error": function(res) {
                             console.log(res);
+                            $(".rights_tips").html("添加失败，请联系管理员");
+
                         }
                     })
                 });
