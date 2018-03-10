@@ -4,7 +4,7 @@ loadRightsList();
 
 function loadRightsList() {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
+        "url": "/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -24,7 +24,7 @@ function loadRightsList() {
                 // 确认添加权限
                 $(".addrights_btn").click(function() {
                     $.ajax({
-                        "url": "http://192.168.0.222:8080/car-management/permission/addPermission.action",
+                        "url": "/car-management/permission/addPermission.action",
                         "type": "get",
                         "data": {
                             "name": $("input[name='rights_name']").val(),
@@ -81,11 +81,11 @@ window.rightsOperateEventsDel = {
     'click #rights_btn_mydel': function(e, value, row, index) {
         console.log(row);
         rightsdelarr.push(row.pid);
-        console.log($(this).parent().parent());
+        // console.log($(this).parent().parent());
         $(this).parent().parent().remove();
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/permission/deletePermission.action",
+            "url": "/car-management/permission/deletePermission.action",
             "type": "get",
             "data": {
                 "pids[]": rightsdelarr
@@ -94,6 +94,8 @@ window.rightsOperateEventsDel = {
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
             "success": function(res) {
                 console.log(res);
+                $("#rightsList").bootstrapTable('refresh');
+                loadRightsList();
             },
             "error": function(res) {
                 console.log(res);

@@ -94,6 +94,11 @@
             font-size: 12px;
             line-height: 7px;
         }
+        
+        .point_tips {
+            font-size: 10px;
+            color: #041473;
+        }
         /*信息框样式*/
         
         .BMap_simple_bubble_pop {
@@ -138,6 +143,10 @@
         .mapinfo ul li span {
             color: red;
         }
+        
+        .mapinfo_title img {
+            cursor: pointer;
+        }
     </style>
     <title>全国主要城市车辆数量</title>
 </head>
@@ -167,6 +176,20 @@
 </html>
 
 <script type="text/javascript">
+    //转换日期格式(时间戳转换为datetime格式)
+    function changeDateFormat(cellval) {
+        var dateVal = cellval + "";
+        if (cellval != null) {
+            var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+        }
+    }
     // 百度地图API功能	
     map = new BMap.Map("allmap");
     map.centerAndZoom(new BMap.Point(104.114129, 37.550339), 5);
@@ -174,55 +197,26 @@
     map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用
     var myIcon = new BMap.Icon("../img/map/30redcar.png", new BMap.Size(30, 57));
     var opts = {
-        width: 80, // 信息窗口宽度
+        width: 60, // 信息窗口宽度
         height: 100, // 信息窗口高度
         enableMessage: true //设置允许信息窗发送短息
     };
+
     var markers = [];
+    var new_markers = [];
+
     // var clickcar_id = 0;
     // 。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-    $.ajax({
-        "url": "../json/map.json",
-        "type": "get",
-        "async": false,
-        "success": function(res) {
-            // res = JSON.parse(res);
-            console.log(res);
-            for (var i = 0; i < res.length; i++) {
-                var marker = new BMap.Marker(new BMap.Point(res[i].longitude, res[i].latitude), {
-                    icon: myIcon
-                }); // 创建标注
-                var runStatic = res[i].runStatic; //点击标注点显示提示框信息
-                var carid = res[i].id; //点击标注点显示提示框信息
-                var drivername = res[i].name; //点击标注点显示提示框信息
-                var showInfo = "<div class='point_content'>当前状态：" + runStatic +
-                    "<br/>" + "车辆编号:<span id='car_id'>" + carid +
-                    "</span><br/>驾驶员：" + drivername +
-                    "<br/>车牌号:" + 1 +
-                    "</div>";
-                markers.push(marker);
-                addClickHandler(showInfo, marker, i, res);
-            }
-        },
-        "error": function(data) {
-            console.log(data);
-        }
-    })
-
-    //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点
-    var markerClusterer = new BMapLib.MarkerClusterer(map, {
-        markers: markers
-    });
-
+    // "url": "../json/map.json",
     function addClickHandler(content, marker, i, res) {
         marker.addEventListener("click", function(e) {
             openInfo(content, e);
-            clickcar_id = $(content).children("#car_id").text();
+            // clickcar_id = $(content).children("#car_id").text();
             // return clickcar_id;
             console.log(i);
             // console.log(this.id);
-            mapInfo(res[i].id, res[i].carid, res[i].gpsid, res[i].brand, res[i].warn, res[i].icid, res[i].ifallow, res[i].status,
-                res[i].speed, res[i].dAllowStartTm, res[i].dAllowEndTm, res[i].time);
+            mapInfo(res[i].vSn, res[i].vCarSn, res[i].gpsSN, res[i].vCarType, res[i].warn, res[i].iccard, res[i].isAllow, res[i].runStatic,
+                res[i].speed, res[i].dAllowStartTm, res[i].dAllowEndTm, res[i].runsumtime);
             console.log(content);
         });
     }
@@ -238,8 +232,8 @@
             '<li>是否允许：' + ifallow + '</li>' +
             '<li>行驶状态：' + status + '</li>' +
             '<li>行驶速度：' + speed + '</li>' +
-            '<li>允许行驶开始时间：' + dAllowStartTm + '</li>' +
-            '<li>允许行驶結束时：' + dAllowEndTm + '</li>' +
+            '<li>允许行驶开始时间：' + changeDateFormat(dAllowStartTm) + '</li>' +
+            '<li>允许行驶結束时：' + changeDateFormat(dAllowEndTm) + '</li>' +
             '<li>车辆行驶总时间：' + time + '</li>';
         $(".mapinfo ul").html(map_ulli);
         console.log($(".mapinfo ul").text());
@@ -260,25 +254,127 @@
         var p = e.target;
         var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
         var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象 
-
         map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
-    // 搜索
+    // 加载页面，加载全部车辆
+    $.ajax({
+        "url": "/car-management/car/allcar.action",
+        "type": "get",
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        "success": function(res) {
+            console.log(res);
+            console.log(res.length);
+            for (var i = 0; i < res.length; i++) {
+                var marker = new BMap.Marker(new BMap.Point(res[i].longitude, res[i].latitude), {
+                    icon: myIcon
+                }); // 创建标注
+                map.addOverlay(marker);
+                console.log(marker);
+                var runStatic = res[i].runStatic; //当前状态
+                var vCarSn = res[i].vCarSn; //车牌号
+                var isAllow = res[i].isAllow; //是否允许
+                var vSn = res[i].vSn; //车辆编号
+                var showInfo = "<div class='point_content'>当前状态：" + runStatic +
+                    "<br/>" + "车辆编号:<span id='car_id'>" + vSn +
+                    "</span><br/>是否允许：" + isAllow +
+                    "<br/><span class='point_tips'>更多车辆信息请查看右侧车辆详情面板<span>" +
+                    "</div>";
+                markers.push(marker);
+                addClickHandler(showInfo, marker, i, res);
+                //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点,实现点聚合
+                var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                    markers: markers
+                });
+            }
+        },
+        "error": function(data) {
+            console.log(data);
+        }
+    });
+    // 搜索某一条车辆
+    function searchcar() {
+        console.log($("#suggestId").val());
+        if ($("#suggestId").val() == null || $("#suggestId").val() == "") {
+            alert("车辆编号不能为空");
+        } else {
+            $.ajax({
+                "url": "/car-management/car/carData.action",
+                "type": "get",
+                "dataType": "jsonp", //数据类型为jsonp  
+                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                "data": {
+                    "vSn": $("#suggestId").val()
+                },
+                "success": function(newres) {
+                    console.log(newres);
+                    console.log(newres);
+
+                    for (var j = 0; j < newres.length; j++) {
+                        if (newres[0] == null) {
+                            alert("车辆数据未搜素到");
+                            return;
+                        }
+                        if (newres[j].longitude != "" && newres[j].latitude != "") {
+                            var new_point = new BMap.Point(newres[j].longitude, newres[j].latitude);
+                            var new_marker = new BMap.Marker(new BMap.Point(newres[j].longitude, newres[j].latitude), {
+                                icon: myIcon
+                            }); // 创建标注
+                            var new_showInfo = "<div class='point_content'>当前状态：" + newres[j].runStatic +
+                                "<br/>" + "车辆编号:<span id='car_id'>" + newres[j].vCarSn +
+                                "</span><br/>是否允许：" + newres[j].isAllow +
+                                "<br/><span class='point_tips'>更多车辆信息请查看右侧车辆详情面板<span>" +
+                                "</div>";
+                            // map.setZoom(11);
+                            map.centerAndZoom(new_point, 11);
+                            // new_markers.push(new_marker);
+                            // console.log(new_marker);
+                            // map.centerAndZoom(new BMap.Point(newres[0].longitude, newres[0].latitude), 8); // 第二个参数为级别，数字越大，聚焦越清晰
+                            map.addOverlay(new_marker); // 将标注添加到地图中
+                            addClickHandler(new_showInfo, new_marker, j, newres);
+                            // map.panTo(new BMap.Point(newres[0].longitude, newres[0].latitude));
+                        } else {
+                            alert("车辆数据未搜素到");
+                        }
+                    }
+                },
+                "error": function(data) {
+                    console.log(data);
+                    alert("发生错误");
+                }
+            })
+        }
+    }
     $("#search-btn").click(function() {
         console.log($("#suggestId").val());
-        $.ajax({
-            url: "",
-            type: "get",
-            data: {
-                carid: $("#suggestId").val()
-            },
-            success: function(res) {
-                console.log(res);
-            }
-
-        })
+        map.clearOverlays(); //清除图层覆盖物
+        searchcar();
     });
-
+    //回车提交事件
+    $("body").keydown(function() {
+        if (event.keyCode == "13") { //keyCode=13是回车键
+            // console.log(this);
+            map.clearOverlays(); //清除图层覆盖物
+            searchcar();
+        }
+    });
+    // 根据经纬度定位车辆位置
+    // 用经纬度设置地图中心点
+    // function theLocation(longitude, latitude) {
+    //     // if (document.getElementById("longitude").value != "" && document.getElementById("latitude").value != "") {
+    //     if (longitude != "" && latitude != "") {
+    //         map.clearOverlays();
+    //         var new_point = new BMap.Point(longitude, latitude);
+    //         var marker = new BMap.Marker(new_point, {
+    //             icon: myIcon
+    //         }); // 创建标注
+    //         // var marker = new BMap.Marker(new BMap.Point(res[i].longitude, res[i].latitude), {
+    //         //         icon: myIcon
+    //         //     }); // 创建标注
+    //         map.addOverlay(marker); // 将标注添加到地图中
+    //         map.panTo(new_point);
+    //     }
+    // }
 
     $(".mapinfo img").click(function() {
         $(".mapinfo ul").slideToggle("slow");

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>车辆轨迹</title>
     <link href="../css/mapcontrol.css" rel="stylesheet">
     <style>
         .liketips {
@@ -18,13 +18,13 @@
 <body>
     <div class="whole">
         <div class="wrap">
-            <div id="mapcontainer"></div>
+            <div id="cmapcontainer"></div>
+            <div id="amapcontainer"></div>
             <div class="mapcontrol">
                 <div class="controlnav">
                     <p>车辆管理系统 <img class="uparrow" src="../img/map/uparrow.png" alt=""></p>
                 </div>
                 <div class="control_box">
-
                     <div class="controlbody">
                         <div class="current curr_btn">
                             <img src="../img/map/control.png" alt="">
@@ -39,23 +39,21 @@
                     <div class="controlfoot">
                         <div class="controlbox footbox">
                             <div class="search_input_box input_box">
-                                <input class="search_input getsearchjson" type="text" name="" value="" placeholder="请输入要查询的车辆编号">
+                                <input class="search_input getsearchjson" id="current_input" type="text" name="" placeholder="请输入要查询的车辆编号">
                             </div>
                             <div class="controlRight">
-                                <button id="track_playback_btn">确定搜索</button>
+                                <button id="currenttrack_btn">确定搜索</button>
                             </div>
                         </div>
                         <div class="guijibox footbox">
                             <div class="date_input_box input_box">
                                 <input placeholder="开始日期" class="form-control layer-date mydata_input" id="startDate" name="startDate">
-                                <!--<input placeholder="请选择起始日期" class="laydate-icon timeUstyle stateUTime mydata_input" id="startDate" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">-->
                             </div>
                             <div class="date_input_box input_box">
                                 <input placeholder="结束日期" class="form-control layer-date mydata_input" id="endDate" name="endDate">
-                                <!--<input placeholder="请选择终止日期" class="laydate-icon timeUstyle stateUTime mydata_input" id="endDate" onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">-->
                             </div>
                             <div class="search_input_box input_box">
-                                <input class="search_input" type="text" name="" value="" placeholder="请输入车辆编号">
+                                <input class="search_input" id="ago_input" type="text" name="" value="" placeholder="请输入车辆编号">
                             </div>
                             <div class="controlRight">
                                 <button id="track_playback_btn">轨迹回放</button>
@@ -70,196 +68,30 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qIVEmOSVWxsby5OEWwm6UIbEfHKEDcZz"></script>
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/laydate.js"></script>
-    <script src="../js/searchfull.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-                var car1 = [
-                    ["113.208619", "23.170208", "广州", "装车", "2016-12-05 19:47:03"],
-                    ["112.622218", "26.979794", "", "装车", "2016-12-05 19:47:03"],
-                    ["113.006332", "28.263503", "长沙", "当前位置", "2016-12-05 19:47:03"],
-                    ["111.731111", "40.842", , "呼和浩特", "暂未到达目的地"]
-                ];
-                var car2 = [
-                    ["120.230199", "30.215376", "", "装车", "2016-12-05 19:47:03"],
-                    ["108.945456", "34.366566", "西安", "当前位置", "2016-12-05 19:47:03"],
-                    ["87.504831", "43.937895", , "乌鲁木齐", "暂未到达目的地"]
-                ];
-                var mp = new BMap.Map("mapcontainer", {
-                    enableMapClick: false
-                });
-
-                mp.centerAndZoom(new BMap.Point(50.633088, 34.745758), 5);
-                // mp.centerAndZoom(new BMap.Point(108.945456, 34.366566), 5);
-
-                mp.enableScrollWheelZoom();
-                currentLocation(["113.006332", "28.263503"], car1);
-                currentLocation(["108.945456", "34.366566"], car2);
-                //标注当前车辆坐标位置
-                function currentLocation(curPosArr, carArr) {
-                    var curPt = new BMap.Point(curPosArr[0], curPosArr[1]); //当前位置
-                    var curIcon = new BMap.Icon("../img/map/working.png", new BMap.Size(28, 20));
-                    var curMarker = new BMap.Marker(curPt, {
-                        icon: curIcon
-                    });
-                    mp.addOverlay(curMarker);
-                    var isDraw = false; //是否已经绘制过路线
-                    curMarker.onclick = function() {
-                        drawPath(carArr, isDraw);
-                        isDraw = true;
-                    }
-                };
-                //绘制路线
-                function drawPath(carArr, isDraw) {
-                    if (isDraw) { //若绘制过路线  返回 false
-                        return false;
-                    };
-                    var pointArr = [];
-                    var ptNum = 0;
-                    var driving = new BMap.DrivingRoute(mp); //创建驾车实例
-                    // 复杂的自定义覆盖物
-                    function ComplexCustomOverlay(point, state, time) {
-                        this._point = point;
-                        this.state = state;
-                        this.time = time;
-                    };
-                    ComplexCustomOverlay.prototype = new BMap.Overlay();
-                    ComplexCustomOverlay.prototype.initialize = function(map) {
-                        this._map = map;
-                        var div = this._div = document.createElement("div");
-                        $(div).addClass('state-wrap');
-                        var str = '<div class="logistics-wrap">';
-                        str += '<div class="logistics-state">' + this.state + '</div>';
-                        str += '<div class="logistics-time">' + this.time + '</div>';
-                        str += '</div>';
-                        div.innerHTML = str;
-                        mp.getPanes().labelPane.appendChild(div);
-                        var he = div.offsetHeight;
-                        this._he = he; //当前div的高度
-                        return div;
-                    };
-                    ComplexCustomOverlay.prototype.draw = function() {
-                        var map = this._map;
-                        var pixel = map.pointToOverlayPixel(this._point);
-                        this._div.style.left = pixel.x - 24 + "px";
-                        this._div.style.top = pixel.y - this._he + 5 + "px";
-                    };
-                    /*自定义复杂覆盖物结束*/
-                    for (var i = 0, len = carArr.length; i < len; i++) {
-                        var point = new BMap.Point(carArr[i][0], carArr[i][1]);
-                        pointArr[i] = point;
-                        var myIcon = new BMap.Icon("../img/map/50greencar.png", new BMap.Size(9, 9));
-                        var marker = new BMap.Marker(point, {
-                            icon: myIcon
-                        }); // 创建标注
-                        mp.addOverlay(marker); // 将标注添加到地图中    
-                        //此处解决在for循环中添加事件总是执行最后一个的情况，传入参数并且立即执行
-                        (function(point, state, time) {
-                            var myComOverlay = new ComplexCustomOverlay(point, state, time);
-                            mp.addOverlay(myComOverlay);
-                            marker.onclick = function() { //给各个点添加点击事件，显示、隐藏自定义复杂物
-                                if (myComOverlay.isVisible()) {
-                                    myComOverlay.hide();
-                                } else {
-                                    myComOverlay.show();
-                                }
-                            }
-                        })(point, carArr[i][3], carArr[i][4]);
-                    };
-                    var len = pointArr.length - 1;
-                    initRoute(ptNum);
-
-                    function initRoute(num) {
-                        driving.search(pointArr[num], pointArr[num + 1]);
-                        driving.setSearchCompleteCallback(function() {
-                            var plan = driving.getResults().getPlan(0);
-                            var pts = plan.getRoute(0).getPath();
-                            var lineCor = ptNum == (len - 1) ? 'red' : "#1aea0a";
-                            var lineSty = ptNum == (len - 1) ? 'dashed' : "solid";
-                            var polyline = new BMap.Polyline(pts, {
-                                strokeColor: lineCor,
-                                strokeWeight: 3,
-                                strokeOpacity: 0.8,
-                                strokeStyle: lineSty
-                            });
-                            mp.addOverlay(polyline);
-                            //查找下两个点
-                            ptNum++;
-                            if (ptNum < len) {
-                                initRoute(ptNum);
-                            }
-                        });
-                    };
-                    mp.setViewport(pointArr); //自动调整视野
-                };
-            })
-            //
-    </script>
-    <script src="../assets/js/jquery.min.js"></script>
     <script>
-        $(".guijibox").hide();
-        $(".controlbox").show();
-        $(".uparrow").click(function() {
-            $(".control_box").slideToggle("slow");
-        })
-        $(".curr_btn").click(function() {
-            $(".controlbox").show();
-            $(".guijibox").hide();
-            $(".pointerTabLeft").removeClass("pointerTabRight");
-        })
-        $(".guiji_btn").click(function() {
-            console.log("guiji");
-            $(".guijibox").show();
-            $(".controlbox").hide();
-            $(".pointerTabLeft").addClass("pointerTabRight");
-        })
+        //转换日期格式(时间戳转换为datetime格式)
+        function changeDateFormat(cellval) {
+            var dateVal = cellval + "";
+            if (cellval != null) {
+                var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
 
-        //    laydate日期联动控制
-        var start = {
-            elem: '#startDate',
-            format: 'YYYY-MM-DD hh:mm',
-            max: laydate.now(),
-            istime: false,
-            istoday: false,
-            choose: function(datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
             }
-        };
-        var end = {
-            elem: '#endDate',
-            format: 'YYYY-MM-DD hh:mm',
-            max: laydate.now(),
-            istime: false, //是否开启时间选择
-            istoday: false,
-            isclear: true, //是否显示清空
-            issure: true, //是否显示确认
-            choose: function(datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-        laydate(start);
-        laydate(end);
-        //给input赋值
-        $('#startDate').val(laydate.now(-30, 'YYYY-MM-DD hh:mm'));
-        $('#endDate').val(laydate.now(0, 'YYYY-MM-DD hh:mm'));
-        // 点击轨迹回放按钮回放历史轨迹
-        $("#track_playback_btn").click(function() {
-            console.log($("#starttime_input").val());
-            // $.ajax({
-            //     url: "",
-            //     type: get,
-            //     data: {
-            //         "startTime": $("#startDate").val(),
-            //         "endTime": $("#endDate").val(),
-            //         "carid": $("#ecarid_input").val()
-            //     },
-            //     success: function(res) {
-            //         console.log(res);
-            //     }
-            // })
-        })
+        }
     </script>
+    <!--<script src="../js/searchfull.js"></script>-->
+    <!--实时轨迹-->
+    <script src="../js/agotrack.js"></script>
+    <!--start轨迹回放-->
+    <script src="../js/cartrack.js"></script>
+    <!--<script id="current_script" src="../js/currenttrack.js"></script>-->
+    <script id="current_script" src="../js/track.js"></script>
+
 </body>
 
 </html>

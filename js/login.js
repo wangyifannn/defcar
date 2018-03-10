@@ -1,9 +1,13 @@
+var win_w = $(window).width(); //获取宽度
+var win_h = $(window).height(); //获取高度
+console.log(win_w, win_h);
 // 获取验证码，页面加载显示验证码信息
 var changecode = 0;
 $(".vercode").click(function() {
     changecode++;
     console.log(this.src);
     this.src = "http://192.168.0.222:8080/car-management/user/code.action?changecode=" + changecode;
+    // this.src = "/car-management/user/code.action?changecode=" + changecode;
 })
 
 var pass = document.getElementsByClassName("pass_input")[0];
@@ -20,10 +24,11 @@ $(document).ready(function() {
     }
     // 密码是否可见
     var flag = false;
-    // 点击登录按钮进行判断
-    $(".login_btn").click(function() {
+
+    function LoginAjax() {
         // 登录
         $.ajax({
+            // url: "/car-management/user/login.action",
             url: "http://192.168.0.222:8080/car-management/user/login.action",
             type: "get",
             data: {
@@ -41,16 +46,29 @@ $(document).ready(function() {
                     successUser.flag = false;
                 } else {
                     $(".logininfo_group").html(data.msg);
-                    successUser.name = $(".user_input").val();
-                    successUser.pass = $(".pass_input").val();
+                    // successUser.name = data.username;
+                    // successUser.name = data.username;
+                    // successUser.name = data.username;
+                    // successUser.name = data.username;
+                    // successUser.role = $(".pass_input").val();
                     successUser.flag = true;
-                    window.localStorage.successUser = JSON.stringify(successUser);
+                    window.localStorage.successUser = JSON.stringify(data);
                     window.location.href = "../index.html";
                 }
             }
         })
+    }
+    // 点击登录按钮进行判断
+    $(".login_btn").click(function() {
+        LoginAjax();
     });
-
+    //回车提交事件
+    $("body").keydown(function() {
+        if (event.keyCode == "13") { //keyCode=13是回车键
+            console.log(this);
+            LoginAjax();
+        }
+    });
     $("#rember").prop("checked") == false;
     // 选择下次自动登陆。存入localStorage;
     var motionLogin = document.getElementsByName("autologin")[0];

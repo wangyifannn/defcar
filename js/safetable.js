@@ -121,7 +121,7 @@ window.safeOperateEventsDel = {
         $(this).parent().parent().remove();
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/safe/deletesafe.action",
+            "url": "/car-management/safe/deletesafe.action",
             "type": "get",
             "data": {
                 "rids[]": safedelarr

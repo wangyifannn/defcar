@@ -12,8 +12,8 @@ function loadingChange() {
 // 面包屑导航
 var breadHtml = "";
 var breadli1 = "车辆管理系统";
-var breadli2 = "车辆地图";
-var breadli3 = "";
+var breadli2 = "GPS";
+var breadli3 = "车辆地图";
 
 function changBread(bread1, bread2, bread3) {
     breadHtml = "<ol class='breadcrumb'> <li><span>车辆管理系统&nbsp;&nbsp;&nbsp;当前位置:&nbsp;&nbsp;&nbsp;</span><a href='./index.html'>" + bread1 + "</a> </li><li> <a href = '#''>" +
@@ -21,43 +21,6 @@ function changBread(bread1, bread2, bread3) {
     $(".bread_left").html(breadHtml);
 }
 changBread(breadli1, breadli2, breadli3);
-
-// 点击选中切换页面并改变面包屑导航路径
-$(".sidebar-dropdown ul li").click(function() {
-        // console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
-        // console.log(this.innerText);
-        changBread(breadli1, this.parentNode.parentNode.parentNode.children[0].children[1].innerText, this.innerText);
-        // console.log($(this));
-        // console.log($(this).children());
-        // console.log($($(this).children[1]).textContent);
-        var sib = $(this).parent().parent().parent().siblings();
-        // console.log(sib);
-        for (var i = 0; i < sib.length; i++) {
-            // console.log(sib[i]);
-            $(sib[i]).removeClass("active");
-            // console.log(sib[i]);
-            if (sib[i].children[1]) {
-                var li2 = sib[i].children[1].children[0];
-                for (var j = 0; j < li2.children.length; j++) {
-                    $(li2.children[j]).removeClass("active");
-                }
-            }
-        }
-    })
-    // 
-$(".li1").click(function() {
-    // console.log(this);
-    var sibs = $(this).siblings();
-    for (var i = 0; i < sibs.length; i++) {
-        // console.log($(sibs[i].children[1].children[0]).children());
-        var li2 = $(sibs[i].children[1].children[0]).children();
-        for (var j = 0; j < li2.length; j++) {
-            // console.log(li2[j]);
-            $(li2[j]).removeClass("active");
-        }
-
-    }
-})
 
 //点击注销按钮，进入登录页面
 $(".glyphicon-off").click(function() {
@@ -78,8 +41,21 @@ console.log(isFF());
 console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
-    $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
+    // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
+
+$(".rights").click(function() {
+    $("html").append("<script type='text/javascript' src='./js/rightstable.js'></script>");
+});
+$(".role").click(function() {
+    $("html").append("<script type='text/javascript' src='./js/roletable.js'></script>");
+});
+$(".user").click(function() {
+    $("html").append("<script type='text/javascript' src='./js/usertable.js'></script>");
+});
+$(".menu").click(function() {
+    $("html").append("<script type='text/javascript' src='./js/menutable.js'></script>");
+});
 // 表单重置函数
 function formReset() {
     $(':input', '.form-horizontal')
@@ -97,6 +73,7 @@ function createTable(boxname, toolbarid, res,
     $(boxname).css({
         "position": "relative"
     });
+    $(boxname).bootstrapTable('destroy');
     $(boxname).bootstrapTable({
         data: res,
         toggle: table,
@@ -153,27 +130,7 @@ function createTable(boxname, toolbarid, res,
             align: 'center',
             events: userOperateEventsDel,
             formatter: userOperateFormatterDel
-        }],
-        // 编辑更新用户信息
-        // onEditableSave: function(field, row, oldValue, $el) {
-        //     $.ajax({
-        //         type: "post",
-        //         url: "/Editable/Edit",
-        //         data: { strJson: JSON.stringify(row) },
-        //         success: function(data, status) {
-        //             if (status == "success") {
-        //                 alert("编辑成功");
-        //             }
-        //         },
-        //         error: function() {
-        //             alert("Error");
-        //         },
-        //         complete: function() {
-
-        //         }
-
-        //     });
-        // }
+        }]
     });
     // 隐藏表格中的某一列
     if (!ifoperate) {
@@ -199,9 +156,9 @@ function changeDateFormat(cellval) {
 }
 
 // 数据库 加载权限列表
-function loadrightsList(paramsid) {
+function loadrightsList(paramsid, namerid) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
+        "url": "/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -209,7 +166,27 @@ function loadrightsList(paramsid) {
             console.log(res);
             var checkboxHtml = "";
             for (var i = 0; i < res.length; i++) {
-                checkboxHtml += '<input name="rids" type="checkbox" value="' + res[i].name + '" rid="' + res[i].rid + '"><label>' + res[i].name + '</label>&nbsp;&nbsp;&nbsp;';
+                checkboxHtml += '<input name="' + namerid + '" type="checkbox" value="' + res[i].name + '" pid="' + res[i].pid + '"><label>' + res[i].name + '</label>&nbsp;&nbsp;&nbsp;';
+            }
+            $(paramsid).html(checkboxHtml);
+        },
+        "error": function(res) {
+            console.log(res);
+        }
+    })
+}
+// 数据库 加载角色列表
+function loadrolesList(paramsid, namerid) {
+    $.ajax({
+        "url": "/car-management/role/roleList.action",
+        "type": "get",
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        "success": function(res) {
+            console.log(res);
+            var checkboxHtml = "";
+            for (var i = 0; i < res.length; i++) {
+                checkboxHtml += '<input name="' + namerid + '" type="checkbox" value="' + res[i].name + '" rid="' + res[i].rid + '"><label>' + res[i].name + '</label>&nbsp;&nbsp;&nbsp;';
             }
             $(paramsid).html(checkboxHtml);
         },

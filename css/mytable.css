@@ -9,7 +9,7 @@ table {
 }
 
 .keep-open .dropdown-menu {
-    background: #074587;
+    background: #f5f5f5;
 }
 
 .btn {
@@ -150,8 +150,13 @@ table {
     color: #D80000 !important;
 }
 
-.table-responsive h3 {
+.table-responsive span {
     /*color: #1471EE;*/
+    color: #1A1D3E;
+    margin-top: -2px;
+}
+
+.tablelistbox h3 {
     margin-top: -2px;
 }
 
@@ -232,10 +237,6 @@ input.form-control {
     vertical-align: middle;
 }
 
-.tablelistbox {
-    /*display: none;*/
-}
-
 .add_boxs {
     display: inline-block;
 }
@@ -289,4 +290,25 @@ input.form-control {
 
 .fixed-table-toolbar {
     margin-top: -20px;
+}
+
+#childmenuList {
+    margin-bottom: 0px
+}
+
+#childmenuList_p {
+    padding-top: 20px;
+}
+
+#menu_rightbox {
+    margin-top: 53px;
+}
+
+#user .form-horizontal {
+    margin-top: 63px;
+}
+
+#menulist_toolbar,
+#childmenulist_toolbar {
+    color: #1B6DDA;
 }

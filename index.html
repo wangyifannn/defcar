@@ -13,21 +13,7 @@
     <link rel="stylesheet" type="text/css" href="./css/mytable.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/scrollscreen.css" />
 
-    <script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
 
-
-
-
-    <!--侧边动态菜单-->
-    <!--<script src="../CarMangae0/js/menu.js"></script>-->
-    <script type="text/javascript" src="assets/js/custom.js"></script>
-    <script type="text/javascript" src="assets/js//jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="./js/cartable.js"></script>
-    <script type="text/javascript" src="./js/drivertable.js"></script>
-    <script type="text/javascript" src="./js/maintable.js"></script>
-    <script type="text/javascript" src="./assets/js/laydate.js"></script>
-    <script type="text/javascript" src="./assets/js/iconfont.js"></script>
     <style type="text/css">
         .icon {
             width: 1em;
@@ -41,9 +27,10 @@
             /*color: #1B6DDA !important;*/
         }
         
-        .icon:hover {
-            cursor: pointer;
-            color: red;
+        .weixiu-icon {
+            /*text-indent: 2px;*/
+            font-size: 18px;
+            margin-left: 1px;
         }
     </style>
 </head>
@@ -73,7 +60,7 @@
                 <div class="sidebar-menu">
                     <ul id="myTab" class="ul_box">
                         <!--gps-->
-                        <li class="sidebar-dropdown">
+                        <!--<li class="sidebar-dropdown">
                             <a href="#">
                                 <svg class="icon text_blue" aria-hidden="true">
                                     <use xlink:href="#icon-ditu"></use>
@@ -82,11 +69,11 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="#carmap" data-toggle="tab" class="text_blue">车辆地图</a> </li>
-                                    <li><a href="#carTrack" data-toggle="tab">车辆轨迹</a> </li>
+                                    <li class="carmap"><a href="#carmap" data-toggle="tab" class="text_blue">车辆地图</a> </li>
+                                    <li class="carTrack"><a href="#carTrack" data-toggle="tab">车辆轨迹</a> </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>-->
                         <!--gps结束-->
                         <!--门岗-->
                         <!--车辆管理-->
@@ -95,98 +82,7 @@
                         <!--日志管理-->
                         <!--权限管理-->
 
-                        <li class="sidebar-dropdown">
-                            <a class="sidebar_dropdown_hover" href="#">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-anquanmenhu"></use>
-                                </svg>
-                                <span>门岗</span><span class="badge">2</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#driverList" data-toggle="tab">驾驶员管理</a> </li>
-                                    <li><a href="#sentry" data-toggle="tab">车辆出入管理</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a class="sidebar_dropdown_hover" href="#">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-cheliang"></use>
-                                </svg>
-                                <span>车辆管理</span><span class="badge">3</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#carList" data-toggle="tab">车辆列表</a></li>
-                                    <li><a href="#carCheck" data-toggle="tab">接车点检</a> </li>
-                                    <li><a href="#returncarCheck" data-toggle="tab">还车点检</a> </li>
-                                    <li><a href="#car_safeCheck" data-toggle="tab">车辆/安全/附件检查</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-shuju"></use>
-                                </svg>
-                                <span>数据管理</span><span class="badge">4</span></a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#currentData" data-toggle="tab"><span>实时数据</span></a></li>
-                                    <li><a href="#beforeData" data-toggle="tab"><span>历史数据</span></a></li>
-                                    <li><a href="#longData" data-toggle="tab"><span>远程采集控制</span></a></li>
-                                    <li><a href="#longECU" data-toggle="tab"><span>远程ECU刷写</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-weixiu"></use>
-                                </svg>
-                                <span>维修管理</span><span class="badge">5</span></a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#maintainList" data-toggle="tab"><span>维修列表</span></a></li>
-                                    <li><a href="#maintainTypeIn" data-toggle="tab"><span>维修申请</span></a></li>
-                                    <li><a href="#maintainPeopleTypeIn" data-toggle="tab"><span>维修协调员填写</span></a></li>
-                                    <li><a href="#maintainProgress" data-toggle="tab"><span>维修进度</span></a></li>
-                                    <li><a href="#maintainScreen" data-toggle="tab"><span>维修车间大屏</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-rizhi"></use>
-                                </svg>
-                                <span>日志管理</span><span class="badge">4</span></a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#warningLog" data-toggle="tab"><span>告警日志</span></a></li>
-                                    <li><a href="#dataLog" data-toggle="tab"><span>数据管理日志</span></a></li>
-                                    <li><a href="#maintainLog" data-toggle="tab"><span>维修管理日志</span></a></li>
-                                    <li><a href="#manageLog" data-toggle="tab"><span>车辆管理日志</span></a></li>
-                                    <li><a href="#approveLog" data-toggle="tab"><span>驾驶员管理日志</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#" class="sidebar_dropdown_hover">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-quanxian"></use>
-                                </svg>
-                                <span>权限管理</span><span class="badge">3</span></a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="#rights" data-toggle="tab"><span>权限授予</span></a></li>
-                                    <li><a href="#role" data-toggle="tab"><span>角色管理</span></a></li>
-                                    <li><a href="#user" data-toggle="tab"><span>用户管理</span></a></li>
-                                    <li><a href="#menu" data-toggle="tab"><span>菜单管理</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
+
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -1110,13 +1006,12 @@
                         </div>
                     </div>
                     <!--e 日志管理-->
-
                     <!--权限-->
                     <!--权限授予-->
                     <div class="tab-pane" id="rights">
                         <!--权限授予-->
                         <div class="rightbox" id="rights_list">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <img class="table_footer" src="./img/index/greycar.png" alt="">
                             <!--<img class="table_header" src="./img/index/table_header.png" alt="">-->
                             <div class="tablerolebox">
                                 <table id="rightsList">
@@ -1169,7 +1064,7 @@
                     <!--角色管理-->
                     <div class="tab-pane" id="role">
                         <div class="rightbox" id="role_list">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <img class="table_footer" src="./img/index/greycar.png" alt="">
                             <div class="tablerolebox">
                                 <table id="roleList">
                                     <div id="rolelist_toolbar" class="btn-group">
@@ -1234,19 +1129,13 @@
                     <!--用户管理-->
                     <div class="tab-pane" id="user">
                         <div class="rightbox" id="user_rightbox">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <img class="table_footer" src="./img/index/greycar.png" alt="">
                             <div class="tablelistbox">
                                 <table id="userList">
                                     <div id="userlist_toolbar" class="btn-group">
                                         <button id="btn_add" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                        </button>
-                                        <!--<button id="btn_edit" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                        </button>
-                                        <button id="btn_delete" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>-->
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                                        </button>
                                     </div>
                                 </table>
                             </div>
@@ -1257,7 +1146,7 @@
                                     <label for="inputEmail3" class="col-sm-4 control-label">用户名:</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="user_name" class="form-control addusername col-sm-5" id="inputEmail3" placeholder="">
-                                        <label for="inputEmail3" class="col-sm-7">用户名必须为6-15位数字、字母、下划线</label>
+                                        <label for="inputEmail3" class="col-sm-7 username_tips">用户名必须为6-15位数字、字母、下划线</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -1302,7 +1191,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">备注:</label>
                                     <div class="col-sm-7">
-                                        <textarea rows="5" cols="45" class="addtext user_remark"></textarea>
+                                        <textarea rows="4" cols="45" class="addtext user_remark"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group form-group-btn">
@@ -1323,17 +1212,17 @@
                     <!--菜单管理-->
                     <div class="tab-pane" id="menu">
                         <div class="rightbox" id="menu_rightbox">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
+                            <img class="table_footer" src="./img/index/greycar.png" alt="">
                             <div class="tablelistbox">
                                 <table id="menuList">
                                     <div id="menulist_toolbar" class="btn-group">
-                                        <h3>父菜单列表</h3>
+                                        <span>父菜单列表</span>
                                     </div>
                                 </table>
-
+                                <p id="childmenuList_p"></p>
                                 <table id="childmenuList" style="margin-top:20px;">
                                     <div id="childmenulist_toolbar" class="btn-group">
-                                        <h3>子菜单列表</h3>
+                                        <span>子菜单列表</span>
                                     </div>
                                 </table>
                             </div>
@@ -1408,6 +1297,23 @@
     </div>
     <!-- page-wrapper -->
 </body>
+<script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
+
+<!--侧边动态菜单-->
+<script type="text/javascript" src="./js/menu.js"></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+
+<script type="text/javascript" src="assets/js//jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="./js/cartable.js"></script>
+<script type="text/javascript" src="./js/drivertable.js"></script>
+<script type="text/javascript" src="./js/maintable.js"></script>
+<script type="text/javascript" src="./assets/js/laydate.js"></script>
+<script type="text/javascript" src="./assets/js/iconfont.js"></script>
+
+
+
+
 <script type="text/javascript" src="./js/FileSaver.min.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/extensions/export/bootstrap-table-export.js"></script>
@@ -1416,18 +1322,14 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>
 <!--角色管理-->
-<script type="text/javascript" src="./js/roletable.js"></script>
+<!--<script type="text/javascript" src="./js/roletable.js"></script>-->
 <!--权限管理-->
-<script type="text/javascript" src="./js/rightstable.js"></script>
+<!--<script type="text/javascript" src="./js/rightstable.js"></script>-->
 <!--用户管理-->
-<script type="text/javascript" src="./js/usertable.js"></script>
+<!--<script type="text/javascript" src="./js/usertable.js"></script>-->
 <!--菜单管理-->
-<script type="text/javascript" src="./js/menutable.js"></script>
+<!--<script type="text/javascript" src="./js/menutable.js"></script>-->
 
-<!--bootstrap-table 行内编辑-->
-<!--<link rel="stylesheet" href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">-->
-<!--<script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>-->
-<!--<script src="~/Content/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>-->
 <script>
     // 维修列表
     $("#tablescreen").bootstrapTable({
@@ -1537,28 +1439,20 @@
 </script>
 <script>
     var islogin = localStorage.getItem("successUser");
-    console.log(islogin);
     islogin = JSON.parse(islogin);
-    if (islogin != null && islogin.flag == true) {
-        // console.log("已经登录成功");
-        // console.log($(".user-name"));
-        // console.log(islogin.name);
-        $(".user-name").html(islogin.name);
-        $.ajax({
-                "url": "http://192.168.0.222:8080/car-management/user/UserInfo.action",
-                "type": "get",
-                "dataType": "jsonp", //数据类型为jsonp  
-                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
-                "success": function(res) {
-                    console.log(res);
-                    $(".user-role").html(res[0].rolename);
-                }
-            })
-            //     location.href = "login.html";
+    console.log(islogin);
+    if (islogin != null && islogin.ret == true) {
+        console.log("已经登录成功");
+        console.log(islogin.data.username);
+        $(".user-name").html(islogin.data.username);
+        if (islogin.data.roles.length > 0) {
+            $(".user-role").html(islogin.data.roles[0].name);
+        } else {
+            $(".user-role").text("");
+        }
     } else {
-        console.log(islogin);
         console.log("没有登录");
-        location.href = "./html/login.html";
+        // location.href = "./html/login.html";
     }
 </script>
 

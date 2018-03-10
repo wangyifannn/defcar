@@ -2,7 +2,7 @@ $("#menu .form-horizontal").hide();
 var childmenuArr = [];
 //加载 菜单列表
 $.ajax({
-    "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
+    "url": "/car-management/menu/menuList.action",
     "type": "get",
     "dataType": "jsonp", //数据类型为jsonp  
     "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -10,8 +10,8 @@ $.ajax({
         console.log(res);
         createTable("#menuList", "toolbar_menuList", res,
             "mid", "name", "keyWord", "remark", "operator", "createTime", true, true,
-            "角色编号", "名称", "关键字", "备注", "创建人", "创建日期",
-            true, menuOperateEventsDel, menuOperateFormatterDel);
+            "菜单编号", "名称", "关键字", "备注", "创建人", "创建日期",
+            false, menuOperateEventsDel, menuOperateFormatterDel);
 
         for (var i = 0; i < res.length; i++) {
             if (res[i].childrenMenus.length != 0) {
@@ -24,8 +24,8 @@ $.ajax({
         console.log(childmenuArr);
         createTable("#childmenuList", "childmenulist_toolbar", childmenuArr,
             "mid", "name", "pId", "remark", "operator", "createTime", true, true,
-            "角色编号", "名称", "父级菜单编号", "备注", "创建人", "创建日期",
-            true, menuOperateEventsDel, menuOperateFormatterDel);
+            "子菜单编号", "名称", "父级菜单编号", "备注", "创建人", "创建日期",
+            false, menuOperateEventsDel, menuOperateFormatterDel);
     },
     "error": function(res) {
         console.log(res);
@@ -45,7 +45,7 @@ window.menuOperateEventsDel = {
         menudelarr.push(row.pid);
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/menu/deletemenu.action",
+            "url": "/car-management/menu/deletemenu.action",
             "type": "get",
             "data": {
                 "mids[]": menudelarr

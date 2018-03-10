@@ -1,10 +1,11 @@
 $("#user .form-horizontal").hide();
-loadrightsList(".user_check_box");
+loadrolesList(".user_check_box", "rolepid");
+var user_role_check_val = [];
 
 //用户管理模块： 用户列表
 function loadUserList() {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/user/userList.action",
+        "url": "/car-management/user/userList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -22,8 +23,7 @@ function loadUserList() {
                 $("#user_rightbox").hide();
                 $("#user .form-horizontal").show();
                 // 判断用户角色权限的 多选选项
-                var obj = document.getElementsByName("rids");
-                var check_val = [];
+                var obj = document.getElementsByName("rolepid");
                 console.log(obj);
                 for (k in obj) {
                     obj[k].onclick = function() {
@@ -31,30 +31,33 @@ function loadUserList() {
                         if (this.checked) {
                             // console.log(this);
                             // console.log(this.getAttribute("rid"));
-                            check_val.push(this.getAttribute("rid"));
+                            user_role_check_val.push(this.getAttribute("rid"));
                         } else {
-                            if ($.inArray(this.getAttribute("rid"), role_check_val) != -1) {
-                                role_check_val.remove(this.getAttribute("rid"));
-                                console.log(role_check_val);
+                            if ($.inArray(this.getAttribute("rid"), user_role_check_val) != -1) {
+                                user_role_check_val.remove(this.getAttribute("rid"));
+                                console.log(user_role_check_val);
                             }
                         }
                     }
                 };
-                console.log(check_val);
 
                 // 确认添加用户
                 $(".adduser_btn").click(function() {
+                    if ($(".username_tips").text() != "用户名正确") {
+                        $(".user_tips").text($(".username_tips").text());
+                        return;
+                    }
                     var username = $("input[name='user_name']").val();
                     console.log(username);
                     console.log($("input[name='user_email']").val());
                     console.log($("input[name='user_nickname']").val());
                     console.log($("input[name='sex']:checked").val());
-                    console.log(check_val);
+                    console.log(user_role_check_val);
                     var adduserFormData = "";
                     // 向数据库添加用户
                     //添加用户角色表单， 数据库加载角色列表
                     $.ajax({
-                        "url": "http://192.168.0.222:8080/car-management/user/addUser.action",
+                        "url": "/car-management/user/addUser.action",
                         "type": "get",
                         "data": {
                             "username": $("input[name='user_name']").val(),
@@ -64,7 +67,7 @@ function loadUserList() {
                             "nickname": $("input[name='user_nickname']").val(),
                             "remark": $(".user_remark").val(),
                             "sex": $("input[name='sex']:checked").val(),
-                            "rids[]": check_val
+                            "rids[]": user_role_check_val
                         },
                         "dataType": "jsonp", //数据类型为jsonp  
                         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
@@ -112,6 +115,46 @@ $(function() {
     });
 })
 
+
+
+
+// 用户名重复及格式正误检测
+$("input[name='user_name']").bind('input porpertychange', function() {
+    var pw1Num = $("input[name='user_name']").val();
+    // var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,16}$/g; //密码必须有大小写字母和数字且6-20位
+    var re = /^[0-9a-zA-Z_]{5,16}$/g; //密码由大小写字母或数字组成且为6-20位
+    var rez = re.test(pw1Num);
+    console.log(pw1Num);
+    if (rez == true) {
+        // tips.style.display = 'block';
+        $(".username_tips").html("格式正确");
+        $.ajax({
+            "url": "/car-management/user/check/" + $("input[name='user_name']").val() + "/1.action",
+            "type": "get",
+            "dataType": "jsonp", //数据类型为jsonp  
+            "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+            "success": function(res) {
+                console.log(res);
+                if (res.ret) {
+                    $(".username_tips").text("用户名正确");
+                } else {
+                    $(".username_tips").text("用户名已被占用");
+                }
+            },
+            "error": function(res) {
+                console.log(res);
+                $(".username_tips").text("系统错误，请联系管理员");
+            }
+        })
+    } else if (pw1Num == '') {
+        $(".username_tips").text('用户名不能为空');
+    } else {
+        $(".username_tips").text('用户名格式不正确');
+        // tips.style.display = 'block';
+    }
+});
+// ------------------------------------------------------
+
 function userOperateFormatterDel(value, row, index) {
     return [
         '<button type="button" id="user_btn_mydel" class="RoleOfA btn btn-default optionBth  btn-sm" style="margin-right:15px;">删除</button>'
@@ -127,7 +170,7 @@ window.userOperateEventsDel = {
         $(this).parent().parent().remove();
         // 删除用户操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/user/delete.action",
+            "url": "/car-management/user/delete.action",
             "type": "get",
             "data": {
                 "ids[]": userdelarr
@@ -137,6 +180,7 @@ window.userOperateEventsDel = {
             "success": function(res) {
                 console.log(res);
                 if (res.ret) {
+                    loadUserList();
                     // alert("删除成功");
                 }
             },
