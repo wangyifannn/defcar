@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>加载海量点</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <style type="text/css">
+        /*html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #panel {
+            position: absolute;
+            top: 30px;
+            left: 10px;
+            z-index: 999;
+            color: #fff;
+        }
+        
+        #login {
+            position: absolute;
+            width: 300px;
+            height: 40px;
+            left: 50%;
+            top: 50%;
+            margin: -40px 0 0 -150px;
+        }
+        
+        #login input[type=password] {
+            width: 200px;
+            height: 30px;
+            padding: 3px;
+            line-height: 30px;
+            border: 1px solid #000;
+        }
+        
+        #login input[type=submit] {
+            width: 80px;
+            height: 38px;
+            display: inline-block;
+            line-height: 38px;
+        }*/
+        
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }
+        
+        p {
+            margin-left: 5px;
+            font-size: 14px;
+        }
+        /*标题*/
+        
+        .map_title {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        /*搜索*/
+        
+        .search-map {
+            position: absolute;
+            top: 60px;
+            left: 100px;
+            height: 38px;
+        }
+        
+        #suggestId {
+            box-sizing: border-box;
+            width: 300px;
+            background: white;
+            border: 0;
+            border-left: 10px solid transparent;
+            border-right: 27px solid transparent;
+            line-height: 20px;
+            font-size: 16px;
+            height: 100%;
+            color: #333;
+            outline: none;
+            border-radius: 2px 0 0 2px;
+        }
+        
+        .search-btn {
+            box-sizing: border-box;
+            border: 0;
+            width: 70px;
+            height: 100%;
+            font-size: 23px;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            display: inline-block;
+            background: #1B6DDA;
+            margin-left: -3px;
+            position: absolute;
+            top: 0px;
+            left: 302px;
+        }
+        
+        .search-btn img {
+            width: 25px;
+            height: 25px;
+            margin-top: 7px;
+        }
+        /*位置信息框*/
+        
+        .point_content {
+            border-radius: 5px;
+        }
+        
+        .point_content p {
+            font-size: 12px;
+            line-height: 7px;
+        }
+        
+        .point_tips {
+            font-size: 10px;
+            color: #041473;
+        }
+        /*信息框样式*/
+        
+        .BMap_simple_bubble_pop {
+            border-radius: 10px;
+        }
+        
+        .BMap_pop {
+            /*top: 90px !important;*/
+            /*border: 11px solid red;*/
+            /*border-radius: 10px;*/
+        }
+        /*车辆信息框*/
+        
+        .mapinfo {
+            width: 180px;
+            position: absolute;
+            top: 20px;
+            right: 10px;
+            /*height: auto;*/
+            min-height: 40px;
+            background: white;
+        }
+        
+        .mapinfo p {
+            margin-top: 9px;
+            margin-right: 13px;
+            display: inline-block;
+        }
+        
+        .mapinfo_title {
+            height: 40px;
+            text-align: center;
+            color: white;
+            background: #1B6DDA;
+        }
+        
+        .mapinfo ul li {
+            padding-top: 7px;
+            font-size: 14px;
+        }
+        
+        .mapinfo ul li span {
+            color: red;
+        }
+        
+        .mapinfo_title img {
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pDUf1lcj5kEDkegBS5DSF1TA9uib5AjE"></script>
+    <!--<script type="text/javascript" src="http://lbsyun.baidu.com/jsdemo/data/points-sample-data.js"></script>-->
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <div class="map_title">
+        全国主要城市车辆数量
+    </div>
+    <div id="r-result" class="search-map">
+        <input type="text" id="suggestId" placeholder="请输入搜索车辆编号" />
+        <div class="search-btn" id="search-btn">
+            <img src="../img/map/search.png" alt="">
+        </div>
+    </div>
+    <div class="mapinfo">
+        <div class="mapinfo_title">
+            <p>测试车辆详情</p>
+            <img src="../img/map/uparrow.png" alt="">
+        </div>
+        <ul>
+
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var map = new BMap.Map("allmap", {}); // 创建Map实例
+        var myIcon = new BMap.Icon("../img/map/30redcar.png", new BMap.Size(30, 57));
+
+        map.centerAndZoom(new BMap.Point(105.000, 38.000), 5); // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(); //启用滚轮放大缩小
+        var total = 0; //总记录数
+        var groupCount = 0; //每次转十条
+
+        //转换日期格式(时间戳转换为datetime格式)
+        function changeDateFormat(cellval) {
+            var dateVal = cellval + "";
+            if (cellval != null) {
+                var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+            }
+        }
+        if (document.createElement('canvas').getContext) { // 判断当前浏览器是否支持绘制海量点
+            $.ajax({
+                // "url": "../json/omap.json",
+                "url": "http://192.168.0.222:8080/car-management/car/allcar.action",
+                "dataType": "jsonp", //数据类型为jsonp  
+                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                "type": "get",
+                "success": function(res) {
+                    console.log(res);
+                    var points = []; // 添加海量点数据
+                    for (var ii = 0; ii < res.length; ii++) {
+                        (function(j) {
+                            var mypoint = new BMap.Point(res[ii].longitude, res[ii].latitude);
+                            mypoint.index = ii;
+                            points.push(mypoint);
+                        })(ii);
+                    }
+                    console.log(points.length);
+                    if (points.length % 10 > 0) {
+                        groupCount = (points.length / 10) + 1;
+                    } else {
+                        groupCount = (points.length / 10);
+                    }
+                    for (var i = 0; i < groupCount; i++) { //外层循环，有多少组十条
+                        var pos = new Array();
+                        for (var j = 0; j < 10; j++) { //内层循环，每组十条
+                            if (total < points.length) { //不超过总记录数结束
+                                console.log(points);
+                                console.log(points[(i * 10) + j].lng);
+                                console.log(points[(i * 10) + j].lat);
+                                var point = new BMap.Point(points[(i * 10) + j].lng, points[(i * 10) + j].lat);
+                                pos.push(point);
+                                console.log(pos);
+                            }
+                            total++;
+                        }
+                        var convertor = new BMap.Convertor();
+                        convertor.translate(pos, 1, 5, function(data) {
+                            console.log(data);
+                            if (data.status === 0) {
+                                for (var i = 0; i < data.points.length; i++) {
+                                    (function(x) {
+                                        var options = {
+                                            size: BMAP_POINT_SIZE_HUGE,
+                                            shape: BMAP_POINT_SHAPE_STAR,
+                                            color: 'red'
+                                        }
+                                        var pointCollection = new BMap.PointCollection(data.points, options); // 初始化PointCollection
+                                        // pointCollection.addEventListener('click', function(e) {
+                                        //     alert(e.point.index);
+                                        // });
+                                        map.addOverlay(pointCollection); // 添加Overlay
+                                        var runStatic = res[i].runStatic; //当前状态
+                                        var vCarSn = res[i].vCarSn; //车牌号
+                                        var isAllow = res[i].isAllow; //是否允许
+                                        var vSn = res[i].vSn; //车辆编号
+                                        var showInfo = "<div class='point_content'>当前状态：" + runStatic +
+                                            "<br/>" + "车辆编号:<span id='car_id'>" + vSn +
+                                            "</span><br/>是否允许：" + isAllow +
+                                            "<br/><span class='point_tips'>更多车辆信息请查看右侧车辆详情面板<span>" +
+                                            "</div>";
+                                        // console.log(i);
+                                        // pointCollection.addClickHandler(showInfo, pointCollection, i, res);
+                                        // markers.push(marker);
+                                        // //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点,实现点聚合
+                                        // var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                                        //     markers: markers
+                                        // });
+                                    })(i);
+                                }
+                            }
+                        });
+                    }
+                },
+                "error": function(data) {
+                    console.log(data);
+                }
+            });
+        } else {
+            alert('请在chrome、safari、IE8+以上浏览器查看本示例');
+        }
+
+
+
+        function addClickHandler(content, marker, i, res) {
+            marker.addEventListener("click", function(e) {
+                // openInfo(content, e);
+                console.log(i);
+                mapInfo(res[i].vSn, res[i].vCarSn, res[i].gpsSN, res[i].vCarType, res[i].warn, res[i].iccard, res[i].isAllow, res[i].runStatic,
+                    res[i].speed, res[i].dAllowStartTm, res[i].dAllowEndTm, res[i].runsumtime);
+            });
+        }
+        var map_ulli = "";
+
+        function mapInfo(id, carid, gpsid, brand, warn, icid, ifallow, status, speed, dAllowStartTm, dAllowEndTm, time) {
+            map_ulli = '<li>车辆编号：<span>' + id + '</span></li>' +
+                '<li>车牌号：' + carid + '</li>' +
+                '<li>gps编号：' + gpsid + '</li>' +
+                '<li>车型：' + brand + '</li>' +
+                '<li>告警：' + warn + '</li>' +
+                '<li>ic卡卡号：' + icid + '</li>' +
+                '<li>是否允许：' + ifallow + '</li>' +
+                '<li>行驶状态：' + status + '</li>' +
+                '<li>行驶速度：' + speed + '</li>' +
+                '<li>允许行驶开始时间：' + changeDateFormat(dAllowStartTm) + '</li>' +
+                '<li>允许行驶結束时：' + changeDateFormat(dAllowEndTm) + '</li>' +
+                '<li>车辆行驶总时间：' + time + '</li>';
+            $(".mapinfo ul").html(map_ulli);
+            console.log($(".mapinfo ul").text());
+            if ($(".mapinfo ul").find("li").length == 0) {
+                $(".mapinfo ul").hide();
+            } else {
+                $(".mapinfo ul").show();
+            }
+        }
+        if ($(".mapinfo ul").find("li").length == 0) {
+            $(".mapinfo ul").hide();
+        } else {
+            $(".mapinfo ul").show();
+        }
+
+        // function openInfo(content, e) {
+        //     var p = e.target;
+        //     var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        //     var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象 
+        //     map.openInfoWindow(infoWindow, point); //开启信息窗口
+        // }
+    </script>
+</body>
+
+</html>

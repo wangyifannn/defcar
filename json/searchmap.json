@@ -1,0 +1,15 @@
+[{
+    "vSn": 20,
+    "name": "车辆 20",
+    "longitude": "116.4178520",
+    "data": "2018-1-1",
+    "dAllowStartTm": "2018-1-4",
+    "dAllowEndTm": "2018-1-4",
+    "runStatic": "出车",
+    "latitude": "34.27",
+    "approvedata": "2天",
+    "brand": "别克",
+    "batteryvoltage": "77.55",
+    "gpsid": "20180202",
+    "carid": "陕A870UX"
+}]

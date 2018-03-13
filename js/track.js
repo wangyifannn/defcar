@@ -11,8 +11,12 @@
       enableMessage: true //设置允许信息窗发送短息
   };
 
+
   var markers = [];
   var new_markers = [];
+  var points = [];
+  var total = 0; //总记录数
+  var groupCount = 0; //每次转十条
 
   function searchCurrentcar() {
       console.log($("#current_input").val());
@@ -27,31 +31,64 @@
               "data": {
                   "vSn": $("#current_input").val()
               },
-              "success": function(newres) {
-                  console.log(newres);
-                  console.log(newres);
-                  for (var j = 0; j < newres.length; j++) {
-                      if (newres[0] == null) {
-                          alert("车辆数据未搜素到");
-                          return;
+              "success": function(res) {
+                  console.log(res);
+                  points.length = 0;
+                  total = 0;
+                  groupCount = 0;
+                  if (res[0] == null) {
+                      alert("您输入的信息有误");
+                      return;
+                  }
+                  for (var n = 0; n < res.length; n++) {
+                      points.push(new BMap.Point(res[n].longitude, res[n].latitude));
+                  }
+                  console.log(points);
+                  if (points.length % 10 > 0) {
+                      groupCount = (points.length / 10) + 1;
+                  } else {
+                      groupCount = (points.length / 10);
+                  }
+                  for (var i = 0; i < groupCount - 1; i++) { //外层循环，有多少组十条
+                      var pos = new Array();
+                      for (var j = 0; j < 10; j++) { //内层循环，每组十条
+                          if (total < points.length) { //不超过总记录数结束
+                              console.log(points);
+                              console.log(points[(i * 10) + j].lng);
+                              console.log(points[(i * 10) + j].lat);
+                              var point = new BMap.Point(points[(i * 10) + j].lng, points[(i * 10) + j].lat);
+                              pos.push(point);
+                              console.log(pos);
+                          }
+                          total++;
                       }
-                      if (newres[j].longitude != "" && newres[j].latitude != "") {
-                          var new_point = new BMap.Point(newres[j].longitude, newres[j].latitude);
-                          var new_marker = new BMap.Marker(new BMap.Point(newres[j].longitude, newres[j].latitude), {
-                              icon: myIcon
-                          }); // 创建标注
-                          var new_showInfo = "<div class='point_content'>当前状态：" + newres[j].runStatic +
-                              "<br/>" + "车辆编号:<span id='car_id'>" + newres[j].vCarSn +
-                              "</span><br/>是否允许：" + newres[j].isAllow +
-                              "<br/><span class='point_tips'><span>" +
-                              "</div>";
-                          // map.setZoom(11);
-                          map.centerAndZoom(new_point, 11);
-                          map.addOverlay(new_marker); // 将标注添加到地图中
-                          addClickHandler(new_showInfo, new_marker, j, newres);
-                      } else {
-                          alert("车辆数据未搜素到");
-                      }
+                      var convertor = new BMap.Convertor();
+                      convertor.translate(pos, 1, 5, function(data) {
+                          console.log(data);
+                          if (data.status === 0) {
+                              for (var i = 0; i < data.points.length; i++) {
+                                  var new_point = new BMap.Point(data.points[i]);
+                                  var marker = new BMap.Marker(data.points[i], {
+                                      icon: myIcon
+                                  }); // 创建标注
+                                  console.log();
+                                  map.addOverlay(marker);
+                                  //   map.centerAndZoom(new_point, 7);
+                                  map.centerAndZoom('中国', 5);
+                                  var runStatic = res[i].runStatic; //当前状态
+                                  var vCarSn = res[i].vCarSn; //车牌号
+                                  var isAllow = res[i].isAllow; //是否允许
+                                  var vSn = res[i].vSn; //车辆编号
+                                  var showInfo = "<div class='point_content'>当前状态：" + runStatic +
+                                      "<br/>" + "车辆编号:<span id='car_id'>" + vSn +
+                                      "</span><br/>是否允许：" + isAllow +
+                                      "<br/><span class='point_tips'>更多车辆信息请查看右侧车辆详情面板<span>" +
+                                      "</div>";
+                                  markers.push(marker);
+                                  addClickHandler(showInfo, marker, i, res);
+                              }
+                          }
+                      });
                   }
               },
               "error": function(data) {
@@ -65,12 +102,7 @@
   function addClickHandler(content, marker, i, res) {
       marker.addEventListener("click", function(e) {
           openInfo(content, e);
-          // clickcar_id = $(content).children("#car_id").text();
-          // return clickcar_id;
           console.log(i);
-          // console.log(this.id);
-          //   mapInfo(res[i].vSn, res[i].vCarSn, res[i].gpsSN, res[i].vCarType, res[i].warn, res[i].iccard, res[i].isAllow, res[i].runStatic,
-          //       res[i].speed, res[i].dAllowStartTm, res[i].dAllowEndTm, res[i].runsumtime);
           console.log(content);
       });
   }

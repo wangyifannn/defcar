@@ -35,16 +35,13 @@
      theme: '#041473' //自定义颜色主题
 
  });
-
+ $("#cmapcontainer").show();
+ $("#amapcontainer").hide();
 
  // 清楚地图覆盖物
  function Clear(inputid) { //清除
      map.clearOverlays(); //清除图层覆盖物
-     //  document.getElementById(inputid).value = ""; //清除搜索框结构
  }
-
-
-
  $("#currenttrack_btn").click(function() {
      console.log("实时轨迹按钮");
      $("#cmapcontainer").show();
@@ -52,14 +49,9 @@
      console.log("隐藏#amap");
      Clear("current_input");
      searchCurrentcar();
-     //  searchCar();
-     //  setTimeout(searchCar, 1000); //动态生成新的点。
  });
  //回车提交事件
  $("body").keydown(function() {
      if (event.keyCode == "13") { //keyCode=13是回车键
-         // console.log(this);
-         //  map.clearOverlays(); //清除图层覆盖物
-         //  searchCar();
      }
  });
