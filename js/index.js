@@ -26,7 +26,14 @@ changBread(breadli1, breadli2, breadli3);
 $(".glyphicon-off").click(function() {
     // alert("a");
     window.localStorage.removeItem("successUser");
-    window.location.href = "./html/login.html";
+    // window.location.href = "./html/login.html";
+    var con;
+    con = confirm("你确定要退出吗？");
+    if (con) {
+        window.localStorage.removeItem("successUser");
+        window.location.href = "/car-management/user/loginOut.action";
+    }
+
 });
 // 点击判断浏览器类型
 function isFF() {
@@ -44,18 +51,7 @@ if (isFF() || isChrome()) {
     // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
 }
 
-$(".rights").click(function() {
-    $("html").append("<script type='text/javascript' src='./js/rightstable.js'></script>");
-});
-$(".role").click(function() {
-    $("html").append("<script type='text/javascript' src='./js/roletable.js'></script>");
-});
-$(".user").click(function() {
-    $("html").append("<script type='text/javascript' src='./js/usertable.js'></script>");
-});
-$(".menu").click(function() {
-    $("html").append("<script type='text/javascript' src='./js/menutable.js'></script>");
-});
+
 // 表单重置函数
 function formReset() {
     $(':input', '.form-horizontal')
@@ -69,19 +65,19 @@ function formReset() {
 function createTable(boxname, toolbarid, res,
     row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
     row1name, row2name, row3name, row4name, row5name, row6name,
-    ifoperate, userOperateEventsDel, userOperateFormatterDel) {
+    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype) {
     $(boxname).css({
         "position": "relative"
     });
     $(boxname).bootstrapTable('destroy');
     $(boxname).bootstrapTable({
         data: res,
-        toggle: table,
-        toolbar: "userlist_toolbar",
+        toggle: "table",
+        toolbar: toolbarid,
         pagination: ifpage, //是否显示分页（*）
         sortable: false, //是否启用排序
         sortOrder: "asc", //排序方式
-        sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+        sidePagination: pagetype, //分页方式：client客户端分页，server服务端分页（*）
         pageNumber: 1, //初始化加载第一页，默认第一页
         pageSize: 10, //每页的记录行数（*）
         pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
@@ -90,6 +86,10 @@ function createTable(boxname, toolbarid, res,
         showRefresh: ifrefresh, //是否显示刷新按钮
         minimumCountColumns: 2, //最少允许的列数
         clickToSelect: true, //是否启用点击选中行
+        searchOnEnterKey: true, //设置为 true时，按回车触发搜索方法
+        strictSearch: true, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        showToggle: true, //是否显示切换视图（table/card）按钮
+        searchAlign: "right",
         columns: [{
             field: row1,
             title: row1name,
@@ -146,11 +146,9 @@ function changeDateFormat(cellval) {
         var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
         var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
         var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-
         var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-
         return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
     }
 }

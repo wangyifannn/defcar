@@ -8,10 +8,10 @@
         "runStatic": "出车",
         "latitude": "39.921988",
         "approvedata": "雨刮器不动作，检修。",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "维修间",
-        "carid": "2015-809"
+        "gpsvSn": "维修间",
+        "vcarSn": "2015-809"
     },
     {
         "vSn": 1,
@@ -23,10 +23,10 @@
         "runStatic": "出车",
         "latitude": "39.921585",
         "approvedata": "更换副驾皮带轮，车辆是新车，未领标",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A570UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A570UX"
     },
     {
         "vSn": 2,
@@ -38,13 +38,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870gg"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870gg"
     },
     {
-        "id": 3,
+        "vSn": 3,
         "name": "车辆 3",
         "longitude": "116.417853",
         "data": "2018-1-1",
@@ -53,13 +53,13 @@
         "runStatic": "出车",
         "latitude": "39.921988",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A270UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A270UX"
     },
     {
-        "id": 4,
+        "vSn": 4,
         "name": "车辆 4",
         "longitude": "116.417854",
         "data": "2018-1-1",
@@ -68,13 +68,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A170UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A170UX"
     },
     {
-        "id": 5,
+        "vSn": 5,
         "name": "车辆 5",
         "longitude": "116.417855",
         "data": "2018-1-1",
@@ -83,13 +83,13 @@
         "runStatic": "出车",
         "latitude": "39.921988",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A470UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A470UX"
     },
     {
-        "id": 6,
+        "vSn": 6,
         "name": "车辆 6",
         "longitude": "116.417856",
         "data": "2018-1-1",
@@ -98,13 +98,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 7,
+        "vSn": 7,
         "name": "车辆 7",
         "longitude": "116.417857",
         "data": "2018-1-1",
@@ -113,13 +113,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A850UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A850UX"
     },
     {
-        "id": 8,
+        "vSn": 8,
         "name": "车辆 8",
         "longitude": "116.417858",
         "data": "2018-1-1",
@@ -128,13 +128,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A875UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A875UX"
     },
     {
-        "id": 9,
+        "vSn": 9,
         "name": "车辆 9",
         "longitude": "116.417859",
         "data": "2018-1-1",
@@ -143,13 +143,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A876UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A876UX"
     },
     {
-        "id": 10,
+        "vSn": 10,
         "name": "车辆 10",
         "longitude": "116.4178510",
         "data": "2018-1-1",
@@ -158,13 +158,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A877UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A877UX"
     },
     {
-        "id": 11,
+        "vSn": 11,
         "name": "车辆 11",
         "longitude": "116.4178511",
         "data": "2018-1-1",
@@ -173,13 +173,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 12,
+        "vSn": 12,
         "name": "车辆 12",
         "longitude": "116.4178512",
         "data": "2018-1-1",
@@ -188,13 +188,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 13,
+        "vSn": 13,
         "name": "车辆 13",
         "longitude": "116.4178513",
         "data": "2018-1-1",
@@ -203,13 +203,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 14,
+        "vSn": 14,
         "name": "车辆 14",
         "longitude": "116.4178514",
         "data": "2018-1-1",
@@ -218,13 +218,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 15,
+        "vSn": 15,
         "name": "车辆 15",
         "longitude": "116.4178515",
         "data": "2018-1-1",
@@ -233,13 +233,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 16,
+        "vSn": 16,
         "name": "车辆 16",
         "longitude": "116.4178516",
         "data": "2018-1-1",
@@ -248,13 +248,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 17,
+        "vSn": 17,
         "name": "车辆 17",
         "longitude": "116.4178517",
         "data": "2018-1-1",
@@ -263,13 +263,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 18,
+        "vSn": 18,
         "name": "车辆 18",
         "longitude": "116.4178518",
         "data": "2018-1-1",
@@ -278,13 +278,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 19,
+        "vSn": 19,
         "name": "车辆 19",
         "longitude": "116.4178519",
         "data": "2018-1-1",
@@ -293,13 +293,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 20,
+        "vSn": 20,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -308,13 +308,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 21,
+        "vSn": 21,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -323,13 +323,13 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     },
     {
-        "id": 22,
+        "vSn": 22,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -338,12 +338,12 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     }, {
-        "id": 23,
+        "vSn": 23,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -352,12 +352,12 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     }, {
-        "id": 24,
+        "vSn": 24,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -366,12 +366,12 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     }, {
-        "id": 25,
+        "vSn": 25,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -380,12 +380,12 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     }, {
-        "id": 26,
+        "vSn": 26,
         "name": "车辆 20",
         "longitude": "116.4178520",
         "data": "2018-1-1",
@@ -394,9 +394,9 @@
         "runStatic": "出车",
         "latitude": "34.27",
         "approvedata": "2天",
-        "brand": "别克",
+        "vCarType": "别克",
         "batteryvoltage": "77.55",
-        "gpsid": "20180202",
-        "carid": "陕A870UX"
+        "gpsvSn": "20180202",
+        "vcarSn": "陕A870UX"
     }
 ]

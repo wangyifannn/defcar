@@ -1,0 +1,65 @@
+[{
+        "childrenMenus": [{
+            "createTime": 1520497671000,
+            "mid": 102,
+            "name": "车辆轨迹",
+            "operate_ip": "192.168.1.1",
+            "operator": "王春森",
+            "pId": 1,
+            "priority": "3",
+            "remark": "轨迹",
+            "url": "carTrack"
+        }, {
+            "createTime": 1520497671000,
+            "mid": 102,
+            "name": "车辆地图",
+            "operate_ip": "192.168.1.1",
+            "operator": "王春森",
+            "pId": 1,
+            "priority": "3",
+            "remark": "轨迹",
+            "url": "carmap"
+        }],
+        "createTime": 1520497533000,
+        "mid": 1,
+        "name": "GPS",
+        "operate_ip": "192.168.1.1",
+        "operator": "王春森",
+        "pId": 0,
+        "priority": "1",
+        "remark": "gps",
+        "url": "GPS"
+    },
+    {
+        "childrenMenus": [{
+            "createTime": 1520497671000,
+            "mid": 201,
+            "name": "车辆出入管理",
+            "operate_ip": "192.168.1.1",
+            "operator": "王春森",
+            "pId": 1,
+            "priority": "3",
+            "remark": "门岗",
+            "url": "carTrack"
+        }, {
+            "createTime": 1520497671000,
+            "mid": 202,
+            "name": "驾驶员录入",
+            "operate_ip": "192.168.1.1",
+            "operator": "王春森",
+            "pId": 1,
+            "priority": "3",
+            "remark": "轨迹",
+            "url": "carmap"
+        }],
+        "createTime": 1520497533000,
+        "mid": 2,
+        "name": "门岗",
+        "operate_ip": "192.168.1.1",
+        "operator": "王春森",
+        "pId": 0,
+        "priority": "1",
+        "remark": "gps",
+        "url": "GPS"
+    }
+]

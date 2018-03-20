@@ -56,6 +56,9 @@ $(document).ready(function() {
                     for (var n = 0; n < res.length; n = n + 2) {
                         points.push(new BMap.Point(res[n][0], res[n][1]));
                     }
+                    // 处理最后一个经纬度坐标点
+                    console.log(res[res.length - 1][0]);
+                    points.push(new BMap.Point(res[res.length - 1][0], res[res.length - 1][1]));
                     console.log(points);
                     if (points.length % 10 > 0) {
                         ago_groupCount = (points.length / 10) + 1;
@@ -170,7 +173,6 @@ $(document).ready(function() {
             console.log(pointArr);
             // var myIcon = new BMap.Icon("../img/map/30greencar.png", new BMap.Size(9, 9));
             var myIcon = new BMap.Icon("../img/map/30redcar.png", new BMap.Size(38, 20));
-
             var marker = new BMap.Marker(point, {
                 icon: myIcon
             }); // 创建标注

@@ -1,5 +1,6 @@
 $.ajax({
     "url": "http://192.168.0.222:8080/car-management/menu/showMenu.action",
+    // "url": "../json/menu.json",
     "type": "get",
     "data": {},
     "dataType": "jsonp", //数据类型为jsonp  
@@ -27,9 +28,9 @@ $.ajax({
         }
 
         $(".sidebar-dropdown > a").click(function() {
-            console.log(this);
-            console.log(this.innerText);
-            console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
+            // console.log(this);
+            // console.log(this.innerText);
+            // console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
 
             $(".sidebar-submenu").slideUp(250);
             if ($(this).parent().hasClass("active")) {
@@ -46,9 +47,9 @@ $.ajax({
         });
         // 点击选中切换页面并改变面包屑导航路径
         $(".sidebar-submenu ul li").click(function() {
-            console.log(this);
-            console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
-            console.log(this.innerText);
+            // console.log(this);
+            // console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
+            // console.log(this.innerText);
             changBread(breadli1, this.parentNode.parentNode.parentNode.children[0].children[1].innerText, this.innerText);
             // console.log($(this));
             // console.log($(this).children());
@@ -70,6 +71,18 @@ $.ajax({
         // $(".carTrack").click(function() {
         //     $("#carTrack").append("<iframe class='iframebg' src='../map/cartrack.html' width='100%' height='800px' scrolling='no' frameborder='no' border='0'></iframe>");
         // });
+        $(".rights").click(function() {
+            $("html").append("<script type='text/javascript' src='./js/rightstable.js'></script>");
+        });
+        $(".role").click(function() {
+            $("html").append("<script type='text/javascript' src='./js/roletable.js'></script>");
+        });
+        $(".user").click(function() {
+            $("html").append("<script type='text/javascript' src='./js/usertable.js'></script>");
+        });
+        $(".menu").click(function() {
+            $("html").append("<script type='text/javascript' src='./js/menutable.js'></script>");
+        });
     },
     "error": function(data) {
         console.log(data);

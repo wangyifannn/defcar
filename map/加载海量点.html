@@ -6,51 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <style type="text/css">
-        /*html,
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-        }
-        
-        #map {
-            width: 100%;
-            height: 100%;
-        }
-        
-        #panel {
-            position: absolute;
-            top: 30px;
-            left: 10px;
-            z-index: 999;
-            color: #fff;
-        }
-        
-        #login {
-            position: absolute;
-            width: 300px;
-            height: 40px;
-            left: 50%;
-            top: 50%;
-            margin: -40px 0 0 -150px;
-        }
-        
-        #login input[type=password] {
-            width: 200px;
-            height: 30px;
-            padding: 3px;
-            line-height: 30px;
-            border: 1px solid #000;
-        }
-        
-        #login input[type=submit] {
-            width: 80px;
-            height: 38px;
-            display: inline-block;
-            line-height: 38px;
-        }*/
-        
         body,
         html {
             width: 100%;
@@ -144,12 +99,6 @@
         .BMap_simple_bubble_pop {
             border-radius: 10px;
         }
-        
-        .BMap_pop {
-            /*top: 90px !important;*/
-            /*border: 11px solid red;*/
-            /*border-radius: 10px;*/
-        }
         /*车辆信息框*/
         
         .mapinfo {
@@ -189,9 +138,10 @@
         }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pDUf1lcj5kEDkegBS5DSF1TA9uib5AjE"></script>
-    <!--<script type="text/javascript" src="http://lbsyun.baidu.com/jsdemo/data/points-sample-data.js"></script>-->
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-
+    <!--多点聚合-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 </head>
 
 <body>
@@ -237,79 +187,53 @@
                 return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
             }
         }
+        var mypoint = ""; //要转化的经纬点
+        var points = [];
         if (document.createElement('canvas').getContext) { // 判断当前浏览器是否支持绘制海量点
             $.ajax({
-                // "url": "../json/omap.json",
-                "url": "http://192.168.0.222:8080/car-management/car/allcar.action",
-                "dataType": "jsonp", //数据类型为jsonp  
-                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                "url": "../json/map.json",
+                // "url": "http://192.168.0.222:8080/car-management/car/allcar.action",
+                // "dataType": "jsonp", //数据类型为jsonp  
+                // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
                 "type": "get",
                 "success": function(res) {
                     console.log(res);
-                    var points = []; // 添加海量点数据
-                    for (var ii = 0; ii < res.length; ii++) {
-                        (function(j) {
-                            var mypoint = new BMap.Point(res[ii].longitude, res[ii].latitude);
-                            mypoint.index = ii;
-                            points.push(mypoint);
-                        })(ii);
+                    for (var n = 0; n < res.length; n++) {
+                        mypoint += res[n].longitude + ',' + res[n].latitude + ";";
                     }
-                    console.log(points.length);
-                    if (points.length % 10 > 0) {
-                        groupCount = (points.length / 10) + 1;
-                    } else {
-                        groupCount = (points.length / 10);
-                    }
-                    for (var i = 0; i < groupCount; i++) { //外层循环，有多少组十条
-                        var pos = new Array();
-                        for (var j = 0; j < 10; j++) { //内层循环，每组十条
-                            if (total < points.length) { //不超过总记录数结束
-                                console.log(points);
-                                console.log(points[(i * 10) + j].lng);
-                                console.log(points[(i * 10) + j].lat);
-                                var point = new BMap.Point(points[(i * 10) + j].lng, points[(i * 10) + j].lat);
-                                pos.push(point);
-                                console.log(pos);
-                            }
-                            total++;
+                    mypoint = mypoint.substring(0, mypoint.lastIndexOf(';'));
+                    console.log(mypoint);
+                    // ----------坐标转换-------------------------------------------------------------------------------------
+                    var reqUrl = "http://api.map.baidu.com/geoconv/v1/?coords=" + mypoint + "&from=1&to=5&ak=pDUf1lcj5kEDkegBS5DSF1TA9uib5AjE";
+                    $.getJSON(reqUrl + "&callback=?", function(data) {
+                        console.log("success");
+                        console.log(data);
+                        for (var i = 0; i < data.result.length; i++) {
+                            (function(j) {
+                                var point = new BMap.Point(data.result[i].x, data.result[i].y);
+                                point.index = i;
+                                points.push(point);
+                            })(i);
+
                         }
-                        var convertor = new BMap.Convertor();
-                        convertor.translate(pos, 1, 5, function(data) {
-                            console.log(data);
-                            if (data.status === 0) {
-                                for (var i = 0; i < data.points.length; i++) {
-                                    (function(x) {
-                                        var options = {
-                                            size: BMAP_POINT_SIZE_HUGE,
-                                            shape: BMAP_POINT_SHAPE_STAR,
-                                            color: 'red'
-                                        }
-                                        var pointCollection = new BMap.PointCollection(data.points, options); // 初始化PointCollection
-                                        // pointCollection.addEventListener('click', function(e) {
-                                        //     alert(e.point.index);
-                                        // });
-                                        map.addOverlay(pointCollection); // 添加Overlay
-                                        var runStatic = res[i].runStatic; //当前状态
-                                        var vCarSn = res[i].vCarSn; //车牌号
-                                        var isAllow = res[i].isAllow; //是否允许
-                                        var vSn = res[i].vSn; //车辆编号
-                                        var showInfo = "<div class='point_content'>当前状态：" + runStatic +
-                                            "<br/>" + "车辆编号:<span id='car_id'>" + vSn +
-                                            "</span><br/>是否允许：" + isAllow +
-                                            "<br/><span class='point_tips'>更多车辆信息请查看右侧车辆详情面板<span>" +
-                                            "</div>";
-                                        // console.log(i);
-                                        // pointCollection.addClickHandler(showInfo, pointCollection, i, res);
-                                        // markers.push(marker);
-                                        // //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点,实现点聚合
-                                        // var markerClusterer = new BMapLib.MarkerClusterer(map, {
-                                        //     markers: markers
-                                        // });
-                                    })(i);
-                                }
-                            }
+                        var options = {
+                            size: BMAP_POINT_SIZE_HUGE,
+                            shape: BMAP_POINT_SHAPE_STAR,
+                            color: '#d340c3'
+                        }
+                        var pointCollection = new BMap.PointCollection(points, options); // 初始化PointCollection
+                        pointCollection.addEventListener('click', function(e) {
+                            console.log(e.point.index);
+                            var s = e.point.index;
+                            mapInfo(res[s].vSn, res[s].vcarSn, res[s].gpsvSn, res[s].vCarType, res[s].warn, res[s].iccard, res[s].isAllow, res[s].runStatic,
+                                res[s].speed, res[s].dAllowStartTm, res[s].dAllowEndTm, res[s].runsumtime);
                         });
-                    }
+                        map.addOverlay(pointCollection); // 添加Overlay
+                        //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。叠加点,实现点聚合
+                        // var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                        //     markers: points
+                        // });
+                    });
                 },
                 "error": function(data) {
                     console.log(data);
@@ -318,8 +242,6 @@
         } else {
             alert('请在chrome、safari、IE8+以上浏览器查看本示例');
         }
-
-
 
         function addClickHandler(content, marker, i, res) {
             marker.addEventListener("click", function(e) {
@@ -357,13 +279,74 @@
         } else {
             $(".mapinfo ul").show();
         }
+        $("#search-btn").click(function() {
+            console.log($("#suggestId").val());
+            map.clearOverlays(); //清除图层覆盖物
+            searchcar();
+        });
+        //回车提交事件
+        $("body").keydown(function() {
+            if (event.keyCode == "13") { //keyCode=13是回车键
+                // console.log(this);
+                map.clearOverlays(); //清除图层覆盖物
+                searchcar();
+            }
+        });
 
-        // function openInfo(content, e) {
-        //     var p = e.target;
-        //     var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-        //     var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象 
-        //     map.openInfoWindow(infoWindow, point); //开启信息窗口
-        // }
+        // 搜索某一条车辆
+        var newpoints = [];
+
+        function searchcar() {
+            console.log($("#suggestId").val());
+            if ($("#suggestId").val() == null || $("#suggestId").val() == "") {
+                alert("车辆编号不能为空");
+            } else {
+                $.ajax({
+                    // "url": "/car-management/car/carData.action",
+                    "url": "../json/searchmap.json",
+                    "type": "get",
+                    // "dataType": "jsonp", //数据类型为jsonp  
+                    // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                    "data": {
+                        "vSn": $("#suggestId").val()
+                    },
+                    "success": function(res) {
+                        console.log(res);
+                        console.log(res);
+                        newpoints.length = 0;
+                        map.clearOverlays(); //清除图层覆盖物
+                        for (var j = 0; j < res.length; j++) {
+                            if (res[0] == null) {
+                                alert("车辆数据未搜素到");
+                                return;
+                            }
+                            newpoints.push(new BMap.Point(res[j].longitude, res[j].latitude));
+                        }
+                        setTimeout(function() {
+                            var convertors = new BMap.Convertor();
+                            convertors.translate(newpoints, 1, 5, function(data) {
+                                console.log(data);
+                                if (data.status === 0) {
+                                    // map.clearOverlays(); //清除图层覆盖物
+                                    for (var i = 0; i < data.points.length; i++) {
+                                        var new_marker = new BMap.Marker(data.points[i], {
+                                            icon: myIcon
+                                        }); // 创建标注
+                                        map.addOverlay(new_marker);
+                                        // console.log(res[i]);
+                                        addClickHandler(showInfo, new_marker, i, res);
+                                    }
+                                }
+                            })
+                        }, 1000);
+                    },
+                    "error": function(data) {
+                        console.log(data);
+                        alert("发生错误");
+                    }
+                })
+            }
+        }
     </script>
 </body>
 

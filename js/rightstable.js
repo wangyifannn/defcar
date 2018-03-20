@@ -4,7 +4,7 @@ loadRightsList();
 
 function loadRightsList() {
     $.ajax({
-        "url": "/car-management/permission/permissionList.action",
+        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -14,7 +14,7 @@ function loadRightsList() {
             createTable("#rightsList", "toolbar_rightsList", res,
                 "pid", "name", "keyWord", "remark", "operator", "createTime", true, true,
                 "权限编号", "名称", "关键字", "备注", "创建人", "创建日期",
-                true, rightsOperateEventsDel, rightsOperateFormatterDel);
+                true, rightsOperateEventsDel, rightsOperateFormatterDel, "client");
             // createTable("#rightsList", "toolbar_rightsList", res, true, true, "uid");
             var addRightsbtn = document.getElementById("btn_add_rights");
             // 点击添加用戶按鈕
@@ -24,7 +24,7 @@ function loadRightsList() {
                 // 确认添加权限
                 $(".addrights_btn").click(function() {
                     $.ajax({
-                        "url": "/car-management/permission/addPermission.action",
+                        "url": "http://192.168.0.222:8080/car-management/permission/addPermission.action",
                         "type": "get",
                         "data": {
                             "name": $("input[name='rights_name']").val(),

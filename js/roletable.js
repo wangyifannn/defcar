@@ -85,7 +85,7 @@ $.ajax({
 function loadRoleList() {
     //加载 角色列表
     $.ajax({
-        "url": "/car-management/role/roleList.action",
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -95,7 +95,7 @@ function loadRoleList() {
             createTable("#roleList", "toolbar_roleList", res,
                 "rid", "name", "keyWord", "remark", "operator", "createTime", true, true,
                 "角色编号", "名称", "关键字", "备注", "创建人", "创建日期",
-                true, roleOperateEventsDel, roleOperateFormatterDel);
+                true, roleOperateEventsDel, roleOperateFormatterDel, "client");
             var addrolebtn = document.getElementById("btn_add_role");
             // 点击添加用戶按鈕
             addrolebtn.onclick = function() {

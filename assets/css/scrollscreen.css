@@ -11,9 +11,7 @@ body {
 
 .maintainList {
     width: 100%;
-    /*border: 1px solid red;*/
     margin: 0 auto;
-    margin-top: 40px;
 }
 
 #btn {

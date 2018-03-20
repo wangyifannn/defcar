@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>文件上传demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-3.3.7.min.css">
+    <!--<link href="../css/login.css" rel="stylesheet">-->
+
+</head>
+
+<body>
+    <div class="mail-to clearfix">
+        <span class="mail-label">
+            <b> 附
+                </b>件：</span>
+        <div class="mail-input">
+            <ul class="list-inline list-unstyled" id="filelist">
+            </ul>
+            <div class="input-group input-group-sm div-app">
+                <span class="fa fa-paperclip fa-flip-horizontal">
+                </span>
+                <input type="hidden" id="filename" value="">
+                <input type="hidden" id="filetype" value="">
+                <input type="hidden" id="filesize" value="">
+                <input type="hidden" id="keyfields" name="keyfields" value="">
+                <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" onchange="fileSelected();">
+                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" id="btn_delfile" onclick="uploadFile()"> 上传
+                                                                        </button>
+                                                                            </ span>
+                                                                                <div class="email-progress-bar email-blue email-stripes" id="div-bar" style="display:none">
+                                                                                    <span style="width:0%;" id="uploadbar">
+                                                                                        </span>
+                </ div>
+            </div>
+            <span class="app-note"> 单个文件大小不超过50M， 支持上传.doc.xls.ppt.img.jpg.gif.zip.rar格式的文件， 文件名称请勿包含特殊字符
+                                                                                                        </span>
+            </ div>
+        </div>
+</body>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../js/fileupload.js"></script>
+
+</html>

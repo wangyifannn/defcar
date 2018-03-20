@@ -111,6 +111,9 @@
             width: 100%;
             background-color: rgb(245, 245, 245);
             border-bottom: 4px solid #DBDBDB;
+            /*position: fixed;*/
+            /*top: 0px;*/
+            /*z-index: 100;*/
         }
         
         .breadcrumb {
@@ -138,14 +141,6 @@
         .bread_right i {
             cursor: pointer;
         }
-        /*.bread_left {
-            float: left;
-        }
-        
-        .bread_right {
-            float: right;
-        }*/
-        /*end 路径导航*/
         
         .tab-pane {
             display: none;
@@ -154,7 +149,6 @@
         .tab-pane.active {
             display: block;
             width: 100%;
-            /*border: 4px solid red;*/
         }
         
         .home_link {
@@ -184,8 +178,6 @@
         
         .content_center {
             width: 100%;
-            /*height: 700px;*/
-            /*border: 1px solid #047AF7;*/
         }
         
         .tab-content>.active {
@@ -212,20 +204,10 @@
             /*padding-top: 30px;*/
         }
         
-        .form-group label {
-            /*color: #A1A2A4;*/
-        }
-        
         .form-group input {
             background: transparent;
             /*color: #A1A2A4;*/
         }
-        /*#carTypeIn h3,
-        #paizhao h3,
-        #driverTypeIn h3,
-        .tableTypein h3 {
-            color: #666;
-        }*/
         
         #btn_mytetail,
         #btn_mydel,
@@ -301,8 +283,11 @@
         .rightbox {
             width: 85%;
             margin: 0 auto;
-            /*border: 1px solid red;*/
             margin-top: 100px;
+        }
+        
+        #carTypeIn {
+            margin-top: -50px;
         }
         
         .point_content {
@@ -429,4 +414,36 @@
         input:-webkit-autofill {
             box-shadow: 0 0 0px 1000px white inset;
             /*font-size: 13px;*/
+        }
+        /*fenye*/
+        
+        .pageNav,
+        .driverpage {
+            /*width: 259px;*/
+            float: right;
+        }
+        
+        .driverpage ul,
+        .pageNav ul {
+            list-style: none;
+            overflow: hidden;
+        }
+        
+        .driverpage ul li,
+        .pageNav ul li {
+            float: left;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin-right: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            background: #ddd;
+        }
+        
+        .pageNav ul li.cur,
+        .driverpage ul li.cur {
+            background-color: #1B6DDA;
         }

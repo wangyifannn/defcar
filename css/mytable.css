@@ -18,18 +18,21 @@ table {
 }
 
 #carCheck .form-group,
+#driverTypeIn .form-group,
 #returncarCheck .form-group,
 #carTypeIn .form-group {
     width: 45% !important;
 }
 
 #carCheck .form-group,
+#driverTypeIn .form-group,
 #returncarCheck .form-group,
 #carTypeIn .form-group {
     display: inline-block;
 }
 
 #carCheck .form-group:nth-child(2n+1),
+#driverTypeIn .form-group:nth-child(2n+1),
 #returncarCheck .form-group:nth-child(2n+1),
 #carTypeIn .form-group:nth-child(2n+1) {
     margin-left: 40px;
@@ -61,19 +64,33 @@ table {
     position: relative;
 }
 
+.panel-body .pull-right {
+    margin-bottom: 15px;
+}
+
+.radio_group {
+    /*margin-top: 6px;*/
+    vertical-align: middle;
+}
+
 .driveradd_btn button,
 .caradd_btn button {
+    width: 70px;
     background: #1A1D3E;
     padding: 5px 7px;
     color: white;
     border: none;
     position: absolute;
-    top: 43px;
+    top: -11px;
     outline: none;
     font-size: 13px;
     left: 160px;
     border-radius: 10px;
     /*margin: -10px 30px 0px 0px;*/
+}
+
+.driveradd_btn button {
+    width: 88px;
 }
 
 .form-group-btn {
@@ -157,7 +174,8 @@ table {
 }
 
 .tablelistbox h3 {
-    margin-top: -2px;
+    margin-top: -12px;
+    margin-bottom: 0px;
 }
 
 .pagination-info,
@@ -217,6 +235,7 @@ input.form-control {
 
 #toolbar h3 {
     display: inline-block;
+    margin-top: -2px;
 }
 
 #userList,
