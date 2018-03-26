@@ -8,7 +8,6 @@ var driverpageNum = 1;
 
 //车辆管理模块： 车辆列表
 function loadDriverList(driverpageNum, size) {
-    console.log($(".driverpage li"));
 
     $.ajax({
         "url": "http://192.168.0.222:8080/car-management/carDriver/CarDriverList.action",
@@ -26,16 +25,12 @@ function loadDriverList(driverpageNum, size) {
             createTable("#DriverListtable", "DriverListtable_toolbar", res.rows,
                 "id", "name", "allowStratTime", "allowEndTime", "iccard", "isallow", false, true,
                 "驾驶员编号", "姓名", "允许起始日期", "允许终止日期", "iccard", "是否授权",
-                true, operateEvents, operateFormatter, "");
-            console.log($(".driverpage li"));
+                true, driveroperateEvents, driveroperateFormatter, "");
             var drivermaxPage = Math.ceil(res.total / size);
             // var drivermaxPage = 9;
-            console.log(drivermaxPage);
 
             if (drivermaxPage >= 9) {
-                console.log("大于等于9");
-                console.log($(".driverpage li"));
-
+                // console.log("大于等于9");
                 dclickPagings(drivermaxPage);
             } else {
                 dclickPaging(drivermaxPage, driverpageNum - 1);
@@ -56,15 +51,15 @@ $(function() {
     });
 })
 
-function operateFormatter(value, row, index) {
+function driveroperateFormatter(value, row, index) {
     return [
-        '<button type="button" id="btn_driverdel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<button type="button" id="btn_driverdetail" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
-        '<button type="button" id="btn_driverimpower" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">授权</button>'
+        '<button type="button" id="btn_driverdel" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
+        '<button type="button" id="btn_driverdetail" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
+        '<button type="button" id="btn_driverimpower" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">授权</button>'
     ].join('');
 }
 
-window.operateEvents = {
+window.driveroperateEvents = {
     'click #btn_driverdel': function(e, value, row, index) {
         console.log(row);
         console.log(index);
@@ -118,7 +113,7 @@ function dclickPagings(drivermaxPage) {
         $(".driverpage li").eq(5).html(drivermaxPage - 1);
         $(".driverpage li").eq(6).html(drivermaxPage);
         //cur
-        console.log($(".driverpage li"));
+        // console.log($(".driverpage li"));
         $(".driverpage li").eq(driverpageNum - 1).addClass("cur").siblings().removeClass("cur");
     } else if (driverpageNum <= drivermaxPage && driverpageNum >= drivermaxPage - 2) {
         $(".driverpage li").eq(0).html("1");
@@ -141,9 +136,9 @@ function dclickPagings(drivermaxPage) {
         //cur
         $(".driverpage li").eq(3).addClass("cur").siblings().removeClass("cur");
     }
-    console.log($(".driverpage li"));
+    // console.log($(".driverpage li"));
     $(".driverpage li").click(function(event) {
-        console.log(this);
+        // console.log(this);
         //写"…"的小格格不能被点击 方式2
         if ($(this).html() == "…") {
             return;
@@ -168,19 +163,14 @@ function dclickPaging(drivermaxPage, i) {
     for (var p = 1; p < drivermaxPage + 1; p++) {
         lis += "<li>" + p + "</li>";
     }
-    console.log(i);
     $(".driverpage ul").html(lis);
     $(".driverpage li").eq(i).addClass("cur").siblings().removeClass("cur");
     // 点击时间
     $(".driverpage li").click(function(event) {
-        console.log(this);
-        console.log($(this));
         // $(this).addClass("cur").siblings().removeClass("cur");
         //改变信号量
         driverpageNum = parseInt($(this).html());
         //调用ajax，切换分页按钮样式
-        // showData();
-        console.log(driverpageNum);
         loadDriverList(driverpageNum, 10);
         dclickPaging(drivermaxPage, driverpageNum - 1);
         //更新URL的hash

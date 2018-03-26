@@ -40,6 +40,12 @@
             margin-top: 90px;
         }
         
+        #carDetail .form-horizontal {
+            margin-top: 30px;
+            text-align: center;
+            color: red;
+        }
+        
         #role .form-horizontal {
             width: 65%;
             margin: 0 auto;
@@ -211,6 +217,7 @@
         
         #btn_mytetail,
         #btn_mydel,
+        .my_btn,
         .optionBth {
             border: none;
             color: white;

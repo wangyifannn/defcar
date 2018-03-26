@@ -359,7 +359,7 @@
             for (var n = 0; n < res.length; n++) {
                 points.push(new BMap.Point(res[n].longitude, res[n].latitude));
             }
-            console.log(points.length);
+            // console.log(points.length);
             if (points.length % 10 > 0) {
                 groupCount = (points.length / 10) + 1;
             } else {
@@ -374,12 +374,12 @@
                     }
                     total++;
                 }
-                console.log(pos);
+                // console.log(pos);
                 var convertor = new BMap.Convertor();
                 convertor.translate(pos, 1, 5, function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status === 0) {
-                        console.log(data.points.length);
+                        // console.log(data.points.length);
                         for (var i = 0; i < data.points.length; i++) {
                             var marker = new BMap.Marker(data.points[i], {
                                 icon: myIcon

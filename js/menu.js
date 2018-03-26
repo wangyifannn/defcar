@@ -28,10 +28,7 @@ $.ajax({
         }
 
         $(".sidebar-dropdown > a").click(function() {
-            // console.log(this);
-            // console.log(this.innerText);
             // console.log(this.parentNode.parentNode.parentNode.children[0].children[1].innerText);
-
             $(".sidebar-submenu").slideUp(250);
             if ($(this).parent().hasClass("active")) {
                 $(".sidebar-dropdown").removeClass("active");
@@ -71,6 +68,10 @@ $.ajax({
         // $(".carTrack").click(function() {
         //     $("#carTrack").append("<iframe class='iframebg' src='../map/cartrack.html' width='100%' height='800px' scrolling='no' frameborder='no' border='0'></iframe>");
         // });
+        $(".carList").click(function() {
+            $('#carListtable').bootstrapTable('destroy');
+            loadCarList(1, 10);
+        });
         $(".rights").click(function() {
             $("html").append("<script type='text/javascript' src='./js/rightstable.js'></script>");
         });

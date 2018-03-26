@@ -17,10 +17,10 @@
  });
  //时间选择器
  var myDate = new Date();
- console.log(myDate);
+ //  console.log(myDate);
  var date2 = new Date(myDate);
  date2.setDate(myDate.getDate() - 30);
- console.log(date2);
+ //  console.log(date2);
 
  laydate.render({
      elem: '#startDate',

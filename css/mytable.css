@@ -17,17 +17,20 @@ table {
     padding: 3px 12px;
 }
 
-#carCheck .form-group,
-#driverTypeIn .form-group,
-#returncarCheck .form-group,
-#carTypeIn .form-group {
-    width: 45% !important;
+.form_twolist .form-group {
+    width: 30% !important;
+    display: inline-block;
+}
+
+.form_twolist .form-group:nth-child(3n+1) {
+    margin-left: 40px;
 }
 
 #carCheck .form-group,
 #driverTypeIn .form-group,
 #returncarCheck .form-group,
 #carTypeIn .form-group {
+    width: 45% !important;
     display: inline-block;
 }
 
@@ -36,6 +39,32 @@ table {
 #returncarCheck .form-group:nth-child(2n+1),
 #carTypeIn .form-group:nth-child(2n+1) {
     margin-left: 40px;
+}
+
+.caroptrator {
+    height: 20px;
+    font-size: 13px;
+}
+
+.detail_input {
+    height: 25px;
+}
+
+#carDetail .row {
+    margin-top: 15px;
+    text-align: center;
+    margin-left: 195px;
+}
+
+.card-view span:first-child {
+    margin-left: 41px;
+    width: 100px;
+    display: inline-block;
+    /*text-align: right;*/
+}
+
+.card-views .card-view:first-child span {
+    color: #1B6DDA;
 }
 
 .car_image {
@@ -64,6 +93,13 @@ table {
     position: relative;
 }
 
+.vSn_tips {
+    font-size: 10px;
+    color: red;
+    position: absolute;
+    /*right: 10px;*/
+}
+
 .panel-body .pull-right {
     margin-bottom: 15px;
 }
@@ -71,6 +107,20 @@ table {
 .radio_group {
     /*margin-top: 6px;*/
     vertical-align: middle;
+}
+
+button.groupsearch_btn {
+    width: 70px;
+    background: #1A1D3E;
+    padding: 5px 7px;
+    color: white;
+    border: none;
+    position: absolute;
+    top: -2px;
+    outline: none;
+    font-size: 13px;
+    left: 160px;
+    border-radius: 10px;
 }
 
 .driveradd_btn button,
@@ -81,12 +131,11 @@ table {
     color: white;
     border: none;
     position: absolute;
-    top: -11px;
+    top: -2px;
     outline: none;
     font-size: 13px;
-    left: 160px;
+    left: 506px;
     border-radius: 10px;
-    /*margin: -10px 30px 0px 0px;*/
 }
 
 .driveradd_btn button {
@@ -113,7 +162,32 @@ table {
 .import-mdoel_select {
     position: absolute;
     left: 70px;
+    top: -4px;
+    width: 148px !important;
+    height: 30px;
+    font-size: 12px;
+}
+
+.groupbox {
+    position: absolute;
+    left: 250px;
     top: 0px;
+    /*float: right;*/
+    /*display: inline-block;*/
+}
+
+#carListtable_toolbar {
+    width: 500px;
+    /*border: 1px solid red;*/
+}
+
+.group-mdoel_select {
+    position: absolute;
+    left: 70px;
+    top: -4px;
+    font-size: 12px;
+    width: 80px !important;
+    height: 30px;
 }
 
 .fixed-table-pagination .pagination a {

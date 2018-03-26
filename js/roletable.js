@@ -6,7 +6,7 @@ var role_check_val = [];
 loadRoleList();
 // 加载菜单列表
 $.ajax({
-    "url": "/car-management/menu/menuList.action",
+    "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
     "type": "get",
     "dataType": "jsonp", //数据类型为jsonp  
     "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -131,7 +131,7 @@ function loadRoleList() {
                     console.log(checkmenu_val.toString());
                     console.log($("input[name='role_name']").val());
                     $.ajax({
-                        "url": "/car-management/role/addRole.action",
+                        "url": "http://192.168.0.222:8080/car-management/role/addRole.action",
                         "type": "get",
                         "data": {
                             "name": $("input[name='role_name']").val(),
@@ -192,7 +192,7 @@ window.roleOperateEventsDel = {
         console.log(roledelarr);
         // 删除权限操作
         $.ajax({
-            "url": "/car-management/role/deleteRole.action",
+            "url": "http:192.168.0.222:8080/car-management/role/deleteRole.action",
             "type": "get",
             "data": {
                 "rids[]": roledelarr

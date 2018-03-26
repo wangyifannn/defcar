@@ -31,7 +31,7 @@ $(".glyphicon-off").click(function() {
     con = confirm("你确定要退出吗？");
     if (con) {
         window.localStorage.removeItem("successUser");
-        window.location.href = "/car-management/user/loginOut.action";
+        window.location.href = "http://192.168.0.222:8080/car-management/user/loginOut.action";
     }
 
 });
@@ -44,8 +44,8 @@ function isChrome() {
     return navigator.userAgent.indexOf("Chrome") > -1;
 }
 isFF();
-console.log(isFF());
-console.log(isChrome());
+// console.log(isFF());
+// console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
     // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
@@ -87,7 +87,7 @@ function createTable(boxname, toolbarid, res,
         minimumCountColumns: 2, //最少允许的列数
         clickToSelect: true, //是否启用点击选中行
         searchOnEnterKey: true, //设置为 true时，按回车触发搜索方法
-        strictSearch: true, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
         showToggle: true, //是否显示切换视图（table/card）按钮
         searchAlign: "right",
         columns: [{
@@ -156,7 +156,7 @@ function changeDateFormat(cellval) {
 // 数据库 加载权限列表
 function loadrightsList(paramsid, namerid) {
     $.ajax({
-        "url": "/car-management/permission/permissionList.action",
+        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -176,7 +176,7 @@ function loadrightsList(paramsid, namerid) {
 // 数据库 加载角色列表
 function loadrolesList(paramsid, namerid) {
     $.ajax({
-        "url": "/car-management/role/roleList.action",
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -209,3 +209,164 @@ Array.prototype.remove = function(val) {
         this.splice(index, 1);
     }
 };
+
+/**
+ * 获取hash参数
+ */
+function getHashParameter(key) {
+    var params = getHashParameters();
+    return params[key];
+}
+
+function getHashParameters() {
+    var arr = (location.hash || "").replace(/^\#/, '').split("&");
+    var params = {};
+    for (var i = 0; i < arr.length; i++) {
+        var data = arr[i].split("=");
+        if (data.length == 2) {
+            params[data[0]] = data[1];
+        }
+    }
+    return params;
+}
+// 参数校验接口
+function checkParams(url, params) {
+    $.ajax({
+        "url": "http://192.168.0.222:8080/car-management/car/check" + url,
+        "type": "get",
+        "data": {},
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback",
+        "success": function(res) {
+            console.log(res);
+            if (res) {
+                // alert("车辆编号已存在")
+                $(params).html(res.msg);
+                return;
+            }
+        }
+    })
+}
+// 车辆列表
+function createcarTable(boxname, toolbarid, res,
+    row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
+    row1name, row2name, row3name, row4name, row5name, row6name,
+    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype, row7, row7name, row8, row8name, row9, row9name) {
+    $(boxname).css({
+        "position": "relative"
+    });
+    $(boxname).bootstrapTable('destroy');
+    $(boxname).bootstrapTable({
+        data: res,
+        toggle: "table",
+        toolbar: toolbarid,
+        pagination: ifpage, //是否显示分页（*）
+        sortable: false, //是否启用排序
+        sortOrder: "asc", //排序方式
+        sidePagination: pagetype, //分页方式：client客户端分页，server服务端分页（*）
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 10, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        search: true, //是否搜索查询
+        showColumns: true, //是否显示所有的列
+        showRefresh: ifrefresh, //是否显示刷新按钮
+        minimumCountColumns: 2, //最少允许的列数
+        clickToSelect: true, //是否启用点击选中行
+        searchOnEnterKey: true, //设置为 true时，按回车触发搜索方法
+        strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        showToggle: true, //是否显示切换视图（table/card）按钮
+        searchAlign: "right",
+        columns: [{
+                field: row1,
+                title: row1name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row2,
+                title: row2name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row3,
+                title: row3name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row4,
+                title: row4name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row5,
+                title: row5name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row7,
+                title: row7name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    // return changeDateFormat(value)
+                    // console.log(value);
+                    if (value == "" || value == null) {
+                        return "未分组";
+                    } else {
+                        return value.name;
+                    }
+                }
+            },
+            {
+                field: row8,
+                title: row8name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    // return changeDateFormat(value)
+                    if (value == "" || value == null) {
+                        return "已录入";
+                    } else if (row.check_s == 1) {
+                        return "已接车点检";
+                    } else if (row.check_s == 2) {
+                        return "已安全检查";
+                    } else if (row.check_s == 3) {
+                        return "已线束检查";
+                    } else if (row.check_s == 4) {
+                        return "已部件检查";
+                    } else if (row.check_s == 5) {
+                        return "已还车点检";
+                    } else {
+                        return "已检查完毕";
+                    }
+                }
+            },
+            {
+                field: row9,
+                title: row9name,
+                align: 'center',
+                sortable: true
+            },
+            {
+                field: row6,
+                title: row6name,
+                align: 'center',
+                sortable: true,
+                //获取日期列的值进行转换
+                formatter: function(value, row, index) {
+                    return changeDateFormat(value)
+                }
+            },
+            {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events: userOperateEventsDel,
+                formatter: userOperateFormatterDel
+            }
+        ]
+    });
+    // 隐藏表格中的某一列
+    if (!ifoperate) {
+        $(boxname).bootstrapTable('hideColumn', 'operate');
+    }
+}

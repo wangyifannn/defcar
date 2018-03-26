@@ -46,11 +46,6 @@ $(document).ready(function() {
                     successUser.flag = false;
                 } else {
                     $(".logininfo_group").html(data.msg);
-                    // successUser.name = data.username;
-                    // successUser.name = data.username;
-                    // successUser.name = data.username;
-                    // successUser.name = data.username;
-                    // successUser.role = $(".pass_input").val();
                     successUser.flag = true;
                     window.localStorage.successUser = JSON.stringify(data);
                     window.location.href = "../index.html";
