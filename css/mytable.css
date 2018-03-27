@@ -97,7 +97,11 @@ table {
     font-size: 10px;
     color: red;
     position: absolute;
-    /*right: 10px;*/
+    top: 5px;
+}
+
+.redtext {
+    /*color: red;*/
 }
 
 .panel-body .pull-right {
@@ -404,4 +408,93 @@ input.form-control {
 #menulist_toolbar,
 #childmenulist_toolbar {
     color: #1B6DDA;
+}
+
+
+/*安全检查*/
+
+.checkMenus {
+    margin: 35px 0px;
+}
+
+.checkMenus button {
+    background: #1B6DDA;
+    padding: 7px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: white;
+    cursor: pointer;
+    margin: 25px 10px 10px 58px;
+    outline: none;
+}
+
+.pot_pressure,
+.check_itembox {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.pot_pressure div {
+    display: inline-block;
+    margin-right: 17px;
+}
+
+.pot_pressure div:last-child {
+    margin-right: 0px;
+}
+
+.pot_pressure label {
+    /*color: rebeccapurple;*/
+}
+
+.pot_pressure input {
+    width: 60px;
+    text-indent: 5px;
+    margin-left: 2px;
+}
+
+.checktitle span {
+    margin-top: 20px;
+    background: #DBDBDB;
+    border: 2px solid #C7C7C7;
+    /*vertical-align: middle;*/
+    /*margin: 0 auto;*/
+}
+
+.checktitle span,
+.checkitem span {
+    display: inline-block;
+    width: 24%;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #C7C7C7;
+    /*border: 1px solid blue;*/
+    border-top: none;
+    border-right: none;
+    vertical-align: middle;
+}
+
+.checktitle span:last-child,
+.checkitem span:last-child {
+    border-right: 1px solid #C7C7C7;
+}
+
+.checkitem div:hover {
+    background: #DBDBDB;
+}
+
+.checkitem span {
+    font-size: 14px;
+}
+
+.explain_input {
+    border: none;
+    height: 35px;
+    padding: 0px 48px;
+}
+
+.statusno {
+    margin: 0px 5px;
 }

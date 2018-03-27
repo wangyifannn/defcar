@@ -75,6 +75,7 @@
                         <!--gps结束-->
                         <!--门岗-->
                         <!--车辆管理-->
+                        <li class=""><a href="#sCheck" data-toggle="tab">车辆安全</a> </li>
                         <!--数据管理-->
                         <!--维修管理-->
                         <!--日志管理-->
@@ -235,6 +236,7 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">电话：</label>
                                 <div class="col-sm-6">
                                     <input type="text" name="send_iphone" class="form-control col-sm-7">
+                                    <span class="col-sm-2"></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -263,7 +265,6 @@
                             </div>
                         </form>
                     </div>
-                    <!--安全检查-->
                     <!--还车点检-->
                     <div class="tab-pane" id="returncarCheck">
                         <img class="table_footer" src="./img/index/table_footer.png" alt="">
@@ -427,7 +428,7 @@
                         </div>
                     </div>
                     <!--车辆录入-->
-                    <div class="tab-pane tableTypein" id="carTypeIn">
+                    <div class="tab-pane" id="carTypeIn">
                         <div class="rightbox">
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
                             <form class="form-horizontal">
@@ -435,7 +436,7 @@
                                     <label for="inputEmail3" class="col-sm-5 control-label">试验车号：</label>
                                     <div class="col-sm-5">
                                         <input type="text" class="form-control col-sm-7" id="vSn" placeholder="车辆编号，必填项">
-                                        <span class="col-sm-3 vSn_tips"></span>
+                                        <span class="col-sm-6 vSn_tips"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -608,44 +609,62 @@
                         </form>
                     </div>
                     <!--车辆/安全/附件检查-->
-                    <div class="tab-pane" id="car_safeCheck">
-                        <div class="rightbox">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                            <div class="pot_pressure">
-                                <div class="form-group">
-                                    <span>缸压</span>
-                                    <input type="text">
+                    <div class="tab-pane" id="sCheck">
+                        <div class="checkMenus">
+
+                        </div>
+                        <div class="pot_pressure">
+
+                        </div>
+                        <div class="check_itembox">
+
+                        </div>
+                        <div class="table_safe">
+                            <table id="safeList">
+                                <div id="safelist_toolbar" class="btn-group">
                                 </div>
-                                <div class="form-group">
-                                    <span>1缸</span>
-                                    <input type="text">
-                                </div>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <a href="#carWiring" data-toggle="tab"><button type="button" class="btn btn-default btn-primary" id="carWiring_btn">下一步</button></a>
+                                <button type="button" class="btn btn-default btn-primary resetsafe_btn">重置</button>
+                                <a href="#carCheck" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carWiring_return">上一步</button></a>
                             </div>
-                            <div class="table_safe">
-                                <table id="safeList">
-                                    <div id="safelist_toolbar" class="btn-group">
-                                    </div>
-                                </table>
+                        </div>
+                        <div class="form-group from-group-tips">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <label for="" class="carsafe_tips"></label>
                             </div>
                         </div>
                     </div>
                     <!--线束检查-->
-                    <div class="tab-pane" id="car_wiringCheck">
+                    <div class="tab-pane" id="wiringCheck">
                         <!---->
+                        <div class="checkMenus">
+
+                        </div>
+                        <div class="wcheck_itembox"></div>
                         <p>
                             线束检查
                         </p>
                     </div>
                     <!--BOM检查-->
-                    <div class="tab-pane" id="car_bomCheck">
+                    <div class="tab-pane" id="bomCheck">
                         <!---->
+                        <div class="checkMenus">
+
+                        </div>
                         <p>
                             BOM检查
                         </p>
                     </div>
                     <!--安装和布置状态检查-->
-                    <div class="tab-pane" id="car_installCheck">
+                    <div class="tab-pane" id="partCheck">
                         <!---->
+                        <div class="checkMenus">
+
+                        </div>
                         <p>
                             安装和布置状态检查
                         </p>

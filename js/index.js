@@ -230,19 +230,25 @@ function getHashParameters() {
     return params;
 }
 // 参数校验接口
-function checkParams(url, params) {
+function checkParams(url, params1, params2, btn) {
     $.ajax({
         "url": "http://192.168.0.222:8080/car-management/car/check" + url,
         "type": "get",
         "data": {},
+        "async": false,
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback",
         "success": function(res) {
             console.log(res);
             if (res) {
                 // alert("车辆编号已存在")
-                $(params).html(res.msg);
-                return;
+                $(params1).html(res.msg);
+                $(params2).html(res.msg);
+                if (res.ret == false) {
+                    $(btn).attr("disabled", true);
+                } else {
+                    $(btn).attr("disabled", false);
+                }
             }
         }
     })

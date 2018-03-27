@@ -184,6 +184,7 @@
         
         .content_center {
             width: 100%;
+            min-width: 1200px;
         }
         
         .tab-content>.active {

@@ -82,13 +82,14 @@ function caroperateFormatter(value, row, index) {
         row.check_s = "新车点检";
         hrefString = "carCheck";
     } else if (row.check_s == 1) {
-        // row.check_s = "安全检查";
-        row.check_s = "还车点检";
-        hrefString = "returncarCheck";
+        row.check_s = "安全检查";
+        hrefString = "sCheck";
     } else if (row.check_s == 2) {
         row.check_s = "线束检查";
+        hrefString = "car_wiringCheck";
     } else if (row.check_s == 3) {
-        row.check_s = "部件检查";
+        row.check_s = "BOM检查";
+        hrefString = "car_bomCheck";
     } else if (row.check_s == 4) {
         row.check_s = "还车点检";
         hrefString = "returncarCheck";
@@ -97,12 +98,12 @@ function caroperateFormatter(value, row, index) {
     }
     return [
         '<button type="button" id="btn_cardel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<a href="#carDetail" data-toggle="tab"><button type="button" id="btn_cardetail" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button><a href="#carCheck" data-toggle="tab">',
+        '<a href="#carDetail" data-toggle="tab"><button type="button" id="btn_cardetail" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
         '<a href="#' + hrefString + '" data-toggle="tab"><button type="button" id="' + hrefString + '" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">' + row.check_s + '</button></a>',
         '<a href="#" data-toggle="tab"><select class="caroptrator">' +
         '<option value="">其他</option>' +
         '<option value="carCheck">接车点检</option>' +
-        '<option value="car_safeCheck">安全检查</option>' +
+        '<option value="sCheck">安全检查</option>' +
         '<option value="harnessCheck">线束检查</option>' +
         '<option value="bomCheck">BOM检查</option>' +
         '<option value="returncarCheck">还车点检</option>' +
@@ -127,9 +128,8 @@ window.caroperateEvents = {
                 console.log(res);
                 if (res.ret) {
                     var indexs = parseInt(index / 10);
-                    console.log(indexs);
-                    console.log(indexs + 1);
-
+                    // console.log(indexs);
+                    // console.log(indexs + 1);
                     loadCarList(indexs + 1, 10, "");
                 }
             },
@@ -140,7 +140,6 @@ window.caroperateEvents = {
     },
     'click #btn_cardetail': function(e, value, row, index) {
         findCarList(row.vSn, ".carDetailForm");
-        // console.log(this.parentNode.parentNode.children[0].children[0].getAttribute("checked"));
     },
     'click #carCheck': function(e, value, row, index) {
         $("#carCheck #vSn").val(row.vSn); //车辆编号
@@ -148,8 +147,13 @@ window.caroperateEvents = {
         $("#returncarCheck #vSn").val(row.vSn); //车辆编号
         $("#carCheck input").attr("readOnly", false);
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
-        // console.log(this.parentNode.parentNode.children[0].children[0].getAttribute("checked"));
-        // console.log(row);
+    },
+    'click #sCheck': function(e, value, row, index) {
+        console.log($('a[href="#sCheck"]'));
+        // $("#carCheck #vSn").val(row.vSn); //车辆编号
+        // $("#carCheck #vin").val(row.vin); //车架号
+        // $("#returncarCheck #vSn").val(row.vSn); //车辆编号
+        window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
     },
     'click #returncarCheck': function(e, value, row, index) {
         $("#returncarCheck #vSn").val(row.vSn); //车辆编号
