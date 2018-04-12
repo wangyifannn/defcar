@@ -1,0 +1,461 @@
+[{
+        "id": 27,
+        "pname": "点火线圈",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 28,
+        "pname": "EGR阀",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 29,
+        "pname": "电子防盗器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 30,
+        "pname": "巡航控制",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 31,
+        "pname": "前氧传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 32,
+        "pname": "后氧传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 33,
+        "pname": "曲轴位置传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 34,
+        "pname": "凸轮轴位置传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 35,
+        "pname": "水温传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 36,
+        "pname": "进气压力/温度传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 37,
+        "pname": "通讯",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 1,
+                "cname": "KW2000"
+            },
+            {
+                "id": 2,
+                "cname": "CAN"
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "pname": "ELOAD信号",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 3,
+                "cname": "大灯负载信号"
+            },
+            {
+                "id": 4,
+                "cname": "鼓风机负载信号"
+            },
+            {
+                "id": 5,
+                "cname": "除雾负载信号"
+            },
+            {
+                "id": 6,
+                "cname": "助力转向开关"
+            },
+            {
+                "id": 7,
+                "cname": "其他电器负载信号"
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "pname": "燃油供给系统",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 8,
+                "cname": "喷油器"
+            },
+            {
+                "id": 9,
+                "cname": "油泵继电器"
+            },
+            {
+                "id": 10,
+                "cname": "碳罐电磁阀"
+            },
+            {
+                "id": 11,
+                "cname": "燃油箱油位传感器信号输出（输入ECM）"
+            },
+            {
+                "id": 12,
+                "cname": "高压油泵控制阀（GDI)"
+            },
+            {
+                "id": 13,
+                "cname": "高压油轨压力传感器（GDI）"
+            },
+            {
+                "id": 14,
+                "cname": "喷嘴加热控制（Flex Fuel）"
+            }
+        ]
+    },
+    {
+        "id": 40,
+        "pname": "制动系统",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 15,
+                "cname": "刹车开关"
+            },
+            {
+                "id": 16,
+                "cname": "刹车灯"
+            },
+            {
+                "id": 17,
+                "cname": "制动真空度传感器信号输入（Turbo建议安装）"
+            },
+            {
+                "id": 18,
+                "cname": "真空泵ECM控制（Turbo建议安装）"
+            },
+            {
+                "id": 19,
+                "cname": "制动真空泵继电器"
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "pname": "车速及轮速",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 20,
+                "cname": "轮速传感器"
+            },
+            {
+                "id": 21,
+                "cname": "车速传感器"
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "pname": "仪表显示",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 22,
+                "cname": "瞬时油耗数据输出功能"
+            },
+            {
+                "id": 23,
+                "cname": "汽车仪表水温数据显示输出"
+            },
+            {
+                "id": 24,
+                "cname": "汽车仪表转速显示输出"
+            },
+            {
+                "id": 25,
+                "cname": "仪表电源输入"
+            },
+            {
+                "id": 26,
+                "cname": "SVS灯/MIL灯"
+            }
+        ]
+    },
+    {
+        "id": 43,
+        "pname": "空调系统",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 27,
+                "cname": "空调请求开关信号"
+            },
+            {
+                "id": 28,
+                "cname": "空调前蒸发器温度传感器是否接入ECM"
+            },
+            {
+                "id": 29,
+                "cname": "空调后蒸发器温度传感器是否接入ECM"
+            },
+            {
+                "id": 30,
+                "cname": "空调压力传感器"
+            },
+            {
+                "id": 31,
+                "cname": "独立冷凝器风扇继电器"
+            },
+            {
+                "id": 32,
+                "cname": "空调离合器继电器"
+            },
+            {
+                "id": 33,
+                "cname": "空调高低压开关"
+            },
+            {
+                "id": 34,
+                "cname": "空调中压开关"
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "pname": "风扇控制",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 35,
+                "cname": "低速风扇继电器"
+            },
+            {
+                "id": 36,
+                "cname": "高速风扇继电器"
+            },
+            {
+                "id": 37,
+                "cname": "高低速中间继电器（五脚）"
+            },
+            {
+                "id": 38,
+                "cname": "PWM风扇控制"
+            },
+            {
+                "id": 73,
+                "cname": "可变进气通道"
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "pname": "增压发动机",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 39,
+                "cname": "旁通阀"
+            },
+            {
+                "id": 40,
+                "cname": "泄压阀"
+            },
+            {
+                "id": 41,
+                "cname": "增压压力、温度传感器（Turbo）"
+            },
+            {
+                "id": 42,
+                "cname": "大气压力、温度传感器（Turbo）"
+            },
+            {
+                "id": 43,
+                "cname": "中冷风扇继电器"
+            }
+        ]
+    },
+    {
+        "id": 47,
+        "pname": "VVT",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 44,
+                "cname": "可变进气相位调节装置"
+            },
+            {
+                "id": 45,
+                "cname": "进气油压控制阀"
+            },
+            {
+                "id": 46,
+                "cname": "排气油压控制阀"
+            }
+        ]
+    },
+    {
+        "id": 48,
+        "pname": "水温电子控制",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 47,
+                "cname": "电子节温器"
+            },
+            {
+                "id": 48,
+                "cname": "电子水泵"
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "pname": "碰撞断油功能",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 50,
+        "pname": "发电机控制",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 49,
+                "cname": "发电机（LIN通讯）"
+            },
+            {
+                "id": 50,
+                "cname": "发电机负载反馈输入信号"
+            },
+            {
+                "id": 51,
+                "cname": "ECM控制发电机输出信号"
+            },
+            {
+                "id": 52,
+                "cname": "充电指示灯是否受ECM控制"
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "pname": "启停控制",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 53,
+                "cname": "起动请求信号"
+            },
+            {
+                "id": 54,
+                "cname": "起停系统主控制开关"
+            },
+            {
+                "id": 55,
+                "cname": "起动电机继电器"
+            },
+            {
+                "id": 56,
+                "cname": "空挡位置传感器"
+            },
+            {
+                "id": 57,
+                "cname": "空挡开关输入信号"
+            },
+            {
+                "id": 58,
+                "cname": "传动链状态输入信号"
+            },
+            {
+                "id": 59,
+                "cname": "发动机舱开关状态输入信号"
+            },
+            {
+                "id": 60,
+                "cname": "驾驶员侧车门开关信号输入起动机继电器控制（输出）信号"
+            },
+            {
+                "id": 61,
+                "cname": "起动机继电器控制（输出）信号"
+            },
+            {
+                "id": 62,
+                "cname": "起停系统工作状态指示灯输出信号"
+            },
+            {
+                "id": 63,
+                "cname": "起停系统警示灯输出信号"
+            },
+            {
+                "id": 64,
+                "cname": "怠速停机状态输出信号（屏蔽仪表机油灯，电池灯）"
+            },
+            {
+                "id": 65,
+                "cname": "蓄电池状态传感器"
+            },
+            {
+                "id": 66,
+                "cname": "离合器信号（顶部开关，底部开关）"
+            }
+        ]
+    },
+    {
+        "id": 52,
+        "pname": "机油温度/压力",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 67,
+                "cname": "机油温度传感器"
+            },
+            {
+                "id": 68,
+                "cname": "机油压力传感器"
+            }
+        ]
+    },
+    {
+        "id": 53,
+        "pname": "进气流量控制",
+        "carCheckRequest": null,
+        "carCheckItems": [{
+                "id": 69,
+                "cname": "节气门位置传感器"
+            },
+            {
+                "id": 70,
+                "cname": "怠速步进电机"
+            },
+            {
+                "id": 71,
+                "cname": "电子节气门（ETC）"
+            },
+            {
+                "id": 72,
+                "cname": "电子油门踏板"
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "pname": "爆震传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    },
+    {
+        "id": 55,
+        "pname": "加速度传感器",
+        "carCheckRequest": null,
+        "carCheckItems": []
+    }
+]

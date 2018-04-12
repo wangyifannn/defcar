@@ -1,6 +1,5 @@
-$("#rights .form-horizontal").hide();
 //加载 权限列表
-loadRightsList();
+
 
 function loadRightsList() {
     $.ajax({
@@ -85,7 +84,7 @@ window.rightsOperateEventsDel = {
         $(this).parent().parent().remove();
         // 删除权限操作
         $.ajax({
-            "url": "/car-management/permission/deletePermission.action",
+            "url": "http://192.168.0.222:8080/car-management/permission/deletePermission.action",
             "type": "get",
             "data": {
                 "pids[]": rightsdelarr

@@ -1,0 +1,34 @@
+[{
+    "id": 1,
+    "name": "A组",
+    "carCheckRequest": {
+        "request": "紧固无漏"
+    },
+    "components": {
+        "id": 1,
+        "name": "28452294"
+    },
+    "carCheckItems": []
+}, {
+    "id": 2,
+    "name": "B组",
+    "carCheckRequest": {
+        "request": "紧固无漏"
+    },
+    "components": {
+        "id": 1,
+        "name": "28452294"
+    },
+    "carCheckItems": []
+}, {
+    "id": 3,
+    "name": "C组",
+    "carCheckRequest": {
+        "request": "紧固无漏"
+    },
+    "components": {
+        "id": 1,
+        "name": "28452294"
+    },
+    "carCheckItems": []
+}]

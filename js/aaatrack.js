@@ -30,19 +30,19 @@ $(document).ready(function() {
     var myarr = [];
     // -------------------------------------------------------------------------------------------------
     function loadAgotrack() {
-        console.log($("#startDate").val());
-        console.log($("#endDate").val());
-        console.log($("#ago_input").val());
+        // console.log($("#startDate").val());
+        // console.log($("#endDate").val());
+        // console.log($("#ago_input").val());
         if ($("#startDate").val() == null || $("#endDate").val() == "" || $("#ago_input").val() == "") {
             alert("不能为空");
             return;
         } else {
             $.ajax({
-                "url": "../json/omap.json",
-                // "url": "http://192.168.0.222:8080/car-management/car/carTrack.action",
+                // "url": "../json/omap.json",
+                "url": "http://192.168.0.222:8080/car-management/car/carTrack.action",
                 "type": "get",
-                // "dataType": "jsonp", //数据类型为jsonp  
-                // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                "dataType": "jsonp", //数据类型为jsonp  
+                "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
                 "data": {
                     "startDate": $("#startDate").val(),
                     "endDate": $("#endDate").val(),
@@ -50,6 +50,10 @@ $(document).ready(function() {
                 },
                 "success": function(res) {
                     console.log(res);
+                    if (res.length <= 1) {
+                        alert("未检索到此车的历史数据");
+                        return;
+                    }
                     points.length = 0;
                     ago_total = 0;
                     ago_groupCount = 0;

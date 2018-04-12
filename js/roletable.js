@@ -1,9 +1,8 @@
-$("#role .form-horizontal").hide();
 // 加载权限列表
-loadrightsList(".role_check_box", "rolepid");
+
 var checkmenu_val = [];
 var role_check_val = [];
-loadRoleList();
+
 // 加载菜单列表
 $.ajax({
     "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
@@ -192,7 +191,7 @@ window.roleOperateEventsDel = {
         console.log(roledelarr);
         // 删除权限操作
         $.ajax({
-            "url": "http:192.168.0.222:8080/car-management/role/deleteRole.action",
+            "url": "http://192.168.0.222:8080/car-management/role/deleteRole.action",
             "type": "get",
             "data": {
                 "rids[]": roledelarr

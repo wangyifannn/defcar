@@ -1,0 +1,33 @@
+[{
+        "createTime": 1520497533000,
+        "id": 1,
+        "name": "车辆安全/附件",
+        "operate_ip": "192.168.1.1",
+        "operator": "王春森",
+        "pId": 0,
+        "priority": "1",
+        "remark": "gps",
+        "url": "GPS"
+    },
+    {
+        "createTime": 1520497533000,
+        "id": 2,
+        "name": "线束检查",
+        "operate_ip": "192.168.1.1",
+        "operator": "王春森",
+        "pId": 0,
+        "priority": "1",
+        "remark": "gps",
+        "url": "GPS"
+    }, {
+        "createTime": 1520497533000,
+        "id": 3,
+        "name": "bom检查",
+        "operate_ip": "192.168.1.1",
+        "operator": "王春森",
+        "pId": 0,
+        "priority": "1",
+        "remark": "gps",
+        "url": "GPS"
+    }
+]

@@ -37,13 +37,13 @@
         }
         
         .form-horizontal {
-            margin-top: 90px;
+            /*margin-top: 90px;*/
         }
         
         #carDetail .form-horizontal {
-            margin-top: 30px;
+            /*margin-top: 30px;
             text-align: center;
-            color: red;
+            color: red;*/
         }
         
         #role .form-horizontal {
@@ -167,6 +167,7 @@
         }
         
         .loading {
+            width: 80%;
             position: fixed;
             left: 55%;
             top: 50%;
@@ -291,11 +292,7 @@
         .rightbox {
             width: 85%;
             margin: 0 auto;
-            margin-top: 100px;
-        }
-        
-        #carTypeIn {
-            margin-top: -50px;
+            margin-top: 15px;
         }
         
         .point_content {

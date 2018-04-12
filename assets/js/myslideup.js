@@ -3,7 +3,6 @@
     $.fn.extend({
         "slideUp": function(value) {
             var docthis = this;
-            // console.log(docthis);
             //默认参数
             value = $.extend({
                 "li_h": "41",

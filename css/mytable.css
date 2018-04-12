@@ -26,19 +26,14 @@ table {
     margin-left: 40px;
 }
 
-#carCheck .form-group,
-#driverTypeIn .form-group,
-#returncarCheck .form-group,
-#carTypeIn .form-group {
-    width: 45% !important;
+.even_style .form-group {
+    width: 50% !important;
     display: inline-block;
 }
 
-#carCheck .form-group:nth-child(2n+1),
-#driverTypeIn .form-group:nth-child(2n+1),
-#returncarCheck .form-group:nth-child(2n+1),
-#carTypeIn .form-group:nth-child(2n+1) {
-    margin-left: 40px;
+.even_style .form-group:nth-child(2n+1) {
+    padding-left: 40px;
+    margin-left: 5px;
 }
 
 .caroptrator {
@@ -60,7 +55,6 @@ table {
     margin-left: 41px;
     width: 100px;
     display: inline-block;
-    /*text-align: right;*/
 }
 
 .card-views .card-view:first-child span {
@@ -82,26 +76,113 @@ table {
     margin: 0px 0px 0px 0px;
 }
 
-#carCheck span,
 #returncarCheck span {
-    padding-top: 3px;
-    line-height: 30px;
+    margin-top: 9px;
 }
 
-#driverList,
-#carList {
+#returncarCheck .col-sm-7.car_tools_check {
+    margin-top: 9px;
+}
+
+#driverTypeIn .form-group,
+#returncarCheck .form-group {
+    height: 60px;
+    line-height: 44px;
+}
+
+#driverTypeIn .col-sm-7,
+#returncarCheck .col-sm-7 {
+    margin-top: 11px;
+}
+
+#driverTypeIn .col-sm-5,
+#returncarCheck .col-sm-5 {
+    margin-top: 7px;
+}
+
+#driverList {
     position: relative;
 }
 
-.vSn_tips {
-    font-size: 10px;
+.form_subject {
+    width: 95%;
+    margin: 0 auto;
+    padding: 6px 12px;
+    color: #01034A;
+    background: #f5f5f5;
+}
+
+#sCheck .form_subject {
+    margin-bottom: 30px;
+}
+
+button.btn.btn-default.btn-primary.resetcheck_btn {
+    margin: 30px 40px;
+}
+
+.form_subject i {
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.form-horizontal {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#m_cancel_btn {
+    margin: 10px 53px;
+}
+
+#driverList span.export_title {
+    bottom: 0px;
+}
+
+span.export_title {
+    left: 572px;
+    position: absolute;
+    bottom: -8px;
+    width: 79px;
+}
+
+.even_style {
+    border: 2px solid #f5f5f5;
+    box-shadow: 4px 11px 3px #f5f5ff;
+}
+
+.even_style .form-group:nth-child(4n+3),
+.even_style .form-group:nth-child(4n+4) {
+    background: #f5f5f5;
+}
+
+.finish_form .from-group-tips {
+    margin-top: -15px;
+}
+
+.maintain_form .form-group {
+    padding-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 0px;
+    min-height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 0px;
+}
+
+button#driverTypeIn_btn {
+    margin-right: 62px;
+    margin-left: 298px;
+}
+
+.vSn_tips,
+.tip_style {
+    font-size: 12px;
     color: red;
     position: absolute;
     top: 5px;
-}
-
-.redtext {
-    /*color: red;*/
+    line-height: 30px;
 }
 
 .panel-body .pull-right {
@@ -109,21 +190,20 @@ table {
 }
 
 .radio_group {
-    /*margin-top: 6px;*/
     vertical-align: middle;
 }
 
 button.groupsearch_btn {
-    width: 70px;
+    width: 56px;
     background: #1A1D3E;
-    padding: 5px 7px;
+    padding: 3px 7px;
     color: white;
     border: none;
     position: absolute;
-    top: -2px;
+    top: 0px;
     outline: none;
     font-size: 13px;
-    left: 160px;
+    left: 424px;
     border-radius: 10px;
 }
 
@@ -131,19 +211,20 @@ button.groupsearch_btn {
 .caradd_btn button {
     width: 70px;
     background: #1A1D3E;
-    padding: 5px 7px;
+    padding: 4px 7px;
     color: white;
     border: none;
     position: absolute;
-    top: -2px;
+    top: -16px;
     outline: none;
     font-size: 13px;
-    left: 506px;
+    left: 0px;
     border-radius: 10px;
 }
 
 .driveradd_btn button {
     width: 88px;
+    top: -7px;
 }
 
 .form-group-btn {
@@ -163,35 +244,56 @@ button.groupsearch_btn {
     height: 22px;
 }
 
+#driverList .import-mdoel_select {
+    top: -5px;
+}
+
 .import-mdoel_select {
     position: absolute;
-    left: 70px;
-    top: -4px;
-    width: 148px !important;
-    height: 30px;
-    font-size: 12px;
+    left: 639px;
+    top: -14px;
+    width: 130px !important;
+    height: 26px;
+    font-size: 10px;
+}
+
+span.car_group_name {
+    position: absolute;
+    left: 312px;
+    top: 2px;
+    width: 72px;
 }
 
 .groupbox {
     position: absolute;
-    left: 250px;
-    top: 0px;
-    /*float: right;*/
-    /*display: inline-block;*/
+    left: 79px;
+    top: -14px;
+}
+
+#group_carvSn {
+    width: 80px;
 }
 
 #carListtable_toolbar {
     width: 500px;
-    /*border: 1px solid red;*/
 }
 
 .group-mdoel_select {
     position: absolute;
-    left: 70px;
-    top: -4px;
-    font-size: 12px;
-    width: 80px !important;
-    height: 30px;
+    left: 350px;
+    top: -2px;
+    font-size: 10px;
+    width: 70px !important;
+    height: 26px;
+}
+
+select.form-control.status-mdoel_select {
+    width: 106px;
+    height: 26px;
+    font-size: 10px;
+    position: absolute;
+    left: 199px;
+    top: -2px;
 }
 
 .fixed-table-pagination .pagination a {
@@ -227,14 +329,18 @@ button.groupsearch_btn {
     background: #1471EE;
 }
 
+.checkitem_active {
+    color: #1471EE;
+}
+
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
 .pagination>.active>span,
 .pagination>.active>span:focus,
 .pagination>.active>span:hover {
-    /*background: #1471EE;*/
-    background: #1A1D3E;
+    background: #1471EE;
+    /*background: #1A1D3E;*/
 }
 
 .fixed-table-loading {
@@ -269,7 +375,7 @@ input.form-control {
     background: white;
 }
 
-#maintainList table td:nth-child(7) {
+#maintainList table td:nth-child(8) {
     background: #BFEBEB;
 }
 
@@ -373,6 +479,65 @@ input.form-control {
     display: inline-block;
 }
 
+#carList .table-responsive {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.modal.in .modal-dialog {
+    margin-top: 15%;
+}
+
+.radio_style {
+    margin-top: 6px;
+}
+
+.model_title {
+    background: #eee;
+    /*text-align: left;*/
+    /*padding: 10px 5px;*/
+    /*margin: 0px !important;*/
+    color: #0078D7;
+}
+
+.form-group-last {
+    margin: 10px 0px;
+}
+
+.detail_part {
+    width: 100%;
+    /*margin: 0 auto;*/
+    margin-top: 20px;
+    /*padding: 0px 20px;*/
+}
+
+.datail_title {
+    width: 95%;
+    margin: 0 auto;
+    background: #eee;
+    height: 40px;
+    padding: 0px 10px;
+}
+
+.detail_menu {
+    display: inline-block;
+}
+
+.detail_menu a:hover {
+    color: #0078D7;
+}
+
+.detail_menu a {
+    margin: 0px 20px;
+    line-height: 40px;
+    padding-bottom: 9px;
+}
+
+.detail_menu a.checkitem_active {
+    color: #0078d7;
+    border-bottom: 2px solid #0078D7;
+}
+
 
 /*门岗是否合法*/
 
@@ -387,10 +552,11 @@ input.form-control {
 
 .fixed-table-toolbar {
     margin-top: -20px;
+    padding-bottom: 20px;
 }
 
 #childmenuList {
-    margin-bottom: 0px
+    margin-bottom: 0px;
 }
 
 #childmenuList_p {
@@ -410,75 +576,182 @@ input.form-control {
     color: #1B6DDA;
 }
 
+#auditList .fixed-table-pagination,
+table#auditTable {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.fixed-table-container {
+    margin-top: 15px;
+}
+
 
 /*安全检查*/
 
-.checkMenus {
-    margin: 35px 0px;
-}
-
-.checkMenus button {
-    background: #1B6DDA;
-    padding: 7px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    color: white;
-    cursor: pointer;
-    margin: 25px 10px 10px 58px;
-    outline: none;
-}
-
-.pot_pressure,
-.check_itembox {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 20px;
-}
-
-.pot_pressure div {
+.checkMenus,
+.menu_style {
     display: inline-block;
-    margin-right: 17px;
 }
 
-.pot_pressure div:last-child {
+.menu_style button,
+.checkMenus button {
+    text-decoration-line: underline;
+    background: transparent;
+    font-size: 11px;
+    cursor: pointer;
+    margin: 0px 10px 0px 28px;
+    outline: none;
+    border: none;
+}
+
+.menu_style button:hover,
+.checkMenus button:hover {
+    color: #1B6DDA;
+}
+
+.form_style2,
+.pot_style,
+.bomcheck_itembox,
+.form_style4,
+.check_itembox {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 0px;
+}
+
+.form_style2 {
+    margin-top: 0px;
+}
+
+.itemlist_head {
+    width: 13% !important;
+    line-height: 20px !important;
+    vertical-align: middle !important;
+    height: auto;
+}
+
+.pot_style div {
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.pot_style div:last-child {
     margin-right: 0px;
 }
 
-.pot_pressure label {
-    /*color: rebeccapurple;*/
+label.audit_tips {
+    color: red;
+    margin-left: 46px;
+    padding-top: 6px;
 }
 
-.pot_pressure input {
+.pot_style input {
     width: 60px;
-    text-indent: 5px;
+    text-align: center;
     margin-left: 2px;
 }
 
+.form_width_style {
+    width: 95% !important;
+    margin: 0 auto;
+}
+
+.checkitem p {
+    height: 37px;
+    border-top: 1px solid #c7c7c7;
+    line-height: 37px;
+    font-size: 13px;
+    margin-bottom: 0px;
+}
+
+.checkitem p:first-child {
+    border: none;
+}
+
+.checkitem p:last-child {
+    /*border-top: none;*/
+}
+
 .checktitle span {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     background: #DBDBDB;
     border: 2px solid #C7C7C7;
     /*vertical-align: middle;*/
     /*margin: 0 auto;*/
 }
 
+.checktitle span:nth-child(2),
+.checkitem span:nth-child(2) {
+    width: 10%;
+}
+
+.checktitle span:nth-child(4),
+.checkitem span:nth-child(4) {
+    width: 35%;
+}
+
 .checktitle span,
 .checkitem span {
     display: inline-block;
     width: 24%;
-    height: 40px;
+    height: auto;
     text-align: center;
-    line-height: 40px;
+    line-height: 40px !important;
     border: 1px solid #C7C7C7;
-    /*border: 1px solid blue;*/
     border-top: none;
     border-right: none;
     vertical-align: middle;
 }
 
-.checktitle span:last-child,
-.checkitem span:last-child {
-    border-right: 1px solid #C7C7C7;
+
+/*************.form_style2表示线束检查表单的相关样式*************************************/
+
+
+/*************.form_style4表示部件检查表单的相关样式*************************************/
+
+.form_style4 .checkitem span,
+.form_style4 .checktitle span,
+.form_style2 .checktitle span,
+.form_style2 .checkitem span {
+    width: 40%;
+}
+
+.form_style2 .itemlist1,
+.form_style4 .itemlist1 {
+    width: 50%;
+}
+
+.form_style2 .itemlist2,
+.form_style4 .itemlist2 {
+    width: 15% !important;
+}
+
+.form_style4 .itemlist3,
+.form_style2 .itemlist3 {
+    width: 40% !important;
+}
+
+.itemlist_head {
+    float: left;
+    border: none !important;
+}
+
+.form_style4 span.itemlist_head.head7,
+.form_style4 span.itemlist_head.head12 {
+    font-size: 10px;
+    line-height: 17px !important;
+}
+
+.reset_btn {
+    margin: 5px 20px;
+}
+
+span.item_child {
+    width: 87% !important;
+    float: left;
+    border-bottom: none;
 }
 
 .checkitem div:hover {
@@ -486,15 +759,83 @@ input.form-control {
 }
 
 .checkitem span {
-    font-size: 14px;
+    font-size: 13px;
+}
+
+.form_style4 .checkitem p {
+    height: 43px;
+    line-height: 20px;
+    font-size: 10px;
+    margin-bottom: 0px;
+}
+
+.form_style4 .itemlist2 p {
+    font-size: 13px;
+}
+
+.itemlist1 .item_child {
+    font-size: 10px;
+}
+
+.checktitle .item_child {
+    font-size: 13px;
 }
 
 .explain_input {
     border: none;
-    height: 35px;
-    padding: 0px 48px;
+    height: 34px;
+    width: 100%;
+}
+
+.form_style4 .explain_input {
+    height: 100%;
 }
 
 .statusno {
     margin: 0px 5px;
+}
+
+.road_menu {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #DDE4EA;
+    box-shadow: 2px 4px 5px #DDE4EA;
+    margin-bottom: 20px;
+}
+
+form.check_itembox,
+form.form_style2,
+form.bomcheck_itembox,
+form.form_style4 {
+    margin-bottom: 20px;
+}
+
+.loadleft {
+    width: 80%;
+    display: inline-block;
+}
+
+.loadright {
+    width: 19%;
+    display: inline-block;
+    text-align: right;
+    font-size: 13px;
+    color: #0078D7;
+}
+
+.loadnormal {
+    font-size: 13px;
+    padding: 8px 50px 8px 50px;
+}
+
+.loadactive {
+    background: url("../img/index/load1.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.loadactives {
+    background: url("../img/index/load2.png") no-repeat;
+    background-size: 100% 100%;
 }

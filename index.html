@@ -16,6 +16,10 @@
 
 
     <style type="text/css">
+        body {
+            background: #FFF;
+        }
+        
         .icon {
             width: 1em;
             height: 1em;
@@ -73,13 +77,6 @@
                             </div>
                         </li>-->
                         <!--gps结束-->
-                        <!--门岗-->
-                        <!--车辆管理-->
-                        <li class=""><a href="#sCheck" data-toggle="tab">车辆安全</a> </li>
-                        <!--数据管理-->
-                        <!--维修管理-->
-                        <!--日志管理-->
-                        <!--权限管理-->
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -143,24 +140,31 @@
                     </div>
                     <!--接车点检-->
                     <div class="tab-pane" id="carCheck">
-                        <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                        <form class="form-horizontal">
+                        <div class="road_menu">
+                        </div>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>接车点检录入</span>
+                        </div>
+                        <form class="form-horizontal even_style">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">车辆编号：</label>
                                 <div class="col-sm-6">
-                                    <input type="text" readonly="readonly" class="form-control" id="vSn" placeholder="试验车号">
+                                    <input type="text" readonly="readonly" class="form-control col-sm-7" id="vSn" placeholder="试验车号">
+                                    <span class="col-sm-5 tip_style">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">车架号：</label>
                                 <div class="col-sm-6">
-                                    <input type="text" readonly="readonly" class="form-control" id="vin" placeholder="车辆识别码">
+                                    <input type="text" readonly="readonly" class="form-control col-sm-7" id="vin" placeholder="车辆识别码">
+                                    <span class="col-sm-5 tip_style">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">发动机号：</label>
                                 <div class="col-sm-6">
-                                    <input type="text" readonly="readonly" class="form-control" id="engineNumber" placeholder="必填项">
+                                    <input type="text" readonly="readonly" class="form-control col-sm-7" id="engineNumber" placeholder="必填项">
+                                    <span class="col-sm-5 tip_style">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -230,6 +234,7 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">送车人：</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control col-sm-7" id="pickone">
+                                    <span class="col-sm-5 tip_style">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -243,6 +248,7 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">接车人：</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control col-sm-7" id="send_p">
+                                    <span class="col-sm-5 tip_style">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -251,32 +257,34 @@
                                     <input placeholder="开始日期" name="receiverdata" class="form-control layer-date mydata_input" id="receiverdata">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-7">
-                                    <a href="#carSaft" data-toggle="tab"><button type="button" class="btn btn-default btn-primary" id="carCheck_btn">下一步</button></a>
-                                    <button type="button" class="btn btn-default btn-primary resetcheck_btn">重置</button>
-                                    <a href="#carTypeIn" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carcheck_return">上一步</button></a>
-                                </div>
-                            </div>
                             <div class="form-group from-group-tips">
                                 <div class="col-sm-offset-4 col-sm-7">
                                     <label for="" class="carcheck_tips"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-7">
+                                    <a href="#" data-toggle="tab"><button type="button" class="btn btn-default btn-primary" id="carCheck_btn">下一步</button></a>
+                                    <button type="button" class="btn btn-default btn-primary resetcheck_btn">重置</button>
+                                    <a href="#carTypeIn" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carcheck_return">上一步</button></a>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <!--还车点检-->
                     <div class="tab-pane" id="returncarCheck">
-                        <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                        <form class="form-horizontal">
+                        <!--<img class="table_footer" src="./img/index/table_footer.png" alt="">-->
+                        <div class="road_menu">
+                        </div>
+                        <form class="form-horizontal even_style">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">车辆编号：</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="vSn" placeholder="试验车号">
+                                    <input type="text" class="form-control col-sm-7" id="vSn" placeholder="试验车号">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label car_image">研发工具回收：</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">研发工具回收：</label>
                                 <div class="col-sm-7 car_tools_check">
                                     <input type="radio" name="toolisrecycled" value="1">是&nbsp;&nbsp;
                                     <input type="radio" name="toolisrecycled" value="2">否
@@ -359,19 +367,19 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">接车人身份证号：</label>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" id="pick_card" placeholder="">
+                                    <input type="text" class="form-control col-sm-7" id="pick_card" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">运输车号：</label>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" id="trans_sn" placeholder="">
+                                    <input type="text" class="form-control col-sm-7" id="trans_sn" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">日期：</label>
                                 <div class="col-sm-6">
-                                    <input placeholder="请选择日期" class="form-control layer-date mydata_input" id="time">
+                                    <input placeholder="请选择日期" class="form-control col-sm-7 layer-date mydata_input" id="time">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -387,208 +395,165 @@
                             </div>
                         </form>
                     </div>
-                    <!--车辆列表-->
-                    <div class="tab-pane" id="carList">
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="carListtable" data-show-export="true">
-                                    <div id="carListtable_toolbar" class="btn-group tablelistbox">
-                                        <!--<h3>车辆列表</h3>-->
-
-                                        <span>导出模式：</span>
-                                        <select class="form-control import-mdoel_select">
-                                            <option value="">导出当前页数据</option>
-                                            <option value="all">导出全部数据</option>
-                                            <option value="selected">导出选中数据</option>
-                                         </select>
-                                        <div class="groupbox">
-                                        </div>
-                                        <!--<span>车辆分组：</span>
-                                        <select class="form-control group-mdoel_select">
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                            <option value="3">C</option>
-                                         </select>-->
-                                        <a href="#carTypeIn" data-toggle="tab" class="caradd_btn"><button>车辆录入</button></a>
-                                    </div>
-                                </table>
-                                <!--后台分页-->
-                                <div class="pageNav">
-                                    <ul>
-                                        <li class="cur"></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!--车辆录入-->
                     <div class="tab-pane" id="carTypeIn">
-                        <div class="rightbox">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">试验车号：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="vSn" placeholder="车辆编号，必填项">
-                                        <span class="col-sm-6 vSn_tips"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">项目名称：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="product_name" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">项目号：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="product_sn" placeholder="必填项">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">车辆识别码（vin）：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="vin" placeholder="必填项">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">发动机编号：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="engineNumber" placeholder="必填项">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">客户：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="customer" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">车辆名称：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="carName" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">车辆类型：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="vCarType" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">项目工程师：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="projectEngineer" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">联系电话：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="contactNumber" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">发动机型号：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="engineType" placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">燃油规则：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="FuelType" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">发动机排量（L）：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="engineCapacity" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">机油规格：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="oilspecification" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">变速箱油规格：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="GBTS" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">轮胎规格：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control col-sm-7" id="tyresize" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">后轮胎压力：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="reaTireP" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">前轮胎压力：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="frontTireP" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">车辆分组：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="gids" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">签字人：</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="operator" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">制作日期：</label>
-                                    <div class="col-sm-5">
-                                        <input placeholder="请选择日期" name="receiverdata" class="form-control layer-date mydata_input" id="makeTime">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-5 control-label">备注信息：</label>
-                                    <div class="col-sm-5">
-                                        <input type="email" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-4 col-sm-7">
-                                        <div class="checkbox">
-                                            <label>
-                                        <input type="checkbox" id="read_carfile">
-                                        <a href="./html/carfile.html">已知晓测试车辆注意事项</a>
-                                        </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-4 col-sm-7">
-                                        <a href="#" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carTypeIn_btn">下一步</button></a>
-                                        <button type="button" class="btn btn-default btn-primary" id="init_carTypeIn">重置</button>
-                                    </div>
-                                </div>
-                                <div class="form-group from-group-tips">
-                                    <div class="col-sm-offset-4 col-sm-7">
-                                        <label for="" class="cartypein_tips"></label>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="road_menu">
                         </div>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>基本信息录入</span>
+                        </div>
+                        <form class="form-horizontal even_style">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">试验车号：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="vSn" placeholder="车辆编号,如：2017-211">
+                                    <span class="col-sm-5 tip_style vSn_tips">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">项目名称：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="product_name" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">项目号：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="product_sn" placeholder="如：2004">
+                                    <span class="col-sm-5 tip_style product_sn_tips">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">车辆识别码（vin）：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="vin" placeholder="如：LJ166A252F1504443">
+                                    <span class="col-sm-5 tip_style vin_tips">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">发动机编号：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="engineNumber" placeholder="如：F3000065D">
+                                    <span class="col-sm-6 tip_style engineNumber_tips">*</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">客户：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="customer" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">车辆名称：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="carName" placeholder="如：sunny">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">车辆类型：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="vCarType" placeholder="如：轿车、货车">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">项目工程师：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="projectEngineer" placeholder="如：刘德武">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">联系电话：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="contactNumber" placeholder="如：18920291022">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">发动机型号：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="engineType" placeholder="如：4GA3">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">燃油规则：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="FuelType" placeholder="如：93号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">发动机排量（L）：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="engineCapacity" placeholder="如：2.0">
+                                    <span class="col-sm-5 tip_style"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">机油规格：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="oilspecification" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">变速箱油规格：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="GBTS" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">轮胎规格：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control col-sm-7" id="tyresize" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">后轮胎压力：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reaTireP" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">前轮胎压力：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="frontTireP" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">车辆分组：</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control cartypein_group" name="" id="gids"></select>
+                                    <!--<input type="text" class="form-control" id="gids" placeholder="1：A组，2：B组，3:C组">-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">签字人：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="operator" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">制作日期：</label>
+                                <div class="col-sm-6">
+                                    <input placeholder="请选择日期" name="receiverdata" class="form-control layer-date mydata_input" id="makeTime">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">备注信息：</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
+                                </div>
+                            </div>
+                            <div class="form-group from-group-tips">
+                                <div class="col-sm-offset-4 col-sm-7">
+                                    <label for="" class="cartypein_tips"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-7">
+                                    <a href="#" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carTypeIn_btn">下一步</button></a>
+                                    <button type="button" class="btn btn-default btn-primary" id="init_carTypeIn">重置</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!--车辆详情-->
                     <div class="tab-pane" id="carDetail">
@@ -605,69 +570,192 @@
                                 <a href="#carList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary detail_returncarlist">返回车辆列表</button></a>
                             </div>
                         </div>
-                        <form class="form-horizontal carDetailForm form_twolist">
-                        </form>
+                        <div class="detail_part">
+                            <div class="datail_title">
+                                <span>车辆详情：</span>
+                                <div class="detail_menu"></div>
+                            </div>
+                            <!--5个详情部分-->
+                            <div class="tab-pane active" id="carTypeInForm"></div>
+                            <div class="tab-pane" id="carCheckForm"></div>
+                            <div class="tab-pane" id="sCheckForm">
+                                <div class="pot_Form pot_style"></div>
+                                <div class="safe_Form form_width_style"></div>
+                            </div>
+                            <div class="tab-pane form_style2 form_width_style " id="wiringCheckForm"></div>
+                            <div class="tab-pane form_width_style" id="bomCheckForm"></div>
+                            <!--<div class="tab-pane form_style4 form_width_style " id="partCheckForm"></div>-->
+                        </div>
+                        <!--<form class="form-horizontal carDetailForm form_twolist">
+                            </form>-->
                     </div>
                     <!--车辆/安全/附件检查-->
                     <div class="tab-pane" id="sCheck">
-                        <div class="checkMenus">
-
+                        <div class="road_menu">
                         </div>
-                        <div class="pot_pressure">
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>安全检查录入</span>
+                            <div class="checkMenus">
 
+                            </div>
                         </div>
-                        <div class="check_itembox">
 
-                        </div>
-                        <div class="table_safe">
+                        <form class="pot_pressure pot_style">
+
+                        </form>
+
+                        <form class="check_itembox" action="">
+
+                        </form>
+                        <!--<div class="table_safe">
                             <table id="safeList">
                                 <div id="safelist_toolbar" class="btn-group">
                                 </div>
                             </table>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-7">
-                                <a href="#carWiring" data-toggle="tab"><button type="button" class="btn btn-default btn-primary" id="carWiring_btn">下一步</button></a>
-                                <button type="button" class="btn btn-default btn-primary resetsafe_btn">重置</button>
+                                <button type="button" class="btn btn-default btn-primary" id="sCheck_btn">提交</button>
+                                <button type="button" class="btn btn-default btn-primary resetsafe_btn reset_btn">重置</button>
                                 <a href="#carCheck" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carWiring_return">上一步</button></a>
                             </div>
                         </div>
                         <div class="form-group from-group-tips">
-                            <div class="col-sm-offset-4 col-sm-7">
+                            <div class="col-sm-offset-5 col-sm-7">
                                 <label for="" class="carsafe_tips"></label>
                             </div>
                         </div>
                     </div>
                     <!--线束检查-->
                     <div class="tab-pane" id="wiringCheck">
-                        <!---->
-                        <div class="checkMenus">
-
+                        <div class="road_menu">
                         </div>
-                        <div class="wcheck_itembox"></div>
-                        <p>
-                            线束检查
-                        </p>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>安全检查录入</span>
+                            <div class="checkMenus"></div>
+                        </div>
+                        <form class="wcheck_itembox form_style2"></form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button type="button" class="btn btn-default btn-primary" id="wiringCheck_btn">提交</button>
+                                <button type="button" class="btn btn-default btn-primary resetwiring_btn reset_btn">重置</button>
+                                <a href="#carCheck" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carWiring_return">上一步</button></a>
+                            </div>
+                        </div>
+                        <div class="form-group from-group-tips">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <label for="" class="wiring_tips"></label>
+                            </div>
+                        </div>
                     </div>
                     <!--BOM检查-->
                     <div class="tab-pane" id="bomCheck">
-                        <!---->
-                        <div class="checkMenus">
+                        <div class="road_menu">
+                        </div>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>安全检查录入</span>
+                            <div class="checkMenus">
+                            </div>
 
                         </div>
-                        <p>
-                            BOM检查
-                        </p>
+                        <form class="bomcheck_itembox" action="">
+
+                        </form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button type="button" class="btn btn-default btn-primary" id="bomCheck_btn">提交</button>
+                                <button type="button" class="btn btn-default btn-primary resetbom_btn reset_btn">重置</button>
+                                <a href="#carCheck" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary" id="carBom_return">上一步</button></a>
+                            </div>
+                        </div>
+                        <div class="form-group from-group-tips">
+                            <div class="col-sm-offset-5 col-sm-7">
+                                <label for="" class="carbom_tips"></label>
+                            </div>
+                        </div>
                     </div>
-                    <!--安装和布置状态检查-->
-                    <div class="tab-pane" id="partCheck">
-                        <!---->
-                        <div class="checkMenus">
-
+                    <!--临时车辆列表-->
+                    <div class="tab-pane" id="carList">
+                        <!--<div class="road_menu">
+                        </div>-->
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>临时车辆列表</span>
+                            <div class="auditMenus menu_style">
+                            </div>
                         </div>
-                        <p>
-                            安装和布置状态检查
-                        </p>
+                        <div class="table-responsive">
+                            <table id="carListtable" data-show-export="true">
+                                <div id="carListtable_toolbar" class="btn-group tablelistbox">
+                                    <span class="export_title">导出模式：</span>
+                                    <select class="form-control import-mdoel_select">
+                                            <option value="">导出当前页数据</option>
+                                            <option value="all">导出全部数据</option>
+                                            <option value="selected">导出选中数据</option>
+                                         </select>
+                                    <div class="groupbox">
+                                        车辆编号：<input type="text" id="group_carvSn">
+                                    </div>
+                                    <a href="#" data-toggle="tab" class="caradd_btn"><button>车辆录入</button></a>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--审核列表-->
+                    <div class="tab-pane" id="auditList">
+                        <div class="road_menu">
+                        </div>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>审核列表</span>
+                            <div class="auditMenus menu_style">
+
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="auditTable" data-toggle="table" data-show-export="true" data-toolbar="#toolbar_auditTable" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                data-sort-name="id" data-page-list="[10, 15, 30, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <div id="toolbar_auditTable" class="btn-group">
+                                    <!--<button id="addrow_btn" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增维修申请
+                                            </button>-->
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                    <!--审核未通过车辆列表-->
+                    <div class="tab-pane" id="failAuditList">
+                        <div class="road_menu">
+                        </div>
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>审核列表</span>
+                            <div class="auditMenus menu_style">
+
+                            </div>
+                        </div>
+                        <div class="table-responsive form_width_style">
+                            <table id="failAuditTable" data-toggle="table" data-show-export="true" data-toolbar="#toolbar_failAuditTable" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                data-sort-name="id" data-page-list="[10, 15, 30, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <div id="toolbar_failAuditTable" class="btn-group">
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                    <!--审核成功车辆列表-->
+                    <div class="tab-pane" id="finishAuditList">
+
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>车辆列表</span>
+                            <div class="auditMenus menu_style">
+
+                            </div>
+                        </div>
+                        <div class="table-responsive form_width_style">
+                            <table id="finishAuditTable" data-toggle="table" data-show-export="true" data-toolbar="#toolbar_finishAuditTable" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                data-sort-name="id" data-page-list="[10, 15, 30, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <div id="toolbar_finishAuditTable" class="btn-group">
+                                </div>
+                            </table>
+                        </div>
                     </div>
                     <!--s 驾驶员相关-->
                     <!--驾驶员列表-->
@@ -678,15 +766,12 @@
                                     <div id="DriverListtable_toolbar" class="btn-group tablelistbox">
                                         <!--<h3>驾驶员列表</h3>-->
                                         <a href="#driverTypeIn" data-toggle="tab" class="driveradd_btn"><button>驾驶员录入</button></a>
-                                        <span>导出模式：</span>
+                                        <span class="export_title">导出模式：</span>
                                         <select class="form-control import-mdoel_select">
                                                     <option value="">导出当前页数据</option>
                                                     <option value="all">导出全部数据</option>
                                                     <option value="selected">导出选中数据</option>
                                                 </select>
-                                        <!--<button id="btn_add" type="button" class="btn btn-default">-->
-                                        <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增-->
-                                        <!--</button>-->
                                     </div>
                                 </table>
                                 <!--后台分页-->
@@ -698,8 +783,10 @@
                     </div>
                     <!--驾驶员录入-->
                     <div class="tab-pane" id="driverTypeIn">
-                        <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                        <form class="form-horizontal">
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-list-alt"></i><span>驾驶员基本信息录入</span>
+                        </div>
+                        <form class="form-horizontal even_style">
                             <!--<h3>驾驶员录入表</h3>-->
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">姓名</label>
@@ -784,26 +871,17 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">备注</label>
                                 <div class="col-sm-7">
-                                    <input type="email" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
+                                    <input type="text" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-7">
-                                    <div class="checkbox">
-                                        <label>
-                                        <input type="checkbox"><a href="./html/carfile.html">同意相关条例</a>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-7">
+                                <div class="col-sm-offset-9 col-sm-12">
                                     <button type="button" id="driverTypeIn_btn" class="btn btn-default btn-primary">提交</button>
                                     <a href="#driverList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary ReturnDriver">返回</button></a>
                                 </div>
                             </div>
                             <div class="form-group from-group-tips">
-                                <div class="col-sm-offset-4 col-sm-7">
+                                <div class="col-sm-7">
                                     <label for="" class="drivetypein_tips"></label>
                                 </div>
                             </div>
@@ -823,143 +901,94 @@
                     <div class="tab-pane tableTypein" id="maintainTypeIn">
                         <div class="rightbox">
                             <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal maintain_form send_form">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆编号">
+                                        <input type="text" class="form-control col-sm-7 vSn" name="vSn" placeholder="请输入车辆编号">
+                                        <span class="col-sm-5 tip_style m_vSn_tips">*</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆停放地点">
+                                        <input type="text" class="form-control" name="send_park" placeholder="请输入车辆停放地点">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">维修原因</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入维修原因">
+                                        <input type="text" class="form-control" name="reason" placeholder="请输入维修原因">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">送修日期</label>
+                                    <div class="col-sm-8">
+                                        <input placeholder="请选择日期" name="send_time" class="form-control layer-date mydata_input" id="send_time">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">协商日期</label>
+                                    <div class="col-sm-8">
+                                        <input placeholder="请选择日期" name="appointedtime" class="form-control layer-date mydata_input" id="discuss_time">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="其他信息">
+                                        <input type="text" class="form-control" name="send_remark" placeholder="可注明是否紧急">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-8">
-                                        <button type="button" class="btn btn-default btn-primary">提交</button>
+                                        <a href="#" data-toggle="tab">
+                                            <button type="button" class="btn btn-default btn-primary" id="send_btn">提交</button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group from-group-tips">
+                                    <div class="col-sm-offset-2 col-sm-8">
+                                        <label for="" class="send_tips"></label>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <!--维修协调员填写-->
-                    <div class="tab-pane tableTypein" id="maintainPeopleTypeIn">
-                        <div class="rightbox">
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆编号">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请输入车辆停放地点">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">工作内容</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="请填写工作内容">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="inputEmail3" placeholder="其他信息">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-8">
-                                        <button type="button" class="btn btn-default btn-primary">提交</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!--维修进度-->
-                    <div class="tab-pane tableTypein" id="maintainProgress">
-                        <div class="maintainbox">
-                            <h3>查询维修进度</h3>
-                            <div class="searchprogresss">
-                                <label for="">车辆编号:</label>
-                                <input class="search_progresss_input" type="text" placeholder="请输入要查询的车辆编号">
-                                <button class="btn btn-default btn-primary">查询</button>
-                            </div>
-                            <div class="maintain_search_box">
-                                <h4>维修车辆</h4>
-                                <div class="maintain_car">
-                                    <table class="table table-condensed">
-                                        <tr>
-                                            <td>车辆编号</td>
-                                            <td>维修原因</td>
-                                            <td>申请日期</td>
-                                            <td>申请人</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1000-999</td>
-                                            <td>点火故障</td>
-                                            <td>2017-02-22</td>
-                                            <td>王先生</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="maintain_progress">
-                                    <img class="pro_status" src="./img/index/maintain1.png" alt="">
-                                    <div class="pro_status_text">
-                                        <span>维修申请</span>
-                                        <span>维修审核</span>
-                                        <span>正在维修</span>
-                                        <span>维修完成</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h3>修改维修进度</h3>
-                            <div class="searchprogresss">
-                                <label for="">车辆编号:</label>
-                                <input class="search_progresss_input" type="text" placeholder="请输入要查询的车辆编号">
-                                <label for="">车辆编号:</label>
-                                <select name="" id="">
-                                    <option value="">维修申请</option>
-                                    <option value="">维修审核</option>
-                                    <option value="">正在维修</option>
-                                    <option value="">维修完成</option>
-                                </select>
 
-                                <button class="btn btn-default btn-primary">确认修改</button>
-                            </div>
-                            <img class="table_footer" src="./img/index/table_footer.png" alt="">
-                            <!--<img src="./img/pro.png" alt="">-->
-                        </div>
-                    </div>
                     <!--维修列表-->
-                    <div class="tab-pane tableTypein" id="maintainList">
+                    <div class="tab-pane" id="maintainList">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="tablescreen" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar_tablescreen" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar_tablescreen" class="toolbar" style="display: inline-block">
-                                        <h3>维修列表</h3>
+                                <table id="tablescreen" data-toggle="table" data-show-export="true" data-toolbar="#toolbar_tablescreen" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                    data-sort-name="id" data-page-list="[10, 15, 30, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                    <div id="toolbar_tablescreen" class="btn-group">
+                                        <!--maintainTypeIn-->
+                                        <a href="#maintainTypeIn" data-toggle="tab">
+                                            <button id="addrow_btn" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增维修申请
+                                            </button>
+                                        </a>
                                     </div>
                                 </table>
+                                <!--后台分页-->
+                                <div class="pageMaintain">
+                                    <ul>
+                                        <li class="cur"></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        <!--////////////////////////////////////////////////////////////////////////////////-->
+                        <!--维修协调员填写-->
+                        <!--<div class="maintainform" id="maintainPeopleTypeIn">
+                            
+                        </div>-->
                     </div>
                     <!--e 维修管理-->
                     <!--s 数据管理-->
@@ -1448,11 +1477,112 @@
         </div>
         <!--end 图片懒加载-->
     </div>
-    <!-- page-wrapper -->
+    <!-- page-wrapper   审核是否通过模态框 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="audit_model" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header model_title">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">车辆审核是否通过</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">是否通过：</label>
+                            <div class="col-sm-8 radio_style">
+                                <input type="radio" checked="checked" name="ifauditsucess" value="1">是&nbsp;
+                                <input type="radio" name="ifauditsucess" value="2">否
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">说明：</label>
+                            <div class="col-sm-8">
+                                <textarea name="audit_remake" id="audit_remake" cols="50" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-last">
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default btn-primary" id="cancel_model_btn">取消</button>
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="" aria-label="" id="ok_audit">确认</button>
+                                <label class="audit_tips"></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--审核是否通过模态框结束-->
+    <!-- page-wrapper   维修协调员填写模态框 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="coord_model" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header model_title">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">维修协调员填写</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal maintain_form finish_form">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="vSn" name="vSn" placeholder="请输入车辆编号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="finish_park" placeholder="请输入车辆停放地点">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">工作内容</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="work" placeholder="请填写工作内容">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">完成日期</label>
+                            <div class="col-sm-9">
+                                <input placeholder="请选择日期" name="finish_time" class="form-control layer-date mydata_input" id="complete_time">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="remark" placeholder="其他信息">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="modal" id="m_cancel_btn">取消</button>
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="" id="m_submit_btn">提交</button>
+                            </div>
+                        </div>
+                        <div class="form-group from-group-tips">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <label for="" class="maintainPeople_tips"></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./assets/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
+<!--权限管理-->
+<script type="text/javascript" src="./js/rightstable.js"></script>
+
+<!--角色管理-->
+<script type="text/javascript" src="./js/roletable.js"></script>
+<!--用户管理-->
+<script type="text/javascript" src="./js/usertable.js"></script>
+<!--菜单管理-->
+<script type="text/javascript" src="./js/menutable.js"></script>
+<script type="text/javascript" src="./js/audittable.js"></script>
 <!--侧边动态菜单-->
 <script type="text/javascript" src="./js/menu.js"></script>
 <script type="text/javascript" src="assets/js/custom.js"></script>
@@ -1461,10 +1591,6 @@
 <script type="text/javascript" src="./js/maintable.js"></script>
 <script type="text/javascript" src="./assets/js/laydate.js"></script>
 <script type="text/javascript" src="./assets/js/iconfont.js"></script>
-
-
-
-
 <script type="text/javascript" src="./js/FileSaver.min.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.js"></script>
 
@@ -1472,142 +1598,15 @@
 <script type="text/javascript" src="./js/tableExport.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/extensions/editable/bootstrap-table-editable.min.js"></script>
-<script type="text/javascript" src="./js/index.js"></script>
 <!--车辆列表-->
 <script type="text/javascript" src="./js/cartable.js"></script>
 
-<!--角色管理-->
-<!--<script type="text/javascript" src="./js/roletable.js"></script>-->
-<!--权限管理-->
-<!--<script type="text/javascript" src="./js/rightstable.js"></script>-->
-<!--用户管理-->
-<!--<script type="text/javascript" src="./js/usertable.js"></script>-->
-<!--菜单管理-->
-<!--<script type="text/javascript" src="./js/menutable.js"></script>-->
 <script type="text/javascript" src="./js/car.js"></script>
 <script type="text/javascript" src="./js/drivertable.js"></script>
+<script type="text/javascript" src="./js/maintain.js"></script>
+<script type="text/javascript" src="./js/detail.js"></script>
+
 <script>
-    // 维修列表
-    $("#tablescreen").bootstrapTable({
-        columns: [
-            [{
-                "title": "测试车辆维修列表",
-                "halign": "center",
-                "align": "center",
-                // 合并维修列表 表头的列单元
-                "colspan": 12
-            }],
-            [{
-                field: 'id',
-                title: "序号",
-                valign: "middle",
-                align: "center",
-                colspan: 1,
-                rowspan: 2,
-                width: "3%"
-
-            }, {
-                title: "送修申请表",
-                valign: "middle",
-                align: "center",
-                colspan: 5,
-                rowspan: 1
-            }, {
-                field: 'data',
-                title: "双方协商日期",
-                valign: "middle",
-                align: "center",
-                colspan: 1,
-                rowspan: 2,
-                width: "7%",
-                background: '#BFEBEB',
-                formatter: function(value, row, index) {
-                    // value = new Date();
-                    // return value;
-                    // var date = eval('new ' + eval(value).source)
-                    // return date.format("yyyy-MM-dd");
-                },
-                disabled: false, //是否禁用编辑
-                editable: {
-                    type: 'date',
-                    title: '双方协商日期',
-                    validate: function(v) {
-                        if (!v) return '日期不能为空';
-                    }
-                }
-
-            }, {
-                title: "维修协调员填写",
-                valign: "middle",
-                align: "center",
-                colspan: 5,
-                rowspan: 1
-            }],
-            [{
-                field: 'carid',
-                title: '车辆编号',
-                valign: "middle",
-                align: "center",
-                width: "7%"
-            }, {
-                field: 'gpsid',
-                title: '停放地点',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-            }, {
-                field: 'name',
-                title: '申请人',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-            }, {
-                field: 'mideaPercent',
-                title: '申请日期',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-            }, {
-                field: 'approvedata',
-                title: '备注',
-                valign: "middle",
-                align: "center",
-                width: "13%"
-            }, {
-                field: 'approvedata',
-                title: '工作内容',
-                valign: "middle",
-                align: "center",
-                width: "13%"
-            }, {
-                field: 'name',
-                title: '操作人',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-
-            }, {
-                field: 'data',
-                title: '完成日期',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-
-            }, {
-                field: 'gpsid',
-                title: '停放地点',
-                valign: "middle",
-                align: "center",
-                width: "8%"
-            }, {
-                field: 'panasonicNum',
-                title: '备注',
-                valign: "middle",
-                align: "center"
-            }]
-        ]
-    })
 </script>
 <script>
     var islogin = localStorage.getItem("successUser");

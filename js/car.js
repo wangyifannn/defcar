@@ -40,6 +40,24 @@ laydate.render({
     theme: '#041473' //授权起始日
 });
 laydate.render({
+    elem: '#discuss_time',
+    type: 'datetime',
+    value: todayDate,
+    theme: '#041473' //协商日期
+});
+laydate.render({
+    elem: '#send_time',
+    type: 'datetime',
+    value: todayDate,
+    theme: '#041473' //协商日期
+});
+laydate.render({
+    elem: '#complete_time',
+    type: 'datetime',
+    value: todayDate,
+    theme: '#041473' //完成日期
+});
+laydate.render({
     elem: '#allowEndTime',
     type: 'datetime',
     value: dateend,
@@ -104,19 +122,14 @@ $("#carTypeIn #vSn").bind('input porpertychange', function() {
     if ($("#carTypeIn #vSn").val() == null || $("#carTypeIn #vSn").val() == "") {
         return;
     } else {
-        checkParams("/" + $("#carTypeIn #vSn").val() + "/1.action", ".vSn_tips", ".cartypein_tips", "#carTypeIn_btn");
+        checkParams("/tempcar/check/" + $("#carTypeIn #vSn").val() + "/1.action", ".vSn_tips", ".cartypein_tips", "#carTypeIn_btn");
     }
 });
 // 车辆录入
 $("#carTypeIn_btn").click(function() {
     $(this).parent().attr("href", "#");
-    // console.log($("#read_carfile").prop("checked"));
     if ($("#carTypeIn #vSn").val() == "" || $("#carTypeIn #product_sn").val() == "" || $("#carTypeIn #vin").val() == "" || $("#carTypeIn #engineNumber").val() == "") {
         alert("有必填项未填写！");
-        return;
-    }
-    if ($("#carTypeIn #read_carfile").prop("checked") == false) {
-        alert("请先阅读测试车辆注意事项");
         return;
     }
     var id = "";
@@ -150,16 +163,16 @@ $("#carTypeIn_btn").click(function() {
         "operator": $("#carTypeIn #operator").val(), //签字人、操作人
         "makeTime": $("#carTypeIn #makeTime").val(), //makeTime
         "remark": $("#carTypeIn #remark").val(), //备注
-        "gids": $("#carTypeIn #gids").val() //车辆分组
+        "gid": $("#carTypeIn #gids").val() //车辆分组
     };
     var that = this;
-    requestTypein(".cartypein_tips", "http://192.168.0.222:8080/car-management/car/addCar.action", carinfodata, that, "carCheck");
+    requestTypein(".cartypein_tips", "http://192.168.0.222:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
 });
 // 接车点检-----------------------------------------------------------------------------------------
 // 接车点检初始化表单
 function initcarCheck() {
     formReset();
-    console.log(getHashParameter("vSn"));
+    // console.log(getHashParameter("vSn"));
     $("#carCheck #vSn").val(getHashParameter("vSn")); //车辆编号
     $("#carCheck #vin").val(getHashParameter("vin")); //车架号
     $("#carCheck #engineNumber").val(getHashParameter("engineNumber")); //发动机编号
@@ -170,6 +183,9 @@ function inputVal(inputid, but) {
     var originhtml = $(inputid).siblings().html();
     $(inputid).bind('input porpertychange', function() {
         var val = $(inputid).val();
+        if (val == "") {
+            return;
+        }
         var regg = reg.test(val);
         if (regg == false) {
             $(inputid).siblings().html("格式不正确");
@@ -182,6 +198,8 @@ function inputVal(inputid, but) {
         }
     });
 }
+
+inputVal("#engineCapacity", "#carTypeIn_btn");
 inputVal("#carCheck #sparetyre", "#carCheck_btn");
 inputVal("#carCheck #tools", "#carCheck_btn");
 inputVal("#carCheck #jack", "#carCheck_btn");
@@ -196,12 +214,13 @@ $(".resetcheck_btn").click(function() {
 });
 // 接车点检提交
 $("#carCheck_btn").click(function() {
-    if (getHashParameter("vSn") == "" || getHashParameter("vin") == "" || getHashParameter("engineNumber") == "") {
-        alert("车辆编号、车架号、发动机编码等不能为空");
+    if ($("#pickone").val() == "" || $("#").val() == "") {
+        alert("有必填项未填写");
         return;
     }
+    $(this).parent().attr("href", "#" + "sCheck");
     var carCheckdata = {
-        "carid": getHashParameter("id"), //数据库编号
+        "tcarid": getHashParameter("id"), //数据库编号
         "vSn": getHashParameter("vSn"), //车辆编号
         "vin": getHashParameter("vin"), //车架号
         "engineNumber": getHashParameter("engineNumber"), //发动机编号
@@ -224,217 +243,323 @@ $("#carCheck_btn").click(function() {
 });
 // 接车点检返回到车辆录入界面，数据回显
 $("#carcheck_return").click(function() {
-    $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/car/carData.action",
-        "type": "get",
-        "data": {
-            "vSn": getHashParameter("vSn")
-        },
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
-        "success": function(res) {
-            console.log(res);
-            res = res[0];
-            $("#carTypeIn #vSn").val(res.vSn);
-            $("#carTypeIn #vin").val(res.vin); //车架号
-            $("#carTypeIn #product_sn").val(res.product_sn);
-            $("#carTypeIn #product_name").val(res.product_name);
-            $("#carTypeIn #engineNumber").val(res.engineNumber);
-            $("#carTypeIn #carName").val(res.carName);
-            $("#carTypeIn #vCarType").val(res.vCarType);
-            $("#carTypeIn #customer").val(res.customer);
-            $("#carTypeIn #projectEngineer").val(res.projectEngineer);
-            $("#carTypeIn #contactNumber").val(res.contactNumber);
-            $("#carTypeIn #engineType").val(res.engineType);
-            $("#carTypeIn #engineCapacity").val(res.engineCapacity);
-            $("#carTypeIn #FuelType").val(res.fuelType);
-            $("#carTypeIn #oilspecification").val(res.oilspecification);
-            $("#carTypeIn #tyresize").val(res.tyresize);
-            $("#carTypeIn #GBTS").val(res.gbts); //变速箱油规格
-            $("#carTypeIn #reaTireP").val(res.reaTireP);
-            $("#carTypeIn #frontTireP").val(res.frontTireP);
-            $("#carTypeIn #vehicleQuality").val(res.vehicleQuality);
-            $("#carTypeIn #loadMethod").val(res.loadMethod);
-            $("#carTypeIn #loadData").val(res.loadData);
-            $("#carTypeIn #operator").val(res.operator); //签字人、操作人
-            $("#carTypeIn #makeTime").val(changeDateFormat(res.makeTime)); //makeTime
-            $("#carTypeIn #remark").val(res.remark); //备注
-            if (res.cGroup == null) {
-                $("#carTypeIn #gids").val("") //车辆分组
-            } else {
-                $("#carTypeIn #gids").val(res.cGroup.id) //车辆分组
-            }
-        }
-    })
+    cartypein_info(getHashParameter("vSn"), "#carTypeIn"); //调用 detail.js里面的车辆录入信息回显函数
+    $(".cartypein_tips").html("");
 });
 
-// 查看车辆点检信息
-function FindCheckinfo(id, url) {
-    $.ajax({
-        "url": url,
-        "type": "get",
-        "data": {
-            "carid": id
-        },
-        "async": false,
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-        "success": function(res) {
-            console.log(res);
-            // $("#carCheck input").attr("readOnly", true);
-            if (res == null || res == undefined) {
-                formReset(); //先将form表单信息清空
-                return;
-            }
-            $("#vSn").val(getHashParameter("vSn"));
-            $("#vin").val(res.vin);
-            $("#engineNumber").val(res.engineNumber);
-            if (res.carfacade == 1) {
-                $(".car_image_check:input:first-child").prop("checked", "checked");
-            } else {
-                $(".car_image_check:input:last-child").prop("checked", "checked");
-            }
-            $("#item").val(res.item);
-            $("#tools").val(res.tools);
-            $("#sparetyre").val(res.sparetyre);
-            $("#jack").val(res.jack);
-            $("#warningboard").val(res.warningboard);
-            $("#fire").val(res.fire);
-            $("#keys").val(res.keyy);
-            $("#ododmeter").val(res.odometer);
-            $("#pickone").val(res.pickone);
-            $("input[name='send_iphone']").val(res.telephone);
-            $("#send_p").val(res.send_p);
-            $("#vin").val(res.vin);
-            $("input[name='receivecar']").val(res.time);
-        },
-        "error": function(res) {
-            console.log(res);
-        }
-    });
-}
 // 安全检查---------------------------------------------------------------
 // 安全检查上一步
 $("#carWiring_return").click(function() {
-    FindCheckinfo(getHashParameter("id"), "http://192.168.0.222:8080/car-management/car/findUpcheck.action");
+    FindCheckinfo(getHashParameter("id"), "http://192.168.0.222:8080/car-management/car/findUpcheck.action", "#carCheck");
+    $(".carcheck_tips").html("");
 });
 // 页面检查菜单
-function addMenu(boxname) {
+function addMenu(boxname, num) {
     $.ajax({
+        // "url": "http://localhost/car/CarMangae0/json/safemenu.json",
         "url": "http://192.168.0.222:8080/car-management/car/findAllCheckName.action",
         "type": "get",
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         "success": function(res) {
             console.log(res);
             var Ahref = "";
+            var active = "";
             for (var a = 0; a < res.length; a++) {
-                Ahref += '<a href="#' + res[a].url + '" data-toggle="tab"><button type="button" class="checkitem' + res[a].id + '">' + res[a].name + '</button></a>';
+                if (res[a].id == num) {
+                    console.log(res[a].id);
+                    active = "checkitem_active";
+                } else {
+                    active = "";
+                }
+                Ahref += '<a href="#" data-toggle="tab"><button type="button" class="checkitem' + res[a].id + ' ' + active + '">' + res[a].name + '</button></a>';
             }
-            console.log(Ahref);
             $(boxname).html(Ahref);
+            $('.checkitem1').click(function() {
+                $(this).parent().attr("href", "#" + "sCheck");
+                addMenu("#sCheck .checkMenus", 1);
+            });
+            $('.checkitem2').click(function() {
+                $(this).parent().attr("href", "#" + "wiringCheck");
+                addMenu("#wiringCheck .checkMenus", 2);
+                initWiringCheck("");
+            });
+            $('.checkitem3').click(function() {
+                $(this).parent().attr("href", "#" + "bomCheck");
+                addMenu("#bomCheck .checkMenus", 3);
+            });
         }
     })
 }
-$('.checkitem1').click(function() {
-    addMenu("#sCheck .checkMenus");
-});
-$('.checkitem2').click(function() {
-    addMenu("#wiringCheck .checkMenus");
-});
-$('.checkitem3').click(function() {
-    addMenu("#bomCheck .checkMenus");
-});
-$('.checkitem4').click(function() {
-    addMenu("#partCheck .checkMenus");
-})
+
 
 
 function getcnid(url, boxname) {
-    // 安全检查项目
+    // 安全检查
     $.ajax({
+        // "url": "http://localhost/car/CarMangae0/json/item" + url + ".json",
         "url": "http://192.168.0.222:8080/car-management/car/findAllParentItem.action?CNID=" + url,
         "type": "get",
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         "success": function(res) {
             console.log(res);
-            var checkboxs = '<div class="checktitle"><span>检查项目</span><span>要求</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
-
-            for (var i = 0; i < res.length; i++) {
-                checkboxs += '<div class="checkitem"><span>' + res[i].name +
-                    '</span><span>' + res[i].carCheckRequest.name +
-                    '</span><span><input type="radio" class="" value="0" name="itemstatus">是' +
-                    '<input type="radio" class="statusno" value="1" name="itemstatus">否' +
-                    '<input type="radio" class="" value="2" name="itemstatus">NA' +
-                    '</span><span> <input type="text" class="item' + i + 'explain explain_input" value=""></span></div>'
+            if (url == 1 || url == 3) {
+                if (url == 1) {
+                    var checkboxs = '<div class="checktitle"><span>检查项目</span><span>要求</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
+                    for (var i = 0; i < res.length; i++) {
+                        checkboxs += '<div class="checkitem"><span>' + res[i].pname +
+                            '</span><span>' + res[i].carCheckRequest.request +
+                            '</span><span class="style1_radio"><input type="radio" checked="" class="statusy" value="Y" name="itemstatus' + i + '">是' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno" value="N" name="itemstatus' + i + '">否' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="" value="NA" name="itemstatus' + i + '">NA' +
+                            '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
+                    }
+                } else if (url == 3) {
+                    var checkboxs = '<div class="checktitle"><span>零部件名称</span><span>零部件号</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
+                    for (var i = 0; i < res.length; i++) {
+                        checkboxs += '<div class="checkitem"><span>' + res[i].pname +
+                            '</span><span>' + res[i].components.name +
+                            '</span><span class="style1_radio"><input type="radio" checked="" class="statusy" value="Y" name="itemstatus' + i + '">是' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno" value="N" name="itemstatus' + i + '">否' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="" value="NA" name="itemstatus' + i + '">NA' +
+                            '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
+                    }
+                }
+            } else if (url == 2 || url == 4) {
+                if (url == 2) {
+                    var checkboxs = '<div class="checktitle"><span>检查项目</span><span class="itemlist2">状态</span><span class="itemlist3">说明（注明问题不能解决的原因）</span></div>';
+                } else if (url == 4) {
+                    var checkboxs = '<div class="checktitle"><span class="itemlist1"><span class="itemlist_head">名称</span><span class="item_child">简明安装使用要求</span></span><span class="itemlist2">状态</span><span class="itemlist3">说明（注明问题不能解决的原因）</span></div>';
+                }
+                for (var i = 0; i < res.length; i++) {
+                    var childitem = "";
+                    var childstatus = "";
+                    var childexplain = "";
+                    if (res[i].carCheckItems.length == 0) {
+                        checkboxs += '<div class="checkitem"><span class="itemlist1">' + res[i].pname +
+                            '</span><span class="itemlist2 rowradio"><input checked="" type="radio" class="statusy my_radio" value="Y" name="status' + i + '">是' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno my_radio" value="N" name="status' + i + '">否' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="my_radio" value="NA" name="status' + i + '">NA' +
+                            '</span><span class="itemlist3"><input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>'
+                    } else {
+                        for (var j = 0; j < res[i].carCheckItems.length; j++) {
+                            childitem += '<p>' + res[i].carCheckItems[j].cname + '</p>';
+                            childstatus += '<p class="rowradio"><input type="radio" checked="" class="statusy my_radio" value="Y" name="statuschild' + i + j + '">是' +
+                                '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno my_radio" value="N" name="statuschild' + i + j + '">否' +
+                                '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="my_radio" value="NA" name="statuschild' + i + j + '">NA</p>';
+                            childexplain += '<p><input type="text" class="item' + j + 'explain explain_input" value="" name="explainchild' + i + j + '"></p>';
+                        }
+                        checkboxs += '<div class="checkitem"><span class="itemlist1">' +
+                            '<span class="itemlist_head head' + i + '">' + res[i].pname + '</span>' +
+                            '<span class="item_child itemlist1_child' + i + '">' + childitem + '</span>' +
+                            '</span><span class="itemlist2">' + childstatus + '</span>' +
+                            '<span class="itemlist3">' + childexplain + '</span></div>';
+                    }
+                }
             }
             // console.log(checkboxs);
             $(boxname).html(checkboxs);
+            $(".statusy").prop("checked", true); //默认单选框选中是
         }
     });
 }
-// initsafeCheck  车辆安全检查初始化
+var cylinderArr = ["缸压（Bar）:", "1缸", "2缸", "3缸", "4缸", "燃油压力(Bar)", "实测"];
+var cylinderName = ["cylinder", "one", "two", "three", "four", "fuel", "actual"];
+
+// 初始化缸压内容
+function initcylinder(box1) {
+    var boxs = "";
+    for (var j = 0; j < cylinderArr.length; j++) {
+        boxs += '<div><label>' + cylinderArr[j] + '</label><input name="' + cylinderName[j] + '_p" type="text" value=""></div>'
+    }
+    $(box1).html(boxs);
+    $("input[name='fuel_p']").val("4.0");
+    $("input[name='fuel_p']").attr("readOnly", true);
+    $("input[name='cylinder_p']").css("display", "none");
+}
+initsafeCheck(".pot_pressure"); //初始化安全检查
 function initsafeCheck(box1) {
-    addMenu("#sCheck .checkMenus");
+    addMenu("#sCheck .checkMenus", 1);
     // 缸压
-    $.ajax({
-        "url": "./json/datatable.json",
-        "type": "get",
-        // "dataType": "jsonp", //数据类型为jsonp  
-        // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-        "success": function(res) {
-            console.log(res);
-            var boxs = "";
-            for (var j = 0; j < res.length; j++) {
-                boxs += '<div><label>' + res[j].name + '</label><input type="text" value="' + res[j].id + '"></div>'
-            }
-            // console.log(boxs);
-            $(box1).html(boxs);
-        }
-    });
+    initcylinder(box1);
     // 初始化检查项目表
     getcnid(1, ".check_itembox");
 }
 //安全检查重置
 $(".resetsafe_btn").click(function() {
-    initcarCheck();
+    myformReset();
 });
+// 线束检查重置
+$(".resetwiring_btn").click(function() {
+    myformReset();
+});
+// bom检查重置
+$(".resetbom_btn").click(function() {
+    myformReset();
+});
+// 添加表单序列化为json的方法
+$.fn.mychangeform = function() {
+    var aaa = this.serialize();
+    var serializeArr = aaa.split("&");
+    var changeArr = []; //最终传给后台的数组对象
+    for (var s = 0; s < serializeArr.length; s = s + 2) {
+        var f = {
+            "status": "",
+            "explanation": ""
+        };
+        f.status = serializeArr[s].split("=")[1];
+        changeArr.push(f);
+    }
+    console.log(changeArr);
+    var explainArr = [];
+    // 取出explain的值，存入数组，再将值赋值给changeArr
+    for (var ss = 1; ss < serializeArr.length; ss = ss + 2) {
+        console.log(serializeArr[ss].split("=")[1]);
+        explainArr.push(serializeArr[ss].split("=")[1]);
+        for (var e = 0; e < explainArr.length; e++) {
+            changeArr[e].explanation = decodeURI(explainArr[e]);
+        }
+    }
+    return changeArr;
+};
+// 判断单选框是否有空
+function isAllChecked(radioLength) {
+    for (var i = 0; i < radioLength; i++) {
+        var radios = document.getElementsByName('itemstatus' + i);
+        var checkedCount = 0;
+        for (var j = 0; j < radios.length; j++) {
+            if (radios[j].checked) {
+                checkedCount++;
+            }
+        }
+        if (!checkedCount) {
+            return false;
+        }
+    }
+    return true;
+}
 // 安全检查提交
-$("#carWiring_btn").click(function() {
-    if (getHashParameter("vSn") == "" || getHashParameter("vin") == "" || getHashParameter("engineNumber") == "") {
-        alert("车辆编号、车架号、发动机编码等不能为空");
+$("#sCheck_btn").click(function() {
+    // 单选框的值不能为空，否则不能提交
+    if (isAllChecked(12) == false) {
+        alert("有选项未选择");
         return;
     }
-    var carCheckdata = {
-        "carid": getHashParameter("id"), //数据库编号
-        "vSn": getHashParameter("vSn"), //车辆编号
-        "vin": getHashParameter("vin"), //车架号
-        "engineNumber": getHashParameter("engineNumber"), //发动机编号
-        "carfacade": $("input[name='carfacade']:checked").val(),
-        "item": $("#item").val(),
-        "tools": $("#tools").val(),
-        "sparetyre": $("#sparetyre").val(), //备用轮胎
-        "jack": $("#jack").val(),
-        "warningboard": $("#warningboard").val(),
-        "fire": $("#fire").val(),
-        "keyy": $("#keys").val(),
-        "odometer": $("#ododmeter").val(),
-        "pickone": $("#pickone").val(),
-        "telephone": $("input[name='send_iphone']").val(),
-        "send_p": $("#send_p").val(),
-        "time": $("input[name='receivecar']").val()
-    };
-    var that = this;
-    requestTypein(".carcheck_tips", "http://192.168.0.222:8080/car-management/car/upcheck.action", carCheckdata, that, "sCheck");
+    console.log(form2);
+    $.ajax({
+        type: "get",
+        url: "http://192.168.0.222:8080/car-management/car/saveClacyLindersss.action?tcarid=" + getHashParameter("id"),
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        data: $(".pot_pressure").serializeObject(),
+        success: function(res) {
+            console.log(res);
+            if (res.ret == true) {} else {
+                $(".carsafe_tips").html("缸压提交失败");
+                return;
+            }
+        }
+    });
+
+    var form2 = $(".check_itembox").mychangeform();
+    console.log(JSON.stringify(form2));
+    $.ajax({
+        type: "POST",
+        url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        data: JSON.stringify(form2),
+        success: function(data) {
+            console.log(data);
+            if (data.ret == true) {
+                $(".carsafe_tips").html("表单提交成功");
+                myformReset(); //表单重置
+            } else {
+                $(".carsafe_tips").html("表单提交失败");
+            }
+        },
+        error: function(dat) {
+            $(".carsafe_tips").html("系统内部错误，请联系程序员小哥哥~");
+        }
+    });
 });
 
-//线束检查初始化 ---------------------------------------------------------
+//线束检查初始化 -------------------------------------------------------------------------------------------------------------
+//线束检查初始化
 function initWiringCheck(box1) {
-    addMenu("#wiringCheck .checkMenus");
+    addMenu("#wiringCheck .checkMenus", 2);
     // 初始化检查项目表
     getcnid(2, ".wcheck_itembox");
 }
+
+// 线束检查提交
+$("#wiringCheck_btn").click(function() {
+    var item1 = $("#wiringCheck .my_radio:checked");
+    var item2 = $("#wiringCheck input[type='text']");
+    var sucArr = [];
+    for (var i = 0; i < item1.length; i++) {
+        var sucobj = {};
+        // sucArr.push({ "\"status\"": item1[i].value, "\"explanation\"": item2[i].value })//将不带“”的key转换为带有key值的
+        sucArr.push({ "status": item1[i].value, "explanation": item2[i].value })
+    }
+    console.log(JSON.stringify(sucArr));
+    $.ajax({
+        type: "POST",
+        url: "http://192.168.0.222:8080/car-management/car/addHiCheck/" + getHashParameter("id") + ".action?",
+        dataType: "json",
+        data: JSON.stringify(sucArr),
+        async: false,
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        success: function(data) {
+            console.log(data);
+            if (data.ret == true) {
+                $(".wiring_tips").html("表单提交成功");
+                $("#wiringCheck input[type='text']").val("");
+            } else {
+                $(".wiring_tips").html("表单提交失败");
+            }
+        },
+        error: function(dat) {
+            $(".wiring_tips").html("系统内部错误，请联系程序员小哥哥~");
+        }
+    });
+});
+//bom检查初始化 -------------------------------------------------------------------------------------------------------------
+function initBomCheck(box1) {
+    addMenu("#bomCheck .checkMenus", 3);
+    // 初始化检查项目表
+    getcnid(3, ".bomcheck_itembox");
+}
+initBomCheck();
+// bom检查提交
+$("#bomCheck_btn").click(function() {
+    // 单选框的值不能为空，否则不能提交
+    if (isAllChecked(11) == false) {
+        alert("有选项未选择");
+        return;
+    }
+    var form4 = $(".bomcheck_itembox").mychangeform();
+    console.log(JSON.stringify(form4));
+    $.ajax({
+        type: "POST",
+        url: "http://192.168.0.222:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("id") + ".action?",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        data: JSON.stringify(form4),
+        success: function(data) {
+            if (data.ret == true) {
+                $(".carbom_tips").html("表单提交成功");
+                $("#bomcheck_itembox input[type='text']").val("");
+            } else {
+                $(".carbom_tips").html("表单提交失败");
+            }
+        },
+        error: function(dat) {
+            $(".carbom_tips").html("系统内部错误，请联系程序员~");
+        }
+    });
+});
+
 // 还车点检----------------------------------------------------------------------------------------
 // 这个按钮从列表来
 $(".resetreturncheck_btn").click(function() {
@@ -514,8 +639,6 @@ function FindreturnCheckinfo(id, url) {
             $("#returncarCheck #pick_tel").val(res.pick_tel);
             $("#returncarCheck #pick_card").val(res.pick_card);
             $("#returncarCheck #trans_sn").val(res.trans_sn);
-            // $("input[name='send_iphone']").val(res.telephone);
-            // $("#send_p").val(res.send_p);
             $("#returncarCheck #time").val(res.time);
             // $("input[name='receivecar']").val(res.time);
         },
@@ -550,3 +673,33 @@ $("#driverTypeIn_btn").click(function() {
     }
     requestTypein(".drivetypein_tips", "http://192.168.0.222:8080/car-management/carDriver/add.action", driverCheckdata);
 });
+
+
+//part初始化 -------------------------------------------------------------------------------------------------------------
+// initPartCheck();//现在不需要部件状态检查这一步了
+// function initPartCheck(box1) {
+//     addMenu("#partCheck .checkMenus", 4);
+//     // 初始化检查项目表
+//     getcnid(4, ".partcheck_itembox");
+// }
+// initPartCheck();
+// // 部件检查提交
+// $("#partCheck_btn").click(function() {
+//     // 单选框的值不能为空，否则不能提交
+//     if (isAllChecked() == false) {
+//         alert("有选项未选择");
+//         return;
+//     }
+//     var form5 = $(".partcheck_itembox").mychangeform();
+//     $.ajax({
+//         type: "POST",
+//         url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+//         dataType: "json",
+//         contentType: 'application/json;charset=UTF-8', //contentType很重要 
+//         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
+//         data: JSON.stringify(form5),
+//         success: function(data) {
+//             console.log(data);
+//         }
+//     });
+// });

@@ -65,6 +65,7 @@
                       var convertor = new BMap.Convertor();
                       convertor.translate(pos, 1, 5, function(data) {
                           console.log(data);
+
                           if (data.status === 0) {
                               for (var i = 0; i < data.points.length; i++) {
                                   var new_point = new BMap.Point(data.points[i]);

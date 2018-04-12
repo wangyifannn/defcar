@@ -19,10 +19,11 @@
    }
    
    .logininfo_group {
+       width: 77%;
        text-align: center;
        font-size: 12px;
-       margin-top: 5px;
        color: #D80000;
+       margin: 0 auto;
    }
    
    .header {
@@ -172,6 +173,7 @@
        width: 210px;
        margin-left: 43px;
        height: 32px;
+       margin-bottom: 10px;
        text-align: center;
        font-size: 16px;
        border-radius: 4px;
