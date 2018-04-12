@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>维修车间大屏</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/scrollscreen.css" />
+    <!--<link rel="stylesheet" type="text/css" href="../assets/css/scrollscreen.css" />-->
+    <!--<link rel="stylesheet" href="../css/styleA.css" media="screen and (min-width: 1500px) and (max-width: 2500px)">-->
+    <link rel="stylesheet" href="../css/styleC.css" media="screen and (max-width: 1900px)">
+    <link rel="stylesheet" href="../assets/css/scrollscreen.css" media="screen and (min-width: 1900px) and (max-width: 5148px)">
     <script type="text/javascript" language="javascript" src="../assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="../assets/js/myslideup.js"></script>
-    <!--<script type="text/javascript" src="../js/fullScreen.js"></script>-->
+    <script type="text/javascript" src="../js/fullScreen.js"></script>
     <script type="text/javascript">
-        $(function() {
-            $(".line").slideUp();
-        })
     </script>
 </head>
 
-<body class="shopbody">
+<body class="shopbody" style="height: 100%;" id="full_mainlist">
     <div class="shopwhole">
-
-        <div class="maintainList" id="full_mainlist">
-            <!--<button id='btn'>全屏/退出全屏</button>-->
+        <button id='btn'>全屏/退出全屏</button>
+        <div class="maintainList">
             <ul class="title">
                 <li>
                     <span class="list1">车辆编号</span>
@@ -98,9 +98,6 @@
             }
         })
     }
-    $("#btn").click(function() {
-        $("#full_mainlist").fullScreen();
-    })
 </script>
 <script>
     //以下代码仅为演示用,具体传入参数请参看接口描述详情页.
@@ -144,29 +141,6 @@
         $(".datatime").html(formatterDateTime());
     }, 1000);
 
-
-    //   圆形百分圈
-    $(".circleChart#1").circleChart({
-        size: 70,
-        color: "#2ff1cf",
-        backgroundColor: "#505f76",
-        value: 30,
-        text: 0,
-        top: 50,
-        onDraw: function(el, circle) {
-            circle.text(Math.round(circle.value) + "%");
-        }
-    });
-    $(".circleChart#0").circleChart({
-        size: 70,
-        color: "#eace50",
-        backgroundColor: "#505f76",
-        value: 50,
-        text: 0,
-        onDraw: function(el, circle) {
-            circle.text(Math.round(circle.value) + "%");
-        }
-    });
     setInterval(function() {
         getList();
         $("#0").circleChart({
@@ -174,6 +148,74 @@
         });
     }, 60000); //1小时刷新一次 维修大屏列表和 百分比
     // 早上刷新一次，下午刷新一次？
+    // window.onresize = function() {
+    // console.log($(document.body).width());
+    // 字体大小变化
+    if ($(document.body).width() >= 3800) {
+        console.log($(document.body).width());
+        $("ul.line li span").css("fontSize", "40px");
+        $("ul.title li span").css("fontSize", "48px");
+        $("ul.title").css("margin-bottom", "7px");
+        $("ul.line li").css({
+            "border-bottom-width": "5px",
+            "border-bottom-width": "5px"
+        });
+
+        $(".circleChart#1").circleChart({
+            size: 190,
+            color: "#2ff1cf",
+            backgroundColor: "#505f76",
+            value: 30,
+            text: 0,
+            top: 50,
+            onDraw: function(el, circle) {
+                circle.text(Math.round(circle.value) + "%");
+            }
+        });
+        $(".circleChart#0").circleChart({
+            size: 190,
+            color: "#eace50",
+            backgroundColor: "#505f76",
+            value: 50,
+            text: 0,
+            onDraw: function(el, circle) {
+                circle.text(Math.round(circle.value) + "%");
+            }
+        });
+    } else {
+        $(".circleChart#1").circleChart({
+            size: 100,
+            color: "#2ff1cf",
+            backgroundColor: "#505f76",
+            value: 30,
+            text: 0,
+            top: 50,
+            onDraw: function(el, circle) {
+                circle.text(Math.round(circle.value) + "%");
+            }
+        });
+        $(".circleChart#0").circleChart({
+            size: 100,
+            color: "#eace50",
+            backgroundColor: "#505f76",
+            value: 50,
+            text: 0,
+            onDraw: function(el, circle) {
+                circle.text(Math.round(circle.value) + "%");
+            }
+        });
+    }
+    // };
+
+    $(function() {
+        var myheight = $("ul.line li").height();
+        $(".line").slideUp("", myheight);
+        $("#btn").click(function() {
+            $("#full_mainlist").fullScreen();
+            myheight = $("ul.line li").height();
+            $(".line").slideUp("", myheight);
+        })
+    })
 </script>
 
 </html>
