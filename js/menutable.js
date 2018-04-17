@@ -2,7 +2,7 @@ var childmenuArr = [];
 //加载 菜单列表
 function loadMenuList() {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
+        "url": "http://192.168.0.106:8080/car-management/menu/menuList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -46,7 +46,7 @@ window.menuOperateEventsDel = {
         menudelarr.push(row.pid);
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/menu/deletemenu.action",
+            "url": "http://192.168.0.106:8080/car-management/menu/deletemenu.action",
             "type": "get",
             "data": {
                 "mids[]": menudelarr

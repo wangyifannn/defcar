@@ -10,7 +10,7 @@ var driverpageNum = 1;
 function loadDriverList(driverpageNum, size) {
 
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/carDriver/CarDriverList.action",
+        "url": "http://192.168.0.106:8080/car-management/carDriver/CarDriverList.action",
         "type": "get",
         "data": {
             "page": driverpageNum,
@@ -68,7 +68,7 @@ window.driveroperateEvents = {
         console.log(row.id);
         // 删除用户操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/carDriver/delete.action",
+            "url": "http://192.168.0.106:8080/car-management/carDriver/delete.action",
             "type": "get",
             "data": {
                 "ids": row.id

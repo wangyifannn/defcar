@@ -2,72 +2,86 @@ var todayDate = new Date();
 var dateend = new Date(todayDate);
 dateend.setDate(todayDate.getDate() + 30);
 laydate.render({
-    elem: '#receiverdata',
-    type: 'datetime',
+    elem: '#receiverdata', //接车日期
+    // type: 'datetime', //精确到 时分秒
+    format: 'yyyy-MM-dd', //精确到 年月日
     value: todayDate,
     theme: '#041473' //自定义颜色主题
 });
 // 车辆录入表制作日期
 laydate.render({
     elem: '#makeTime',
-    type: 'datetime',
+    format: 'yyyy-MM-dd', //精确到 年月日
     value: todayDate,
     theme: '#041473' //自定义颜色主题
 });
 // 驾驶员录入相关日期
 laydate.render({
     elem: '#birthday',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     theme: '#041473' //驾驶员出生年月
 });
+
 laydate.render({
     elem: '#LStartTime',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     value: todayDate,
     theme: '#041473' //驾照有效日起
 });
 
 laydate.render({
     elem: '#LEndTime',
-    type: 'datetime',
     value: dateend,
+    format: 'yyyy-MM-dd',
     theme: '#041473' //驾照有效日止
 });
 laydate.render({
     elem: '#allowStartTime',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     value: todayDate,
     theme: '#041473' //授权起始日
 });
 laydate.render({
     elem: '#discuss_time',
-    type: 'datetime',
     value: todayDate,
+    format: 'yyyy-MM-dd',
     theme: '#041473' //协商日期
 });
 laydate.render({
     elem: '#send_time',
-    type: 'datetime',
     value: todayDate,
+    format: 'yyyy-MM-dd',
     theme: '#041473' //协商日期
 });
 laydate.render({
     elem: '#complete_time',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     value: todayDate,
     theme: '#041473' //完成日期
 });
 laydate.render({
     elem: '#allowEndTime',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     value: dateend,
     theme: '#041473' //授权终止日
 });
 laydate.render({
     elem: '#time',
-    type: 'datetime',
+    format: 'yyyy-MM-dd',
     value: todayDate,
     theme: '#041473' //授权终止日
+});
+laydate.render({
+    elem: '#upkeepTime',
+    format: 'yyyy-MM-dd',
+    value: todayDate,
+    theme: '#041473' //保养日期
+}); 
+laydate.render({
+    elem: '#nextupkeepTime',
+    format: 'yyyy-MM-dd',
+    value: dateend,    
+    theme: '#041473' //下次保养日期
 });
 // 数据库 加载权限列表
 function requestTypein(paramsid, url, data, that, next) {
@@ -95,7 +109,6 @@ function requestTypein(paramsid, url, data, that, next) {
             }
             if (res.ret == true) {
                 window.location.hash = "id=" + id + "&pagenum=1&vSn=" + vSn + "&vin=" + vin + "&engineNumber=" + engineNumber; //车辆数据库编号
-                $(that).parent().attr("href", "#" + next);
                 if (next == "carCheck") {
                     initcarCheck(); //初始化接车点检
                 } else if (next == "sCheck") {
@@ -103,6 +116,7 @@ function requestTypein(paramsid, url, data, that, next) {
                 } else if (next == "initReturnCarCheck") {
                     initReturnCarCheck(""); //初始化还车检点
                 }
+                $(that).parent().attr("href", "#" + next);
                 $('a[href="#' + next + '"]').tab('show');
                 // 将提交成功，返回的数据存入session
                 window.localStorage.formData = JSON.stringify(res);
@@ -166,7 +180,7 @@ $("#carTypeIn_btn").click(function() {
         "gid": $("#carTypeIn #gids").val() //车辆分组
     };
     var that = this;
-    requestTypein(".cartypein_tips", "http://192.168.0.222:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
+    requestTypein(".cartypein_tips", "http://192.168.0.106:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
 });
 // 接车点检-----------------------------------------------------------------------------------------
 // 接车点检初始化表单
@@ -198,7 +212,6 @@ function inputVal(inputid, but) {
         }
     });
 }
-
 inputVal("#engineCapacity", "#carTypeIn_btn");
 inputVal("#carCheck #sparetyre", "#carCheck_btn");
 inputVal("#carCheck #tools", "#carCheck_btn");
@@ -224,7 +237,7 @@ $("#carCheck_btn").click(function() {
         "vSn": getHashParameter("vSn"), //车辆编号
         "vin": getHashParameter("vin"), //车架号
         "engineNumber": getHashParameter("engineNumber"), //发动机编号
-        "carfacade": $("input[name='carfacade']:checked").val(),
+        "facade": $("input[name='carfacade']:checked").val(),
         "item": $("#item").val(),
         "tools": $("#tools").val(),
         "sparetyre": $("#sparetyre").val(), //备用轮胎
@@ -232,14 +245,15 @@ $("#carCheck_btn").click(function() {
         "warningboard": $("#warningboard").val(),
         "fire": $("#fire").val(),
         "keyy": $("#keys").val(),
-        "odometer": $("#ododmeter").val(),
+        "odometer": $("#ododmeter").val(), //*
         "pickone": $("#pickone").val(),
         "telephone": $("input[name='send_iphone']").val(),
         "send_p": $("#send_p").val(),
-        "time": $("input[name='receivecar']").val()
+        "time": $("input[name='receiverdata']").val()
     };
+    console.log(carCheckdata);
     var that = this;
-    requestTypein(".carcheck_tips", "http://192.168.0.222:8080/car-management/car/upcheck.action", carCheckdata, that, "sCheck");
+    requestTypein(".carcheck_tips", "http://192.168.0.106:8080/car-management/car/upcheck.action", carCheckdata, that, "sCheck");
 });
 // 接车点检返回到车辆录入界面，数据回显
 $("#carcheck_return").click(function() {
@@ -250,14 +264,13 @@ $("#carcheck_return").click(function() {
 // 安全检查---------------------------------------------------------------
 // 安全检查上一步
 $("#carWiring_return").click(function() {
-    FindCheckinfo(getHashParameter("id"), "http://192.168.0.222:8080/car-management/car/findUpcheck.action", "#carCheck");
+    FindCheckinfo("http://192.168.0.106:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheck");
     $(".carcheck_tips").html("");
 });
 // 页面检查菜单
 function addMenu(boxname, num) {
     $.ajax({
-        // "url": "http://localhost/car/CarMangae0/json/safemenu.json",
-        "url": "http://192.168.0.222:8080/car-management/car/findAllCheckName.action",
+        "url": "http://192.168.0.106:8080/car-management/car/findAllCheckName.action",
         "type": "get",
         "success": function(res) {
             console.log(res);
@@ -296,7 +309,7 @@ function getcnid(url, boxname) {
     // 安全检查
     $.ajax({
         // "url": "http://localhost/car/CarMangae0/json/item" + url + ".json",
-        "url": "http://192.168.0.222:8080/car-management/car/findAllParentItem.action?CNID=" + url,
+        "url": "http://192.168.0.106:8080/car-management/car/findAllParentItem.action?CNID=" + url,
         "type": "get",
         "success": function(res) {
             console.log(res);
@@ -445,7 +458,7 @@ $("#sCheck_btn").click(function() {
     console.log(form2);
     $.ajax({
         type: "get",
-        url: "http://192.168.0.222:8080/car-management/car/saveClacyLindersss.action?tcarid=" + getHashParameter("id"),
+        url: "http://192.168.0.106:8080/car-management/car/saveClacyLindersss.action?tcarid=" + getHashParameter("id"),
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         data: $(".pot_pressure").serializeObject(),
@@ -462,7 +475,7 @@ $("#sCheck_btn").click(function() {
     console.log(JSON.stringify(form2));
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
@@ -473,7 +486,7 @@ $("#sCheck_btn").click(function() {
                 $(".carsafe_tips").html("表单提交成功");
                 myformReset(); //表单重置
             } else {
-                $(".carsafe_tips").html("表单提交失败");
+                $(".carsafe_tips").html(data.msg);
             }
         },
         error: function(dat) {
@@ -503,7 +516,7 @@ $("#wiringCheck_btn").click(function() {
     console.log(JSON.stringify(sucArr));
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.222:8080/car-management/car/addHiCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addHiCheck/" + getHashParameter("id") + ".action?",
         dataType: "json",
         data: JSON.stringify(sucArr),
         async: false,
@@ -515,7 +528,7 @@ $("#wiringCheck_btn").click(function() {
                 $(".wiring_tips").html("表单提交成功");
                 $("#wiringCheck input[type='text']").val("");
             } else {
-                $(".wiring_tips").html("表单提交失败");
+                $(".carsafe_tips").html(data.msg);
             }
         },
         error: function(dat) {
@@ -541,7 +554,7 @@ $("#bomCheck_btn").click(function() {
     console.log(JSON.stringify(form4));
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.222:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("id") + ".action?",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
@@ -593,7 +606,7 @@ $("#returncarCheck_btn").click(function() {
             // "operator_time": $("#operator_time").val() //自动能够生产
     };
     // console.log(carCheckdata);
-    requestTypein(".returncarcheck_tips", "http://192.168.0.222:8080/car-management/car/backCheck.action", returncarCheckdata);
+    requestTypein(".returncarcheck_tips", "http://192.168.0.106:8080/car-management/car/backCheck.action", returncarCheckdata);
 });
 
 // 还车点检返回
@@ -640,7 +653,6 @@ function FindreturnCheckinfo(id, url) {
             $("#returncarCheck #pick_card").val(res.pick_card);
             $("#returncarCheck #trans_sn").val(res.trans_sn);
             $("#returncarCheck #time").val(res.time);
-            // $("input[name='receivecar']").val(res.time);
         },
         "error": function(res) {
             console.log(res);
@@ -671,7 +683,7 @@ $("#driverTypeIn_btn").click(function() {
         "allowEndTime": $("#allowEndTime").val(),
         "remark": $("#carTypeIn_remake").val()
     }
-    requestTypein(".drivetypein_tips", "http://192.168.0.222:8080/car-management/carDriver/add.action", driverCheckdata);
+    requestTypein(".drivetypein_tips", "http://192.168.0.106:8080/car-management/carDriver/add.action", driverCheckdata);
 });
 
 
@@ -693,7 +705,7 @@ $("#driverTypeIn_btn").click(function() {
 //     var form5 = $(".partcheck_itembox").mychangeform();
 //     $.ajax({
 //         type: "POST",
-//         url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+//         url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
 //         dataType: "json",
 //         contentType: 'application/json;charset=UTF-8', //contentType很重要 
 //         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置

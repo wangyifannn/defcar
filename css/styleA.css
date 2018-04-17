@@ -1,3 +1,180 @@
-/*(min-width: 1500px) and (max-width: 2500px)*/
+* {
+    margin: 0;
+    padding: 0;
+}
 
-.shopbody {}
+html {
+    background: #0531b7;
+    height: 100%;
+}
+
+.shopbody {
+    width: 100%;
+    min-width: 1000px;
+    min-height: 820px;
+    height: 100%;
+    padding-top: 20px;
+    background: #0531b7;
+    font: 20px Helvetica, sans-serif;
+}
+
+.shopwhole {
+    width: 95%;
+    height: 87%;
+    margin: 0 auto;
+    min-height: 740px;
+    position: relative;
+}
+
+.workshopList {
+    width: 85%;
+    height: 72%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+#btn {
+    padding: 2px 0px;
+    background: yellow;
+    color: #505f76;
+    font-size: 17px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
+    outline: none;
+    position: absolute;
+    right: 165px;
+    top: 41px;
+    cursor: pointer;
+    width: 130px;
+}
+
+ul.title {
+    width: 100.3%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+ul.title li {
+    width: 100%;
+    display: inline-block;
+}
+
+ul.title li span {
+    width: 14%;
+    height: 100%;
+    float: left;
+    margin-left: 0.8%;
+    text-align: center;
+    color: white;
+    font-size: 27px;
+    /*字体垂直居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul.line li span {
+    width: 14%;
+    float: left;
+    margin-left: 0.8%;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    box-sizing: border-box;
+    /*字体垂直居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shopwhole h3 {
+    font-size: 49px;
+    padding: 15px 0px;
+    letter-spacing: 22px;
+    color: white;
+    text-align: center;
+}
+
+ul.line li span:last-child,
+ul.title li span:last-child {
+    float: right;
+    border: none;
+}
+
+ul.title li span.list3,
+ul.line li span.list3 {
+    width: 40%;
+}
+
+ul.line {
+    width: 100%;
+    margin-left: 5px;
+    min-height: 438px;
+    height: 95%;
+    text-align: center;
+    overflow: hidden;
+    display: block !important;
+    /*border: 1px solid yellow;*/
+}
+
+ul.title li span:first-child,
+ul.line li span:first-child {
+    margin-left: 4px;
+}
+
+ul.line li {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    list-style: none;
+    border-top: 2px solid #0531b7;
+    border-bottom: 2px solid #0531b7;
+    -webkit-transition: 1s duration timing-function delay;
+    -moz-transition: 1s duration timing-function delay;
+    transition: 1s duration timing-function delay;
+}
+
+ul.line li:nth-child(2n+1) {
+    background: url("../img/workshopScreen/odd.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.shopfooter {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.shopfooter div {
+    display: inline-block;
+}
+
+.shopfooter .footer_left {
+    color: white;
+    margin-top: 37px;
+}
+
+.font-big {
+    font-size: 29px;
+    font-family: 圆体;
+    margin-top: 10px;
+}
+
+.footer_content {
+    margin: 0px 100px;
+    color: #ffc;
+    margin-top: 26px;
+}
+
+.footer_right {
+    float: right;
+    color: white;
+    margin-left: 100px;
+    margin-top: 26px;
+}
+
+.circleChart_text {
+    /*百分比园内的字体大小*/
+    font-size: 14px !important;
+}

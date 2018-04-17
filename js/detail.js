@@ -7,10 +7,21 @@ $("#carCheckForm button").css("display", "none");
 $("#carTypeInForm button").css("display", "none");
 $("#carTypeInForm .checkbox").css("display", "none");
 $("#carTypeInForm .cartypein_tips").css("display", "none");
+
+// 详情页搜索
+$("#detail_search_btn").click(function() {
+    if ($(".detail_input").val() == "") {
+        alert("请输入车辆编号");
+        return;
+    }
+    window.location.hash = "vSn=" + $(".detail_input").val(); //车辆数据库编号
+    $("#carTypeInForm").addClass("active").siblings().removeClass("active");
+    $(".detailitem0").addClass("checkitem_active").siblings().removeClass("checkitem_active");
+    cartypein_info($(".detail_input").val(), "#carTypeInForm");
+});
 // 页面检查菜单
 function addDetailMenu(boxname, num, href, firstcall) {
     if (firstcall == "firstcall") {}
-
     // 克隆录入表单到详情页面部分
     var res = [{ "id": 0, "name": "车辆录入信息" }, { "id": 1, "name": "接车点检信息" }, { "id": 2, "name": "安全检查信息" },
         { "id": 3, "name": "线束检查信息" }, { "id": 4, "name": "BOM检查信息" }
@@ -36,22 +47,23 @@ function addDetailMenu(boxname, num, href, firstcall) {
     $('.detailitem1').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "carCheckForm");
-        FindCheckinfo(getHashParameter("id"), "http://192.168.0.222:8080/car-management/car/findUpcheck.action", "#carCheckForm");
+        FindCheckinfo("http://192.168.0.106:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheckForm");
     });
     $('.detailitem2').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "sCheckForm");
-        FindSafeinfo("http://192.168.0.222:8080/car-management/car/findSafeCheckByCar/" + getHashParameter("id") + ".action", ".safe_Form");
+        FindPotinfo("http://192.168.0.106:8080/car-management/car/findCldCheckByCar/" + getHashParameter("vSn") + ".action", "", ".pot_Form"); //缸压信息
+        FindSafeinfo("http://192.168.0.106:8080/car-management/car/findSafeCheckByCar/" + getHashParameter("vSn") + ".action", ".safe_Form");
     });
     $('.detailitem3').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "wiringCheckForm");
-        findHiCheckByCar("http://192.168.0.222:8080/car-management/car/findHiCheckByCar/" + getHashParameter("id") + ".action", "#wiringCheckForm");
+        findHiCheckByCar("http://192.168.0.106:8080/car-management/car/findHiCheckByCar/" + getHashParameter("vSn") + ".action", "#wiringCheckForm");
     });
     $('.detailitem4').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "bomCheckForm");
-        FindSafeinfo("http://192.168.0.222:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("id") + ".action", "#bomCheckForm");
+        FindSafeinfo("http://192.168.0.106:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action", "#bomCheckForm");
     });
 }
 addDetailMenu(".detail_menu", 0, "carTypeInForm", "firstcall");
@@ -60,7 +72,7 @@ $(".detail_part input").attr("disabled", true);
 // 根据车辆编号，查看车辆录入的信息，信息回显-----------------------------------------------------------------
 function cartypein_info(vSn, boxname) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/tempcar/findTempCarByvSn.action",
+        "url": "http://192.168.0.106:8080/car-management/tempcar/findTempCarByvSn.action",
         "type": "get",
         "data": {
             "vSn": vSn
@@ -69,6 +81,10 @@ function cartypein_info(vSn, boxname) {
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
         "success": function(res) {
             console.log(res);
+            if (res == null) {
+                alert("未检索到相关车辆信息");
+                return;
+            }
             $(boxname + " #vSn").val(res.vSn);
             $(boxname + " #vin").val(res.vin); //车架号
             $(boxname + " #product_sn").val(res.product_sn);
@@ -102,14 +118,12 @@ function cartypein_info(vSn, boxname) {
     })
 }
 // 查看车辆点检信息---------------------------------------------------------------------------
-function FindCheckinfo(id, url, boxname) {
+function FindCheckinfo(url, boxname) {
     $(boxname + " .carcheck_tips").css("display", "none");
     $.ajax({
         "url": url,
         "type": "get",
-        "data": {
-            "tcarid": id
-        },
+        "data": {},
         "async": false,
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -120,6 +134,7 @@ function FindCheckinfo(id, url, boxname) {
                 $(boxname + " #vSn").val(getHashParameter("vSn"));
                 $(boxname + " .carcheck_tips").css("display", "display-block");
                 $(boxname + " .carcheck_tips").html("此车可能尚未进行接车点检");
+                alert("未检索到此车的相关信息，请核对车辆编号是否有误？");
                 return;
             }
             if (res.carfacade == 1) {
@@ -150,23 +165,26 @@ function FindCheckinfo(id, url, boxname) {
     });
 }
 // 查看缸压信息
-function FindPotinfo(url, vSn, name) {
-    if (name == ".safe_Form") {
-        initcylinder(".pot_Form");
-    }
+function FindPotinfo(url, data, name) {
+    initcylinder(name);
     $.ajax({
         "url": url,
         "type": "get",
-        "data": {
-            "vSn": vSn
-        },
+        "data": data,
         "success": function(res) {
             console.log(res);
-            $("input[name='one_p']").val(res.one_p);
-            $("input[name='two_p']").val(res.two_p);
-            $("input[name='three_p']").val(res.three_p);
-            $("input[name='four_p']").val(res.four_p);
-            $("input[name='actual_p']").val(res.actual_p);
+            if (res == null) {
+                alert("缸压信息为空");
+                return;
+            }
+            if (res.one_p == null) {
+                res.one_p == "";
+            }
+            $(name + " input[name='one_p']").val(res.one_p);
+            $(name + " input[name='two_p']").val(res.two_p);
+            $(name + " input[name='three_p']").val(res.three_p);
+            $(name + " input[name='four_p']").val(res.four_p);
+            $(name + " input[name='actual_p']").val(res.actual_p);
         }
     })
 }
@@ -251,7 +269,7 @@ function findHiCheckByCar(url, name) {
 
 // function findCarList(carid, carDetailForm) {
 //     $.ajax({
-//         "url": "http://192.168.0.222:8080/car-management/car/carData.action",
+//         "url": "http://192.168.0.106:8080/car-management/car/carData.action",
 //         "type": "get",
 //         "dataType": "jsonp", //数据类型为jsonp  
 //         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  

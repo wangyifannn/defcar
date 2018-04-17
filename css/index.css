@@ -390,7 +390,11 @@
             margin-left: 0px;
         }
         /*设置placeholder的颜色*/
-        
+                #maintainList ::-webkit-input-placeholder {
+                  /* WebKit browsers */
+                  color: #666;
+                  font-size: 10px;
+              }
          ::-webkit-input-placeholder {
             /* WebKit browsers */
             color: #666;

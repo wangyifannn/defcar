@@ -4,11 +4,14 @@ function loadingChange() {
     if (document.readyState == "complete") { //当页面加载状态为完全结束时进入   
         $(".loading").hide(); //当页面加载完成后将loading页隐藏  
         $(".fixed-table-loading").hide(); //当页面加载完成后将loading页隐藏  
+    } else {
+        setTimeout(function() {
+            $(".loading").hide(); //当页面加载完成后将loading页隐藏  
+            $(".fixed-table-loading").hide(); //当页面加载完成后将loading页隐藏 
+        }, 3000)
     }
 }
 // e 页面懒加载
-
-
 // 面包屑导航
 var breadHtml = "";
 var breadli1 = "车辆管理系统";
@@ -29,7 +32,7 @@ $(".glyphicon-off").click(function() {
     con = confirm("你确定要退出吗？");
     if (con) {
         window.localStorage.removeItem("successUser");
-        window.location.href = "http://192.168.0.222:8080/car-management/user/loginOut.action";
+        window.location.href = "http://192.168.0.106:8080/car-management/user/loginOut.action";
     }
 });
 // 点击判断浏览器类型
@@ -41,8 +44,6 @@ function isChrome() {
     return navigator.userAgent.indexOf("Chrome") > -1;
 }
 isFF();
-// console.log(isFF());
-// console.log(isChrome());
 isChrome();
 if (isFF() || isChrome()) {
     // $("head").append("<meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests'>");
@@ -174,7 +175,7 @@ function changeDateFormat(cellval) {
 // 数据库 加载权限列表
 function loadrightsList(paramsid, namerid) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
+        "url": "http://192.168.0.106:8080/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -194,7 +195,7 @@ function loadrightsList(paramsid, namerid) {
 // 数据库 加载角色列表
 function loadrolesList(paramsid, namerid) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
+        "url": "http://192.168.0.106:8080/car-management/role/roleList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -250,7 +251,7 @@ function getHashParameters() {
 // 参数校验接口
 function checkParams(url, params1, params2, btn) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management" + url,
+        "url": "http://192.168.0.106:8080/car-management" + url,
         "type": "get",
         "data": {},
         "async": false,
@@ -263,6 +264,7 @@ function checkParams(url, params1, params2, btn) {
                     if (res.ret == false) {
                         $(params1).html("车辆编号正确");
                         $(btn).attr("disabled", false);
+                        return true;
                     } else {
                         $(btn).attr("disabled", true);
                         $(params1).html("车辆编号不存在");

@@ -2,7 +2,7 @@
 // 初始化加载待审核列表
 function loadAuditList() {
     var data;
-    var url = "http://192.168.0.222:8080/car-management/car/findWaitReviewCar.action";
+    var url = "http://192.168.0.106:8080/car-management/car/findWaitReviewCar.action";
     $.ajax({
         "url": url,
         "type": "get",
@@ -182,7 +182,7 @@ function addAuditMenu(boxname, num) {
     });
     $('.audititem3').click(function() {
         $(this).parent().attr("href", "#" + "finishAuditList");
-        // addAuditMenu("#finishAuditList .auditMenus", 3);
+        addAuditMenu("#finishAuditList .auditMenus", 3);
         loadsucAudit();
     });
 }
@@ -192,19 +192,24 @@ addAuditMenu("#failAuditList .auditMenus", 2);
 function auditFormatter(value, row, index) {
     return [
         '<button type="button" id="btn_auditlistdel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<a href="#" data-toggle="tab"><button type="button" id="audit_info_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
+        '<a href="#carDetail" data-toggle="tab"><button type="button" id="audit_info_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
         '<a href="#" data-toggle="tab"><button type="button"  id="ifaudit_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">审核</button></a>'
     ].join('');
 }
+// 审核列表数据删除
 window.auditoperateEvents = {
     'click #btn_auditlistdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
+        console.log(row.id);
         $.ajax({
-            url: "",
+            url: "http://192.168.0.106:8080/car-management/car/deleteReview/" + row.id + ".action",
             type: "get",
+            data: {},
             success: function(res) {
+                console.log(res);
                 if (res.ret == true) {
-                    // alert("删除成功");
+                    alert("删除成功");
+                    loadAuditList();
                 }
             }
         })
@@ -217,10 +222,10 @@ window.auditoperateEvents = {
     },
     'click #audit_info_btn': function(e, value, row, index) { //进入详情页面查看审核车辆的车辆详情
         console.log(row);
-        // $(".maintainform").show();
-        // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-        // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-        // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
+        window.location.hash = "pagenum=" + index + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
+        $("#carTypeInForm").addClass("active").siblings().removeClass("active");
+        $(".detailitem0").addClass("checkitem_active").siblings().removeClass("checkitem_active");
+        cartypein_info(row.vSn, "#carTypeInForm");
     }
 };
 $("#ok_audit").click(function() {
@@ -238,7 +243,7 @@ $("#ok_audit").click(function() {
 
 function AuditAjax(url, data, name) {
     $.ajax({
-        url: "http://192.168.0.222:8080/car-management" + url,
+        url: "http://192.168.0.106:8080/car-management" + url,
         data: data,
         type: "post",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
@@ -252,37 +257,10 @@ function AuditAjax(url, data, name) {
         }
     })
 }
-
-// 待审核车辆列表------------------------------------------------------------
-// function waitAuditFormatter(value, row, index) {
-//     return [
-//         '<button type="button" id="btn_auditdel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-//         '<a href="#" data-toggle="tab"><button type="button" id="audit_info_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
-//         '<a href="#" data-toggle="tab"><button type="button" id="ifaudit_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">审核</button></a>'
-//         // '<a href="#' + hrefString + '" data-toggle="tab"><button type="button" id="btn_' + hrefString + '" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">' + row.check_s + '</button></a>',
-//     ].join('');
-// }
-// window.waitAuditoperateEvents = {
-//     'click #btn_auditdel': function(e, value, row, index) {
-//         $(this).parent().parent().remove();
-//     },
-//     'click #ifaudit_btn': function(e, value, row, index) {
-//         // $(".maintainform").show();
-//         // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-//         // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-//         // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
-//     },
-//     'click #audit_info_btn': function(e, value, row, index) {
-//         // $(".maintainform").show();
-//         // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-//         // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-//         // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
-//     }
-// };
 // 审核成功列表
 function loadsucAudit(params) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/car/findPassReview.action",
+        "url": "http://192.168.0.106:8080/car-management/car/findPassReview.action",
         "type": "get",
         "data": {},
         "success": function(res) {
@@ -299,11 +277,10 @@ function loadsucAudit(params) {
     });
 }
 
-
 // 审核失败列表
 function loadFailAudit(params) {
     $.ajax({
-        "url": "http://192.168.0.222:8080/car-management/car/findNotPassReview.action",
+        "url": "http://192.168.0.106:8080/car-management/car/findNotPassReview.action",
         "type": "get",
         "data": {},
         "success": function(res) {
@@ -323,27 +300,43 @@ function loadFailAudit(params) {
 function finishAuditOperateFormatter(value, row, index) {
     return [
         '<button type="button" id="btn_finauditdel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<a href="#" data-toggle="tab"><button type="button" id="finaudit_info_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
-        '<a href="#" data-toggle="tab"><button type="button" id="finaudit_tools_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">研发工具记录</button></a>',
-        '<a href="#" data-toggle="tab"><button type="button" id="finaudit_returncar_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">还车点检</button></a>'
+        '<a href="#carDetail" data-toggle="tab"><button type="button" id="finaudit_info_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">详情</button></a>',
+        '<a href="#rd_record" data-toggle="tab"><button type="button" id="finaudit_tools_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">研发工具记录</button></a>',
+        '<a href="#upkeep_record" data-toggle="tab"><button type="button" id="upkeep_record_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">保养记录</button></a>',
+        '<a href="#returncarCheck" data-toggle="tab"><button type="button" id="finaudit_returncar_btn" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">还车点检</button></a>'
     ].join('');
 }
 window.finishAuditOperateEvents = {
     'click #btn_finauditdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
+        $.ajax({
+            //实例路径： http://localhost:8081/car-management/car/delete.action?cids=9,10
+            url: "http://192.168.0.106:8080/car-management/car/delete.action",
+            type: "get",
+            data: {
+                // string类型，可以删除一个或多个
+                cids: row.id
+            },
+            success: function(res) {
+                console.log(res);
+                if (res.ret == true) {
+                    alert("删除成功");
+                    loadAuditList();
+                }
+            }
+        })
     },
+    'click #upkeep_record': function (e, value, row, index) {},
     'click #finaudit_tools_btn': function(e, value, row, index) {},
     'click #finaudit_info_btn': function(e, value, row, index) {
         // 查看车辆详情
-        // $(".maintainform").show();
-        // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-        // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-        // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
+        window.location.hash = "pagenum=" + 1 + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
+        $("#carTypeInForm").addClass("active").siblings().removeClass("active");
+        $(".detailitem0").addClass("checkitem_active").siblings().removeClass("checkitem_active");
+        cartypein_info(row.vSn, "#carTypeInForm");
     },
     'click #finaudit_returncar_btn': function(e, value, row, index) {
-        // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-        // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-        // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
+
     }
 };
 

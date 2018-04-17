@@ -39,7 +39,7 @@ $(document).ready(function() {
         } else {
             $.ajax({
                 // "url": "../json/omap.json",
-                "url": "http://192.168.0.222:8080/car-management/car/carTrack.action",
+                "url": "http://192.168.0.106:8080/car-management/car/carTrack.action",
                 "type": "get",
                 "dataType": "jsonp", //数据类型为jsonp  
                 "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  

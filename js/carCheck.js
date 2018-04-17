@@ -25,5 +25,5 @@ $("#carCheck_btn").click(function() {
         "remark": $("input[name='remark']").val()
     };
     console.log(carCheckdata);
-    // requestTypein(".drivetypein_tips", "http://192.168.0.222:8080/car-management/carDriver/add.action", carCheckdata);
+    // requestTypein(".drivetypein_tips", "http://192.168.0.106:8080/car-management/carDriver/add.action", carCheckdata);
 });

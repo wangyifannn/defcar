@@ -36,7 +36,7 @@
 
      //定义ajax去获取json，type参数通过data-type设置，keyword则是目前已输入的值 
      //返回值以table形式展示 
-     $.post('http://192.168.0.222:8080/car-management/car/vCarSn.action?vSn=y', {
+     $.post('http://192.168.0.106:8080/car-management/car/vCarSn.action?vSn=y', {
          type: $this.data('type'),
          keyword: $this.val()
      }, function(json) {

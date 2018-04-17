@@ -5,25 +5,43 @@ $("#maintainTypeIn .vSn").bind('input porpertychange', function() {
     if ($("#maintainTypeIn .vSn").val() == null || $("#maintainTypeIn .vSn").val() == "") {
         return;
     } else {
-        checkParams("/carMaintain/check/" + $("#maintainTypeIn .vSn").val() + ".action", ".m_vSn_tips", "", "#send_btn");
-        // 维修状态校验，验证是否已经在维修列表
+        // var ss = checkParams("/tempcar/check/" + $("#maintainTypeIn .vSn").val() + "/1.action", ".m_vSn_tips", "", "#send_btn");
+        // console.log(ss);
         $.ajax({
+            url: "http://192.168.0.106:8080/car-management/tempcar/check/" + $("#maintainTypeIn .vSn").val() + "/1.action",
             type: "get",
-            url: "http://192.168.0.222:8080/car-management/carMaintain/check/" + $("#maintainTypeIn .vSn").val() + ".action",
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-            data: {},
             success: function(res) {
                 console.log(res);
                 if (res.ret == false) {
-                    $(".send_tips").html("车辆已在维修列表");
-                    $("#send_btn").attr("disabled", true);
-                } else {
+                    $(".m_vSn_tips").html("车辆编号正确");
                     $("#send_btn").attr("disabled", false);
-                    $(".send_tips").html("");
+                    $.ajax({
+                        type: "get",
+                        url: "http://192.168.0.106:8080/car-management/carMaintain/check/" + $("#maintainTypeIn .vSn").val() + ".action",
+                        "dataType": "jsonp", //数据类型为jsonp  
+                        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+                        data: {},
+                        success: function(dat) {
+                            console.log(dat);
+                            if (dat.ret == false) {
+                                $(".send_tips").html("车辆已在维修列表");
+                                $(".m_vSn_tips").html("车辆已在维修列表");
+                                $("#send_btn").attr("disabled", true);
+                            } else {
+                                $("#send_btn").attr("disabled", false);
+                                $(".send_tips").html("");
+                            }
+                        }
+                    });
+                } else {
+                    $("#send_btn").attr("disabled", true);
+                    $(".m_vSn_tips").html("车辆编号不正确");
                 }
             }
         });
+
     }
 });
 
@@ -31,7 +49,7 @@ function addmaintain(url, da, that, box) {
     console.log(da);
     $.ajax({
         type: "get",
-        url: "http://192.168.0.222:8080/car-management" + url,
+        url: "http://192.168.0.106:8080/car-management" + url,
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         data: da,
@@ -67,22 +85,10 @@ $("#m_submit_btn").click(function() {
     addmaintain(url, maintain_form_data, that, ".maintainPeople_tips");
 });
 // 维修列表
-// 添加一行数据
-$("#addrow_btn").click(function() {
-    // var randomId = 100 + ~~(Math.random() * 100);
-    // $table.bootstrapTable('insertRow', {
-    //     index: 0,
-    //     row: {
-    //         id: randomId,
-    //         name: 'Item ' + randomId,
-    //         price: '$' + randomId
-    //     }
-    // });
-});
 var mainpageNum = 1;
 
 // 初始化加载维修列表
-function loadMaintainList(mainpageNum, size, gid) {
+function loadMaintainList(mainpageNum, size, vSn, status) {
     var data;
     var url;
     if (mainpageNum == "" || size == "") {
@@ -91,9 +97,11 @@ function loadMaintainList(mainpageNum, size, gid) {
     } else {
         data = {
             "page": mainpageNum,
-            "size": size
+            "size": size,
+            "vSn": vSn,
+            "status": status
         }
-        url = "http://192.168.0.222:8080/car-management/carMaintain/pageQueryCarMaintain.action";
+        url = "http://192.168.0.106:8080/car-management/carMaintain/pageQueryCarMaintain.action";
     }
     $.ajax({
         "url": url,
@@ -127,6 +135,7 @@ function loadMaintainList(mainpageNum, size, gid) {
 }
 // 维修列表
 function initmaintain(res, toolbarid) {
+    $('#tablescreen').bootstrapTable('destroy');
     $("#tablescreen").bootstrapTable({
         data: res,
         toggle: "table",
@@ -352,16 +361,18 @@ window.maintainListoperateEvents = {
         $(this).parent().parent().remove();
         // 删除维修列表操作
         $.ajax({
-            "url": "http://192.168.0.222:8080/car-management/carMaintain/delete/" + row.id + ".action",
+            "url": "http://192.168.0.106:8080/car-management/carMaintain/delete.action",
             "type": "get",
-            "data": {},
+            "data": {
+                "infoid": row.id
+            },
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
             "success": function(res) {
                 console.log(res);
                 if (res.ret) {
                     var indexs = parseInt(index / 10);
-                    loadMaintainList(indexs + 1, 10, "");
+                    loadMaintainList(indexs + 1, 10, "", "");
                 }
             },
             "error": function(res) {
@@ -377,8 +388,13 @@ window.maintainListoperateEvents = {
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
     }
 };
-// 分页---------------------------------------------------------------------
-// 分页——————————————————————————————————————————————————————————————————————————————————————————————
+$("#auditLit_search_btn").click(function() {
+        $('#tablescreen').bootstrapTable('destroy');
+        loadMaintainList(1, 30, $(".mainList_vSn").val(), $("#mainList_status").val());
+        // loadCarList(s_data);
+    })
+    // 分页---------------------------------------------------------------------
+    // 分页——————————————————————————————————————————————————————————————————————————————————————————————
 function maintainPagings(maxPage, pageul, pageli) {
     var lis = "";
     for (var p = 1; p < 8; p++) {
@@ -425,7 +441,7 @@ function maintainPagings(maxPage, pageul, pageli) {
         mainpageNum = parseInt($(this).html());
         //调用ajax，切换分页按钮样式
         // console.log(mainpageNum);
-        loadMaintainList(mainpageNum, 10, "");
+        loadMaintainList(mainpageNum, 10, "", "");
         maintainPagings(maxPage, ".pageMaintain ul", ".pageMaintain li");
         //更新URL的hash
         window.location.hash = "pagenum=" + mainpageNum;
@@ -447,7 +463,7 @@ function maintainPaging(maxPage, i, pageul, pageli) {
         //改变信号量
         mainpageNum = parseInt($(this).html());
         //调用ajax，切换分页按钮
-        loadMaintainList(mainpageNum, 10, "");
+        loadMaintainList(mainpageNum, 10, "", "");
         maintainPaging(maxPage, mainpageNum, ".pageMaintain ul", ".pageMaintain li");
         //更新URL的hash
         window.location.hash = "pagenum=" + mainpageNum;

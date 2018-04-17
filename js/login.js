@@ -6,7 +6,7 @@ var changecode = 0;
 $(".vercode").click(function() {
     changecode++;
     console.log(this.src);
-    this.src = "http://192.168.0.222:8080/car-management/user/code.action?changecode=" + changecode;
+    this.src = "http://192.168.0.106:8080/car-management/user/code.action?changecode=" + changecode;
     // this.src = "/car-management/user/code.action?changecode=" + changecode;
 })
 
@@ -29,7 +29,7 @@ $(document).ready(function() {
         // 登录
         $.ajax({
             // url: "/car-management/user/login.action",
-            url: "http://192.168.0.222:8080/car-management/user/login.action",
+            url: "http://192.168.0.106:8080/car-management/user/login.action",
             type: "get",
             data: {
                 username: $(".user_input").val(),
