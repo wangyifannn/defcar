@@ -1,11 +1,11 @@
 $.ajax({
-    "url": "../../../car/CarMangae0/json/menu.json",
-    // "url": "http://192.168.0.106:8080/car-management/menu/showMenu.action",
+    // "url": "../../../car/CarMangae0/json/menu.json",
+    "url": "http://192.168.0.106:8080/car-management/menu/showMenu.action", //要登陆
     // "url": "http://192.168.0.106:8080/car-management/menu/menuList.action",
     "type": "get",
     "data": {},
-    // "dataType": "jsonp", //数据类型为jsonp  
-    // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+    "dataType": "jsonp", //数据类型为jsonp  
+    "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
     "success": function(res) {
         console.log(res);
         var menuli = "";
@@ -96,6 +96,12 @@ $.ajax({
                 }
             }
         });
+        //驾驶员管理
+        $(".driverList ").click(function() {
+            $("#driverTypeIn").removeClass("active");
+            $("#driverList").addClass("active");
+            loadDriverList(1, 10);
+        });
         // 车辆录入
         $(".carTypeIn").click(function() {
             window.location.hash = "";
@@ -104,7 +110,9 @@ $.ajax({
         $(".carList").click(function() {
             $('#carListtable').bootstrapTable('destroy');
             addAuditMenu("#carList .auditMenus", 0);
-            loadCarList();
+            loadCarList(JSON.stringify({
+                "vSn": null
+            }));
         });
         // 车辆列表
         $(".finishAuditList").click(function() {
@@ -146,6 +154,11 @@ $.ajax({
             loadMenuList();
             // $("html").append("<script type='text/javascript' src='./js/menutable.js'></script>");
         });
+        // 点击维修申请，重置申请表单
+        $(".maintainTypeIn").click(function() {
+            myformReset();
+            $(".send_tips").html("");
+        })
     },
     "error": function(data) {
         console.log("cuo" + data);

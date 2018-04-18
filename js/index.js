@@ -80,7 +80,7 @@ $.fn.serializeObject = function() {
     });
     return o;
 };
-// 权限管理、用户管理、角色管理列表函数
+// 权限管理、用户管理、角色管理列表函数，驾驶员列表
 function createTable(boxname, toolbarid, res,
     row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
     row1name, row2name, row3name, row4name, row5name, row6name,
@@ -140,9 +140,9 @@ function createTable(boxname, toolbarid, res,
             align: 'center',
             sortable: true,
             //获取日期列的值进行转换
-            formatter: function(value, row, index) {
-                return changeDateFormat(value)
-            }
+            // formatter: function(value, row, index) {
+            //     return changeDateFormat(value)
+            // }
         }, {
             field: 'operate',
             title: '操作',

@@ -3,12 +3,10 @@
 $(".ReturnDriver").click(function() {
     loadDriverList(1, 10);
 });
-loadDriverList(1, 10);
 var driverpageNum = 1;
 
 //车辆管理模块： 车辆列表
 function loadDriverList(driverpageNum, size) {
-
     $.ajax({
         "url": "http://192.168.0.106:8080/car-management/carDriver/CarDriverList.action",
         "type": "get",
@@ -23,7 +21,7 @@ function loadDriverList(driverpageNum, size) {
             console.log(res);
             $('#DriverListtable').bootstrapTable('destroy');
             createTable("#DriverListtable", "DriverListtable_toolbar", res.rows,
-                "id", "name", "allowStratTime", "allowEndTime", "iccard", "isallow", false, true,
+                "id", "name", "allowStartTime", "allowEndTime", "iccard", "isallow", false, true,
                 "驾驶员编号", "姓名", "允许起始日期", "允许终止日期", "iccard", "是否授权",
                 true, driveroperateEvents, driveroperateFormatter, "");
             var drivermaxPage = Math.ceil(res.total / size);

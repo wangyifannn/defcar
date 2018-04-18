@@ -168,7 +168,9 @@ function addAuditMenu(boxname, num) {
         $(this).parent().attr("href", "#" + "carList");
         addAuditMenu("#carList .auditMenus", 0);
         $(".carList").addClass("active").siblings().removeClass("active");
-        loadCarList();
+        loadCarList(JSON.stringify({
+            "vSn": null
+        }));
     });
     $('.audititem1').click(function() {
         $(this).parent().attr("href", "#" + "auditList");
@@ -310,23 +312,19 @@ window.finishAuditOperateEvents = {
     'click #btn_finauditdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
         $.ajax({
-            //实例路径： http://localhost:8081/car-management/car/delete.action?cids=9,10
-            url: "http://192.168.0.106:8080/car-management/car/delete.action",
+            url: "http://192.168.0.106:8080/car-management/car/deleteReview/" + row.id + ".action",
             type: "get",
-            data: {
-                // string类型，可以删除一个或多个
-                cids: row.id
-            },
+            data: {},
             success: function(res) {
                 console.log(res);
                 if (res.ret == true) {
                     alert("删除成功");
-                    loadAuditList();
+                    loadsucAudit();
                 }
             }
         })
     },
-    'click #upkeep_record': function (e, value, row, index) {},
+    'click #upkeep_record': function(e, value, row, index) {},
     'click #finaudit_tools_btn': function(e, value, row, index) {},
     'click #finaudit_info_btn': function(e, value, row, index) {
         // 查看车辆详情
@@ -349,11 +347,18 @@ function failAuditOperateFormatter(value, row, index) {
 window.failAuditOperateEvents = {
     'click #btn_failauditdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
+        $.ajax({
+            url: "http://192.168.0.106:8080/car-management/car/deleteReview/" + row.id + ".action",
+            type: "get",
+            data: {},
+            success: function(res) {
+                console.log(res);
+                if (res.ret == true) {
+                    alert("删除成功");
+                    loadFailAudit();
+                }
+            }
+        })
     },
-    'click #failaudit_edit': function(e, value, row, index) {
-        // $(".maintainform").show();
-        // window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
-        // $("#maintainPeopleTypeIn #vSn").val(row.vSn);
-        // $("#maintainPeopleTypeIn #vSn").attr("readOnly", true);
-    }
+    'click #failaudit_edit': function(e, value, row, index) {}
 };

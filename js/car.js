@@ -3,28 +3,33 @@ var dateend = new Date(todayDate);
 dateend.setDate(todayDate.getDate() + 30);
 laydate.render({
     elem: '#receiverdata', //接车日期
-    // type: 'datetime', //精确到 时分秒
-    format: 'yyyy-MM-dd', //精确到 年月日
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd', //精确到 年月日
     value: todayDate,
     theme: '#041473' //自定义颜色主题
 });
 // 车辆录入表制作日期
 laydate.render({
-    elem: '#makeTime',
-    format: 'yyyy-MM-dd', //精确到 年月日
+    elem: '#makeTime', //设置只读模式
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd', //精确到 年月日
     value: todayDate,
+    trigger: 'click',
     theme: '#041473' //自定义颜色主题
+
 });
 // 驾驶员录入相关日期
 laydate.render({
     elem: '#birthday',
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd',
     theme: '#041473' //驾驶员出生年月
 });
 
 laydate.render({
     elem: '#LStartTime',
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd',
     value: todayDate,
     theme: '#041473' //驾照有效日起
 });
@@ -32,55 +37,53 @@ laydate.render({
 laydate.render({
     elem: '#LEndTime',
     value: dateend,
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd',
     theme: '#041473' //驾照有效日止
 });
 laydate.render({
     elem: '#allowStartTime',
-    format: 'yyyy-MM-dd',
+    // format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
     value: todayDate,
     theme: '#041473' //授权起始日
 });
 laydate.render({
     elem: '#discuss_time',
-    value: todayDate,
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
+    // format: 'yyyy-MM-dd',
     theme: '#041473' //协商日期
 });
-laydate.render({
-    elem: '#send_time',
-    value: todayDate,
-    format: 'yyyy-MM-dd',
-    theme: '#041473' //协商日期
-});
+
 laydate.render({
     elem: '#complete_time',
-    format: 'yyyy-MM-dd',
+    // format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
     value: todayDate,
     theme: '#041473' //完成日期
 });
 laydate.render({
     elem: '#allowEndTime',
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
     value: dateend,
     theme: '#041473' //授权终止日
 });
 laydate.render({
     elem: '#time',
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
     value: todayDate,
     theme: '#041473' //授权终止日
 });
 laydate.render({
     elem: '#upkeepTime',
-    format: 'yyyy-MM-dd',
+    type: 'datetime', //精确到 时分秒
     value: todayDate,
     theme: '#041473' //保养日期
-}); 
+});
 laydate.render({
     elem: '#nextupkeepTime',
-    format: 'yyyy-MM-dd',
-    value: dateend,    
+    type: 'datetime', //精确到 时分秒
+    value: dateend,
     theme: '#041473' //下次保养日期
 });
 // 数据库 加载权限列表
@@ -102,10 +105,19 @@ function requestTypein(paramsid, url, data, that, next) {
             vin = getHashParameter("vin");
             engineNumber = getHashParameter("engineNumber");
             if (getHashParameter("id") == null) {
-                id = res.data.id;
-                vSn = res.data.vSn;
-                vin = res.data.vin;
-                engineNumber = res.data.engineNumber;
+
+                if (res.data == null || res.data.id == null || res.data.id == undefined) {
+                    // 如果是驾驶员录入
+                    id = "";
+                    vSn = "";
+                    vin = "";
+                    engineNumber = "";
+                } else {
+                    id = res.data.id;
+                    vSn = res.data.vSn;
+                    vin = res.data.vin;
+                    engineNumber = res.data.engineNumber;
+                }
             }
             if (res.ret == true) {
                 window.location.hash = "id=" + id + "&pagenum=1&vSn=" + vSn + "&vin=" + vin + "&engineNumber=" + engineNumber; //车辆数据库编号
@@ -115,6 +127,8 @@ function requestTypein(paramsid, url, data, that, next) {
                     initsafeCheck(".pot_pressure"); //初始化安全检查
                 } else if (next == "initReturnCarCheck") {
                     initReturnCarCheck(""); //初始化还车检点
+                } else if (next == "driverList") {
+                    loadDriverList(1, 10);
                 }
                 $(that).parent().attr("href", "#" + next);
                 $('a[href="#' + next + '"]').tab('show');
@@ -174,7 +188,7 @@ $("#carTypeIn_btn").click(function() {
         "vehicleQuality": $("#carTypeIn #vehicleQuality").val(),
         "loadMethod": $("#carTypeIn #loadMethod").val(),
         "loadData": $("#carTypeIn #loadData").val(),
-        "operator": $("#carTypeIn #operator").val(), //签字人、操作人
+        "operator": "", //签字人、操作人,后台生成
         "makeTime": $("#carTypeIn #makeTime").val(), //makeTime
         "remark": $("#carTypeIn #remark").val(), //备注
         "gid": $("#carTypeIn #gids").val() //车辆分组
@@ -212,7 +226,7 @@ function inputVal(inputid, but) {
         }
     });
 }
-inputVal("#engineCapacity", "#carTypeIn_btn");
+// inputVal("#engineCapacity", "#carTypeIn_btn");
 inputVal("#carCheck #sparetyre", "#carCheck_btn");
 inputVal("#carCheck #tools", "#carCheck_btn");
 inputVal("#carCheck #jack", "#carCheck_btn");
@@ -289,6 +303,7 @@ function addMenu(boxname, num) {
             $('.checkitem1').click(function() {
                 $(this).parent().attr("href", "#" + "sCheck");
                 addMenu("#sCheck .checkMenus", 1);
+                initsafeCheck(".pot_pressure"); //初始化安全检查
             });
             $('.checkitem2').click(function() {
                 $(this).parent().attr("href", "#" + "wiringCheck");
@@ -298,6 +313,7 @@ function addMenu(boxname, num) {
             $('.checkitem3').click(function() {
                 $(this).parent().attr("href", "#" + "bomCheck");
                 addMenu("#bomCheck .checkMenus", 3);
+                initBomCheck();
             });
         }
     })
@@ -324,15 +340,23 @@ function getcnid(url, boxname) {
                             '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="" value="NA" name="itemstatus' + i + '">NA' +
                             '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
                     }
+
                 } else if (url == 3) {
                     var checkboxs = '<div class="checktitle"><span>零部件名称</span><span>零部件号</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
                     for (var i = 0; i < res.length; i++) {
-                        checkboxs += '<div class="checkitem"><span>' + res[i].pname +
-                            '</span><span>' + res[i].components.name +
-                            '</span><span class="style1_radio"><input type="radio" checked="" class="statusy" value="Y" name="itemstatus' + i + '">是' +
-                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno" value="N" name="itemstatus' + i + '">否' +
-                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="" value="NA" name="itemstatus' + i + '">NA' +
+                        checkboxs += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].pname + '">' +
+                            '</span><span><input type="text" class="bom_num" value="' + res[i].components.name + '">' +
+                            '</span><span class="style1_radio"><input type="radio" checked="" class="statusy my_radio" value="Y" name="itemstatus' + i + '">是' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno my_radio" value="N" name="itemstatus' + i + '">否' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="my_radio" value="NA" name="itemstatus' + i + '">NA' +
                             '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
+                    }
+                    for (var j = 11; j < 16; j++) {
+                        checkboxs += '<div class="checkitem"><span><input type="text" class="bom_name"></span><span><input type="text" class="bom_num">' +
+                            '</span><span class="style1_radio"><input type="radio" checked="" class="statusy my_radio" value="Y" name="itemstatus' + j + '">是' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="statusno my_radio" value="N" name="itemstatus' + j + '">否' +
+                            '&nbsp;&nbsp;&nbsp;<input type="radio" checked="" class="my_radio" value="NA" name="itemstatus' + j + '">NA' +
+                            '</span><span> <input type="text" class="item' + j + 'explain explain_input" value="" name="explain' + j + '"></span></div>';
                     }
                 }
             } else if (url == 2 || url == 4) {
@@ -370,6 +394,9 @@ function getcnid(url, boxname) {
             // console.log(checkboxs);
             $(boxname).html(checkboxs);
             $(".statusy").prop("checked", true); //默认单选框选中是
+            console.log($("#sCheck .item27explain"));
+            $("#sCheck .item26explain").val("当前发动机编号为：" + getHashParameter("engineNumber"));
+            $("#sCheck .item27explain").val("当前车架号为：" + getHashParameter("vin"));
         }
     });
 }
@@ -387,13 +414,13 @@ function initcylinder(box1) {
     $("input[name='fuel_p']").attr("readOnly", true);
     $("input[name='cylinder_p']").css("display", "none");
 }
-initsafeCheck(".pot_pressure"); //初始化安全检查
+// initsafeCheck(".pot_pressure"); //初始化安全检查
 function initsafeCheck(box1) {
     addMenu("#sCheck .checkMenus", 1);
     // 缸压
     initcylinder(box1);
     // 初始化检查项目表
-    getcnid(1, ".check_itembox");
+    getcnid(1, "#sCheck .check_itembox");
 }
 //安全检查重置
 $(".resetsafe_btn").click(function() {
@@ -432,6 +459,7 @@ $.fn.mychangeform = function() {
     }
     return changeArr;
 };
+
 // 判断单选框是否有空
 function isAllChecked(radioLength) {
     for (var i = 0; i < radioLength; i++) {
@@ -542,7 +570,6 @@ function initBomCheck(box1) {
     // 初始化检查项目表
     getcnid(3, ".bomcheck_itembox");
 }
-initBomCheck();
 // bom检查提交
 $("#bomCheck_btn").click(function() {
     // 单选框的值不能为空，否则不能提交
@@ -550,15 +577,31 @@ $("#bomCheck_btn").click(function() {
         alert("有选项未选择");
         return;
     }
-    var form4 = $(".bomcheck_itembox").mychangeform();
-    console.log(JSON.stringify(form4));
+    var item1 = $("#bomCheck .bom_name");
+    var item2 = $("#bomCheck .bom_num");
+    var item3 = $("#bomCheck .my_radio:checked");
+    var item4 = $("#bomCheck .explain_input");
+    console.log(item1);
+    console.log(item2);
+    console.log(item3);
+    console.log(item4);
+    var bomobjArrs = [];
+    for (var i = 0; i < item1.length; i++) {
+        var bomobj = {};
+        bomobjArrs.push({ "bomName": item1[i].value, "partName": item2[i].value, "status": item3[i].value, "explanation": item4[i].value })
+    }
+    console.log(bomobjArrs);
+    console.log(JSON.stringify(bomobjArrs));
+    // var form4 = $(".bomcheck_itembox").mychangeform();
+    // console.log(JSON.stringify(form4));
+
     $.ajax({
         type: "POST",
         url: "http://192.168.0.106:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("id") + ".action?",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
-        data: JSON.stringify(form4),
+        data: JSON.stringify(bomobjArrs),
         success: function(data) {
             if (data.ret == true) {
                 $(".carbom_tips").html("表单提交成功");
@@ -606,7 +649,7 @@ $("#returncarCheck_btn").click(function() {
             // "operator_time": $("#operator_time").val() //自动能够生产
     };
     // console.log(carCheckdata);
-    requestTypein(".returncarcheck_tips", "http://192.168.0.106:8080/car-management/car/backCheck.action", returncarCheckdata);
+    requestTypein(".returncarcheck_tips", "http://192.168.0.106:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
 });
 
 // 还车点检返回
@@ -674,16 +717,13 @@ $("#driverTypeIn_btn").click(function() {
         "telephone": $("#telephone").val(),
         "birthday": $("#birthday").val(),
         "iccard": $("#iccard").val(),
-        "idnumber": $("#idnumber").val(), //身份证号
-        "license": $("#driverlicensenum").val(), //驾驶证号
-        "LStartTime": $("#LStartTime").val(),
-        "LEndTime": $("#LEndTime").val(),
         "isallow": $("input[name='isallow']:checked").val(), //是否授权
         "allowStartTime": $("#allowStartTime").val(),
         "allowEndTime": $("#allowEndTime").val(),
         "remark": $("#carTypeIn_remake").val()
     }
-    requestTypein(".drivetypein_tips", "http://192.168.0.106:8080/car-management/carDriver/add.action", driverCheckdata);
+    var that = this;
+    requestTypein(".drivetypein_tips", "http://192.168.0.106:8080/car-management/carDriver/add.action", driverCheckdata, that, "driverList");
 });
 
 

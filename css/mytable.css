@@ -171,9 +171,14 @@ span.export_title {
     margin-left: 0px;
 }
 
-button#driverTypeIn_btn {
-    margin-right: 62px;
-    margin-left: 298px;
+button#driverTypeIn_btn,
+.ReturnDriver {
+    margin-top: 16px;
+    margin-left: 28px;
+}
+
+label.drivetypein_tips {
+    padding-left: 200px;
 }
 
 .vSn_tips,
@@ -208,17 +213,49 @@ button#driverTypeIn_btn {
     left: 424px;
     border-radius: 10px;
 }
-.form-group_text label{
+
+.form-group_text label {
     font-weight: normal;
 }
+
 button#upkeep_btn {
     margin-right: 45px;
 }
+
+input.bom_name,
+input.bom_num {
+    width: 100%;
+    border: none;
+    text-align: center;
+}
+
+.pageMaintain li {
+    width: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    background: #eee;
+    color: #278CDE;
+    text-align: center;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.pageMaintain {
+    float: right;
+    margin-top: -27px;
+}
+
+.pageMaintain li.cur {
+    background: #278CDE;
+    color: white;
+}
+
 .form-group.zhanwei {
-        padding-left: 40px;
-        margin-left: 5px;
+    padding-left: 40px;
+    margin-left: 5px;
     background: #f5f5f5;
 }
+
 .form-group_text input {
     width: 385px;
     height: 25px;
@@ -229,19 +266,23 @@ button#upkeep_btn {
     border: 1px solid #ccc;
     outline: none;
     margin-right: 113px;
- }
+}
+
 .col-sm-9.car_tools_check div {
     padding: 10px 5px;
 }
+
 .col-sm-9.car_tools_check .col-sm-12 span:first-child {
     /*color: red;*/
     display: inline-block;
     width: 130px;
     vertical-align: middle;
 }
+
 .upitem_group label.col-sm-2.control-label {
     margin-left: 30px;
 }
+
 #maintainList #toolbar_tablescreen .form-control {
     display: inline-block;
     width: 25%;
@@ -250,9 +291,11 @@ button#upkeep_btn {
     font-size: 11px;
     line-height: 25px;
 }
+
 #maintainList .input-sm {
     padding: 2px 10px;
 }
+
 .driveradd_btn button,
 .caradd_btn button {
     width: 70px;

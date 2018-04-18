@@ -1,15 +1,14 @@
 // 车辆列表
 // var pageNum = 1;
-//车辆管理模块： 车辆列表
-
 function loadCarList(data) {
+    console.log(data);
     $.ajax({
         "url": "http://192.168.0.106:8080/car-management/tempcar/query.action",
         "type": "post",
         "data": data,
         "async": false,
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
         "success": function(res) {
             console.log(res);
             $('#carListtable').bootstrapTable('destroy');
@@ -18,6 +17,7 @@ function loadCarList(data) {
                 "序号", "车辆编号", "车牌号", "车辆名称", "发动机编号", "创建日期",
                 true, caroperateEvents, caroperateFormatter, "client",
                 "cGroup", "所属分组", "status", "检查进度", "product_sn", "项目号");
+            // $('#carListtable').bootstrapTable('refreshOptions', { pageNumber: 1 });
         },
         "error": function(res) {
             console.log(res);
@@ -40,6 +40,7 @@ $(function() {
 });
 // 判断车辆状态，加载车辆按钮，0或null：已录入，1：已点检，2：已安全检查，3：已线束检查，4：已BOM检查，5：还车点检完毕
 function caroperateFormatter(value, row, index) {
+    window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
     var hrefString = "";
     // console.log(row.check_s);
     if (row.status == 0 || row.status == "" || row.status == null) {
@@ -48,12 +49,15 @@ function caroperateFormatter(value, row, index) {
     } else if (row.status == 1) {
         row.check_s = "安全检查";
         hrefString = "sCheck";
+        // initsafeCheck(".pot_pressure"); //初始化安全检查
     } else if (row.status == 2) {
         row.check_s = "线束检查";
         hrefString = "wiringCheck";
+        // initWiringCheck("");
     } else if (row.status == 3) {
         row.check_s = "BOM检查";
         hrefString = "bomCheck";
+        // initBomCheck();
     } else if (row.status == 4) {
         row.check_s = "等待审核";
         hrefString = "auditList";
@@ -83,7 +87,9 @@ window.caroperateEvents = {
                 console.log(res);
                 if (res.ret) {
                     // var indexs = parseInt(index / 10);
-                    loadCarList("");
+                    loadCarList(JSON.stringify({
+                        "vSn": null
+                    }));
                 }
             },
             "error": function(res) {
@@ -108,6 +114,14 @@ window.caroperateEvents = {
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
         initsafeCheck(".pot_pressure");
     },
+    'click #btn_wiringCheck': function(e, value, row, index) {
+        window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
+        initWiringCheck("");
+    },
+    'click #btn_bomCheck': function(e, value, row, index) {
+        window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn + "&vin=" + row.vin + "&engineNumber=" + row.engineNumber; //车辆数据库编号
+        initBomCheck();
+    },
     'click #btn_auditList': function(e, value, row, index) {
         loadAuditList();
     },
@@ -123,6 +137,8 @@ function findGroupList(appendbox, url, limitinfo) {
         "url": url,
         "type": "get",
         "data": {},
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         "success": function(res) {
             // console.log(res);
             var cargroupOption = "";
@@ -135,6 +151,7 @@ function findGroupList(appendbox, url, limitinfo) {
                 return;
             }
             var groupOption = "";
+            groupOption = '<option value="" name="" remark="">全部</option>';
 
             for (var r = 0; r < res.length; r++) {
                 groupOption += '<option value="' + res[r].id + '" name="' + res[r].name + '" remark="' + res[r].remark + '">' + res[r].name + '</option>';
@@ -156,9 +173,9 @@ function findGroupList(appendbox, url, limitinfo) {
                         "remark": $("#group_opt option:selected").attr("remark")
                     }
                 };
-                // var data = JSON.stringify(groupdata);
+                var data = JSON.stringify(groupdata);
                 // console.log(data);
-                loadCarList(groupdata);
+                loadCarList(data);
             })
         },
         "error": function(res) {
@@ -171,23 +188,29 @@ findGroupList(".groupbox", "http://192.168.0.106:8080/car-management/group/find.
 findGroupList(".cartypein_group", "http://192.168.0.106:8080/car-management/group/find.action", "limitinfo");
 
 var statusobj = [{
-    value: 1,
+    value: 0,
     name: "已录入"
 }, {
-    value: 2,
+    value: 1,
     name: "已点检"
 }, {
-    value: 3,
+    value: 2,
     name: "已安全检查"
 }, {
-    value: 4,
+    value: 3,
     name: "已线束检查"
 }, {
-    value: 5,
+    value: 4,
     name: "已bom检查"
+}, {
+    value: 5,
+    name: "已审核"
 }, {
     value: 6,
     name: "已还车"
+}, {
+    value: "",
+    name: "全部"
 }];
 findStatusList(".groupbox", statusobj);
 

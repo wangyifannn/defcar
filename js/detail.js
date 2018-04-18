@@ -63,7 +63,7 @@ function addDetailMenu(boxname, num, href, firstcall) {
     $('.detailitem4').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "bomCheckForm");
-        FindSafeinfo("http://192.168.0.106:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action", "#bomCheckForm");
+        Findbominfo("http://192.168.0.106:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action", "#bomCheckForm");
     });
 }
 addDetailMenu(".detail_menu", 0, "carTypeInForm", "firstcall");
@@ -188,13 +188,11 @@ function FindPotinfo(url, data, name) {
         }
     })
 }
-// 查看安全/附件检查和  bom信息
+// 查看安全/附件检查信息
 function FindSafeinfo(url, name) {
     $(name).html("");
     if (name == ".safe_Form") {
         getcnid(1, name);
-    } else {
-        getcnid(3, "#bomCheckForm");
     }
     $.ajax({
         "url": url,
@@ -223,7 +221,41 @@ function FindSafeinfo(url, name) {
         }
     });
 }
-
+// 查看bom信息
+function Findbominfo(url, name) {
+    $(name).html("");
+    $.ajax({
+        "url": url,
+        "type": "get",
+        "data": {},
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        "success": function(res) {
+            console.log(res);
+            $(name + " input").attr("readOnly", true);
+            var checkboxs_info = '<div class="checktitle"><span>零部件名称</span><span>零部件号</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].status == "Y") {
+                    res[i].status = "是";
+                } else if (res[i].status == "N") {
+                    res[i].status = "否";
+                }
+                myradio[i].innerHTML = res[i].status;
+                item2[i].value = res[i].explanation;
+            }
+            for (var i = 0; i < res.length; i++) {
+                checkboxs_info += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].bomName + '">' +
+                    '</span><span><input type="text" class="bom_num" value="' + res[i].partName + '">' +
+                    '</span><span class="style1_radio">"' + res[i].status + '"' +
+                    '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="' + res[i].explanation + '" name="explain' + i + '"></span></div>';
+            }
+            $(name).html(checkboxs_info);
+        },
+        "error": function(res) {
+            alert("发生内部错误，请联系程序员");
+        }
+    });
+}
 // 查看线束检查信息
 function findHiCheckByCar(url, name) {
     $(name).html("");

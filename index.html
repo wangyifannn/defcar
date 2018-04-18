@@ -62,6 +62,8 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul id="myTab" class="ul_box">
+                        <!--bomCheck-->
+                        <li class=""><a href="#bomCheck" data-toggle="tab" class="">bom检测</a> </li>
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -255,20 +257,20 @@
                     </div>
                     <!--研发工具记录-->
                     <div class="tab-pane" id="rd_record">
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-7">
-                            <button type="button" class="btn btn-default btn-primary" id="rd_record_btn">提交</button>
-                            <a href="#finishAuditList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary">返回</button></a>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button type="button" class="btn btn-default btn-primary" id="rd_record_btn">提交</button>
+                                <a href="#finishAuditList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary">返回</button></a>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <!--保养记录-->
                     <div class="tab-pane" id="upkeep_record">
-                    <div class="form_subject">
-                        <i class="glyphicon glyphicon-pencil"></i><span>保养记录</span>
-                        <div class="auditMenus menu_style">
+                        <div class="form_subject">
+                            <i class="glyphicon glyphicon-pencil"></i><span>保养记录</span>
+                            <div class="auditMenus menu_style">
+                            </div>
                         </div>
-                    </div>
                         <form class="form-horizontal even_style">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">车辆编号：</label>
@@ -303,40 +305,40 @@
                             <div class="upitem_group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">保养项目：</label>
                                 <div class="col-sm-9 car_tools_check">
-                                <div class="col-sm-12">
-                                    <span>
+                                    <div class="col-sm-12">
+                                        <span>
                                         <input type="checkbox" name="upkeepItem" value="1">换机油&nbsp;&nbsp;
                                     </span>
-                                    <span class="form-group_text">
+                                        <span class="form-group_text">
                                         <label for="">品牌及标号：</label>
                                         <input type="text">
                                     </span>
-                                    <input type="checkbox" name="upkeepItem" value="2">换机滤
-                                </div>
-                                <div class="col-sm-12">
-                                    <span>
+                                        <input type="checkbox" name="upkeepItem" value="2">换机滤
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <span>
                                     <input type="checkbox" name="upkeepItem" value="3">换防冻液&nbsp;&nbsp;
                                     </span>
-                                    <span class="form-group_text">
+                                        <span class="form-group_text">
                                          <label for="">品牌及标号：</label>
                                          <input type="text">
                                     </span>
-                                    <input type="checkbox" name="upkeepItem" value="4">换空滤
-                                </div>
-                                <div class="col-sm-12">
-                                    <span>
+                                        <input type="checkbox" name="upkeepItem" value="4">换空滤
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <span>
                                     <input type="checkbox" name="upkeepItem" value="5">换变速箱油&nbsp;&nbsp;
                                     </span>
-                                    <span class="form-group_text">
+                                        <span class="form-group_text">
                                          <label for="">品牌及标号：</label>
                                          <input type="text">
                                     </span>
-                                    <input type="checkbox" name="upkeepItem" value="6">换汽油滤
-                                </div>
+                                        <input type="checkbox" name="upkeepItem" value="6">换汽油滤
+                                    </div>
                                 </div>
                             </div>
-                        <div class="form-group zhanwei">
-                       </div>
+                            <div class="form-group zhanwei">
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-7">
                                     <button type="button" class="btn btn-default btn-primary" id="upkeep_btn">提交</button>
@@ -602,22 +604,22 @@
                                     <!--<input type="text" class="form-control" id="gids" placeholder="1：A组，2：B组，3:C组">-->
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">签字人：</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="operator" placeholder="">
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">制作日期：</label>
                                 <div class="col-sm-6">
-                                    <input placeholder="请选择日期" name="" class="form-control layer-date mydata_input" id="makeTime">
+                                    <input disabled="disabled" placeholder="请选择日期" name="" class="form-control layer-date mydata_input" id="makeTime">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">备注信息：</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6">
                                 </div>
                             </div>
                             <div class="form-group from-group-tips">
@@ -899,30 +901,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">身份证号</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="idnumber" placeholder="请输入身份证号">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">驾驶证号</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="driverlicensenum" placeholder="请输入驾驶证号码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">驾照有效日起</label>
-                                <div class="col-sm-7">
-                                    <input placeholder="有效期起" name="" class="form-control layer-date mydata_input" id="LStartTime">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">驾照有效日止</label>
-                                <div class="col-sm-7">
-                                    <input placeholder="有效期止" name="" class="form-control layer-date mydata_input" id="LEndTime">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">授权</label>
                                 <div class="col-sm-5">
                                     <input type="radio" name="isallow" value="1">是 &nbsp; &nbsp; &nbsp;
@@ -947,15 +925,17 @@
                                     <input type="text" class="form-control" id="carTypeIn_remake" placeholder="其他信息">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-9 col-sm-12">
-                                    <button type="button" id="driverTypeIn_btn" class="btn btn-default btn-primary">提交</button>
-                                    <a href="#driverList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary ReturnDriver">返回</button></a>
-                                </div>
-                            </div>
                             <div class="form-group from-group-tips">
                                 <div class="col-sm-7">
                                     <label for="" class="drivetypein_tips"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-5 col-sm-6">
+                                    <a href="#" data-toggle="tab" class="">
+                                        <button type="button" id="driverTypeIn_btn" class="btn btn-default btn-primary">提交</button>
+                                    </a>
+                                    <a href="#driverList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary ReturnDriver">返回</button></a>
                                 </div>
                             </div>
                         </form>
@@ -989,27 +969,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">维修原因</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">维修项目</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="reason" placeholder="请输入维修原因">
+                                        <input type="text" class="form-control" name="reason" placeholder="请填写维修项目">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">送修日期</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">要求完成日期</label>
                                     <div class="col-sm-8">
-                                        <input placeholder="请选择日期" name="send_time" class="form-control layer-date mydata_input" id="send_time">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">协商日期</label>
-                                    <div class="col-sm-8">
-                                        <input placeholder="请选择日期" name="appointedtime" class="form-control layer-date mydata_input" id="discuss_time">
+                                        <input placeholder="请选择日期,选填" type="" name="appointedtime" class="form-control layer-date mydata_input" id="discuss_time">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="send_remark" placeholder="可注明是否紧急">
+                                        <input type="text" class="form-control" name="send_remark" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -1043,6 +1017,7 @@
                                         <span>
                                             <input type="text" class="form-control mainList_vSn" placeholder="请输入车辆编号">
 <select name="" id="mainList_status" class="form-control input-sm">
+                                                <option value="">全部</option>
                                                 <option value="1">待维修</option>
                                                 <option value="2">已维修</option>
                                             </select>
@@ -1663,6 +1638,8 @@
 <!--菜单管理-->
 <script type="text/javascript" src="./js/menutable.js"></script>
 <script type="text/javascript" src="./js/audittable.js"></script>
+<!--驾驶员列表-->
+<script type="text/javascript" src="./js/drivertable.js"></script>
 <!--侧边动态菜单-->
 <script type="text/javascript" src="./js/menu.js"></script>
 <script type="text/javascript" src="assets/js/custom.js"></script>
@@ -1682,7 +1659,6 @@
 <script type="text/javascript" src="./js/cartable.js"></script>
 
 <script type="text/javascript" src="./js/car.js"></script>
-<script type="text/javascript" src="./js/drivertable.js"></script>
 <script type="text/javascript" src="./js/maintain.js"></script>
 <script type="text/javascript" src="./js/detail.js"></script>
 

@@ -5,10 +5,8 @@ $("#maintainTypeIn .vSn").bind('input porpertychange', function() {
     if ($("#maintainTypeIn .vSn").val() == null || $("#maintainTypeIn .vSn").val() == "") {
         return;
     } else {
-        // var ss = checkParams("/tempcar/check/" + $("#maintainTypeIn .vSn").val() + "/1.action", ".m_vSn_tips", "", "#send_btn");
-        // console.log(ss);
         $.ajax({
-            url: "http://192.168.0.106:8080/car-management/tempcar/check/" + $("#maintainTypeIn .vSn").val() + "/1.action",
+            url: "http://192.168.0.106:8080/car-management/car/check/" + $("#maintainTypeIn .vSn").val() + "/1.action",
             type: "get",
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -60,7 +58,7 @@ function addmaintain(url, da, that, box) {
                 $(that).parent().attr("href", "#maintainList");
                 $('a[href="#maintainList"]').tab('show');
                 $(".maintainform").hide();
-                loadMaintainList(1, 10);
+                loadMaintainList(1, 10, "", "");
             } else {
                 $(box).html(res.msg);
                 $(".maintainform").show();
@@ -72,6 +70,9 @@ function addmaintain(url, da, that, box) {
 $("#send_btn").click(function() {
     var url = "/carMaintain/PutInCarMaintainApply.action";
     var maintain_form_data = $(".send_form").serializeObject();
+
+    maintain_form_data.send_time = changeDateFormat(new Date().getTime());
+    console.log(maintain_form_data);
     var that = this;
     addmaintain(url, maintain_form_data, that, ".send_tips");
 });
@@ -79,7 +80,7 @@ $("#send_btn").click(function() {
 $("#m_submit_btn").click(function() {
     var url = "/carMaintain/coordination.action";
     var maintain_form_data = $(".finish_form").serializeObject();
-    maintain_form_data.id = getHashParameter("id");
+    maintain_form_data.infoid = getHashParameter("id");
     console.log(maintain_form_data);
     var that = this;
     addmaintain(url, maintain_form_data, that, ".maintainPeople_tips");
@@ -381,7 +382,6 @@ window.maintainListoperateEvents = {
         })
     },
     'click #btn_maintainpeople': function(e, value, row, index) {
-        // $(".maintainform").show();
         $("#coord_model #vSn").val(row.vSn);
         $("#coord_model #vSn").attr("readOnly", true);
         $('#coord_model').modal();
@@ -389,12 +389,12 @@ window.maintainListoperateEvents = {
     }
 };
 $("#auditLit_search_btn").click(function() {
-        $('#tablescreen').bootstrapTable('destroy');
-        loadMaintainList(1, 30, $(".mainList_vSn").val(), $("#mainList_status").val());
-        // loadCarList(s_data);
-    })
-    // 分页---------------------------------------------------------------------
-    // 分页——————————————————————————————————————————————————————————————————————————————————————————————
+    $('#tablescreen').bootstrapTable('destroy');
+    loadMaintainList(1, 10, $(".mainList_vSn").val(), $("#mainList_status").val());
+    // loadCarList(s_data);
+});
+// 分页---------------------------------------------------------------------
+// 分页——————————————————————————————————————————————————————————————————————————————————————————————
 function maintainPagings(maxPage, pageul, pageli) {
     var lis = "";
     for (var p = 1; p < 8; p++) {
