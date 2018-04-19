@@ -190,6 +190,10 @@ ul.line li:nth-child(2n+1) {
     font-size: 14px !important;
 }
 
+.rightBox {
+    margin-left: 255px;
+}
+
 
 /*响应式布局 ，字体大小*/
 

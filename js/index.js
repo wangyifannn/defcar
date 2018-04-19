@@ -1,3 +1,21 @@
+// 设置消息提示框的配置xinxi
+toastr.options = messageOpts;
+//设置显示配置
+var messageOpts = {
+    "closeButton": true, //是否显示关闭按钮
+    "debug": false, //是否使用debug模式
+    "positionClass": "toast-top-center", //弹出窗的位置
+    "onclick": null,
+    "showDuration": "300", //显示的动画时间
+    "hideDuration": "1000", //消失的动画时间
+    "timeOut": "1500", //展现时间
+    "extendedTimeOut": "80000", //加长展示时间
+    "showEasing": "swing", //显示时的动画缓冲方式
+    "hideEasing": "linear", //消失时的动画缓冲方式
+    "showMethod": "fadeIn", //显示时的动画方式
+    "hideMethod": "fadeOut" //消失时的动画方式
+};
+//--------------------------------------------------------------------------------------------
 // s 页面懒加载
 document.onreadystatechange = loadingChange; //当页面加载状态改变的时候执行这个方法.  
 function loadingChange() {
@@ -391,11 +409,7 @@ function createcarTable(boxname, toolbarid, res,
                 field: row6,
                 title: row6name,
                 align: 'center',
-                sortable: true,
-                //获取日期列的值进行转换
-                formatter: function(value, row, index) {
-                    return changeDateFormat(value)
-                }
+                sortable: true
             },
             {
                 field: 'operate',

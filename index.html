@@ -13,8 +13,8 @@
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./css/mytable.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/scrollscreen.css" />
-
-
+    <!--消息提示框-->
+    <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <style type="text/css">
         body {
             background: #FFF;
@@ -1018,8 +1018,10 @@
                                             <input type="text" class="form-control mainList_vSn" placeholder="请输入车辆编号">
 <select name="" id="mainList_status" class="form-control input-sm">
                                                 <option value="">全部</option>
-                                                <option value="1">待维修</option>
-                                                <option value="2">已维修</option>
+                                                <option value="1">排队中</option>
+                                                <option value="2">维修中</option>
+                                                <option value="3">已维修</option>
+                                                <option value="4">已完成</option>
                                             </select>
                                             <button class="btn btn-primary" id="auditLit_search_btn">搜索</button>
                                         </span>
@@ -1614,11 +1616,6 @@
                                 <button type="button" class="btn btn-default btn-primary" data-dismiss="" id="m_submit_btn">提交</button>
                             </div>
                         </div>
-                        <div class="form-group from-group-tips">
-                            <div class="col-sm-offset-4 col-sm-6">
-                                <label for="" class="maintainPeople_tips"></label>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -1626,6 +1623,9 @@
     </div>
 </body>
 <script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
+<!--模态框-->
+<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
+
 <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>
 <!--权限管理-->

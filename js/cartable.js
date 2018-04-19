@@ -36,7 +36,6 @@ $(function() {
         $carListtable.bootstrapTable('destroy');
         console.log($(this).val());
     });
-
 });
 // 判断车辆状态，加载车辆按钮，0或null：已录入，1：已点检，2：已安全检查，3：已线束检查，4：已BOM检查，5：还车点检完毕
 function caroperateFormatter(value, row, index) {

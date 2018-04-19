@@ -240,15 +240,14 @@ function Findbominfo(url, name) {
                 } else if (res[i].status == "N") {
                     res[i].status = "否";
                 }
-                myradio[i].innerHTML = res[i].status;
-                item2[i].value = res[i].explanation;
-            }
-            for (var i = 0; i < res.length; i++) {
                 checkboxs_info += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].bomName + '">' +
                     '</span><span><input type="text" class="bom_num" value="' + res[i].partName + '">' +
                     '</span><span class="style1_radio">"' + res[i].status + '"' +
                     '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="' + res[i].explanation + '" name="explain' + i + '"></span></div>';
             }
+            // for (var i = 0; i < res.length; i++) {
+
+            // }
             $(name).html(checkboxs_info);
         },
         "error": function(res) {

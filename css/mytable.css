@@ -1,3 +1,12 @@
+/*消息弹框样式*/
+
+.toast-top-center {
+    top: 35% !important;
+    right: -4% !important;
+    /*width: 100% ;*/
+}
+
+
 /*表格样式*/
 
 .table-responsive {
@@ -45,6 +54,17 @@ table {
     height: 25px;
 }
 
+#maintainList .btn-default:hover {
+    background: #010B52;
+}
+
+#maintainList .my_btn {
+    border: none;
+    color: white;
+    border-radius: 10px;
+    background: #1471EE;
+}
+
 #carDetail .row {
     margin-top: 15px;
     text-align: center;
@@ -53,7 +73,7 @@ table {
 
 .card-view span:first-child {
     margin-left: 41px;
-    width: 100px;
+    width: 100px !important;
     display: inline-block;
 }
 
@@ -464,7 +484,7 @@ input.form-control {
     background: white;
 }
 
-#maintainList table td:nth-child(8) {
+#maintainList table td:nth-child(9) {
     background: #BFEBEB;
 }
 

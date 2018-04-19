@@ -59,9 +59,12 @@ function addmaintain(url, da, that, box) {
                 $('a[href="#maintainList"]').tab('show');
                 $(".maintainform").hide();
                 loadMaintainList(1, 10, "", "");
+                $('#coord_model').modal('hide');
+                toastr.success('维修协调员填写信息提交成功', '维修协调员填写', messageOpts);
             } else {
                 $(box).html(res.msg);
                 $(".maintainform").show();
+                toastr.warning('维修协调员填写信息提交失败', '维修协调员填写', messageOpts);
                 return;
             }
         }
@@ -83,7 +86,7 @@ $("#m_submit_btn").click(function() {
     maintain_form_data.infoid = getHashParameter("id");
     console.log(maintain_form_data);
     var that = this;
-    addmaintain(url, maintain_form_data, that, ".maintainPeople_tips");
+    addmaintain(url, maintain_form_data, that, "");
 });
 // 维修列表
 var mainpageNum = 1;
@@ -104,16 +107,15 @@ function loadMaintainList(mainpageNum, size, vSn, status) {
         }
         url = "http://192.168.0.106:8080/car-management/carMaintain/pageQueryCarMaintain.action";
     }
+    console.log(data);
     $.ajax({
         "url": url,
         "type": "get",
         "data": data,
-        "async": false,
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         "success": function(res) {
-            window.location.hash = "pagenum=" + mainpageNum;
             console.log(res);
+            console.log(res.rows);
+            window.location.hash = "pagenum=" + mainpageNum;
             var ress;
             if (res.rows) {
                 ress = res.rows;
@@ -121,6 +123,7 @@ function loadMaintainList(mainpageNum, size, vSn, status) {
                 ress = res;
             }
             $('#tablescreen').bootstrapTable('destroy');
+            console.log(ress);
             initmaintain(ress, "#toolbar_tablescreen");
             var maxPage = Math.ceil(res.total / data.size);
             if (maxPage >= 9) {
@@ -141,46 +144,54 @@ function initmaintain(res, toolbarid) {
         data: res,
         toggle: "table",
         toolbar: toolbarid,
-        editable: true,
         columns: [
             [{
                 "title": "测试车辆维修列表",
                 "halign": "center",
                 "align": "center",
                 // 合并维修列表 表头的列单元
-                "colspan": 14
+                "colspan": 15
             }],
             [{
-                field: 'id',
+                field: 'ids',
                 title: "序号",
                 valign: "middle",
                 align: "center",
                 colspan: 1,
                 rowspan: 2,
-                width: "3%"
-
+                width: "3%",
+                formatter: function(value, row, index) {
+                    return index + 1
+                }
             }, {
                 title: "送修申请表",
                 valign: "middle",
                 align: "center",
-                colspan: 6,
+                colspan: 7,
                 rowspan: 1
             }, {
-                field: 'carMaintainApply',
-                title: "双方协商日期",
+                field: 'status',
+                title: "当前状态",
                 valign: "middle",
                 align: "center",
                 colspan: 1,
                 rowspan: 2,
-                width: "7%",
+                width: "5%",
                 background: '#BFEBEB',
-                disabled: false, //是否禁用编辑
                 formatter: function(value, row, index) {
+                    var a = "";
                     if (value == null) {
-                        return "";
+                        var a = '';
+                    } else if (value == "1") {
+                        var a = '<span style="color:red">排队中</span>';
+                    } else if (value == "2") {
+                        var a = '<span style="color:green">维修中</span>';
+                    } else if (value == "3") {
+                        var a = '<span style="color:blue">已维修</span>';
                     } else {
-                        return value.appointedtime
+                        var a = '<span>已完成</span>';
                     }
+                    return a;
                 }
             }, {
                 title: "维修协调员填写",
@@ -194,13 +205,13 @@ function initmaintain(res, toolbarid) {
                 title: '车辆编号',
                 valign: "middle",
                 align: "center",
-                width: "7%"
+                width: "6%"
             }, {
                 field: 'carMaintainApply',
                 title: '停放地点',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "7%",
                 formatter: function(value, row, index) {
                     if (value == null) {
                         return "";
@@ -213,9 +224,8 @@ function initmaintain(res, toolbarid) {
                 title: '送修人',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "6%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -224,21 +234,7 @@ function initmaintain(res, toolbarid) {
                 }
             }, {
                 field: 'carMaintainApply',
-                title: '送修日期',
-                valign: "middle",
-                align: "center",
-                width: "8%",
-                formatter: function(value, row, index) {
-                    // return value.time
-                    if (value == null) {
-                        return "";
-                    } else {
-                        return value.send_time
-                    }
-                }
-            }, {
-                field: 'carMaintainApply',
-                title: '送修原因',
+                title: '维修项目',
                 valign: "middle",
                 align: "center",
                 width: "8%",
@@ -252,12 +248,41 @@ function initmaintain(res, toolbarid) {
                 }
             }, {
                 field: 'carMaintainApply',
+                title: '送修日期',
+                valign: "middle",
+                align: "center",
+                width: "7%",
+                formatter: function(value, row, index) {
+                    // return value.time
+                    if (value == null) {
+                        return "";
+                    } else {
+                        return value.send_time
+                    }
+                }
+            }, {
+                field: 'carMaintainApply',
+                title: "要求完成日期",
+                valign: "middle",
+                align: "center",
+                // colspan: 1,
+                // rowspan: 2,
+                width: "7%",
+                background: '#BFEBEB',
+                formatter: function(value, row, index) {
+                    if (value == null) {
+                        return "";
+                    } else {
+                        return value.appointedtime
+                    }
+                }
+            }, {
+                field: 'carMaintainApply',
                 title: '备注',
                 valign: "middle",
                 align: "center",
-                width: "10%",
+                width: "5%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -269,9 +294,8 @@ function initmaintain(res, toolbarid) {
                 title: '工作内容',
                 valign: "middle",
                 align: "center",
-                width: "13%",
+                width: "6%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -283,9 +307,8 @@ function initmaintain(res, toolbarid) {
                 title: '操作人',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "5%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -298,9 +321,8 @@ function initmaintain(res, toolbarid) {
                 title: '完成日期',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "5%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -313,9 +335,8 @@ function initmaintain(res, toolbarid) {
                 title: '停放地点',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "5%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -327,9 +348,8 @@ function initmaintain(res, toolbarid) {
                 title: '备注',
                 valign: "middle",
                 align: "center",
-                width: "8%",
+                width: "4%",
                 formatter: function(value, row, index) {
-                    // return value.time
                     if (value == null) {
                         return "";
                     } else {
@@ -341,9 +361,7 @@ function initmaintain(res, toolbarid) {
                 title: '操作',
                 valign: "middle",
                 align: 'center',
-                // colspan: 1,
-                // rowspan: 2,
-                width: "4%",
+                width: "12%",
                 events: maintainListoperateEvents,
                 formatter: maintainListFormatter
             }]
@@ -353,8 +371,10 @@ function initmaintain(res, toolbarid) {
 
 function maintainListFormatter(value, row, index) {
     return [
-        '<button type="button" id="btn_maintaindel" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<a href="#" data-toggle="tab"><button type="button" id="btn_maintainpeople" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">填写</button></a>'
+        '<button type="button" id="btn_maintaindel" class="RoleOfA btn btn-default  btn-sm my_btn" style="margin-right:10px;">删除</button>',
+        '<button type="button" id="btn_maintainTop" class="RoleOfA btn btn-default  btn-sm my_btn" style="margin-right:10px;">置顶</button>',
+        '<button type="button" id="btn_ChangeStatus" class="RoleOfA btn btn-default  btn-sm my_btn" style="margin-right:10px;margin-top:5px;">维修</button>',
+        '<a href="#" data-toggle="tab"><button type="button" id="btn_maintainpeople" class="RoleOfB btn btn-default  btn-sm my_btn" style="margin-right:10px;margin-top:5px;">填写</button></a>'
     ].join('');
 }
 window.maintainListoperateEvents = {
@@ -382,10 +402,61 @@ window.maintainListoperateEvents = {
         })
     },
     'click #btn_maintainpeople': function(e, value, row, index) {
+        myformReset();
         $("#coord_model #vSn").val(row.vSn);
         $("#coord_model #vSn").attr("readOnly", true);
         $('#coord_model').modal();
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
+    },
+    // 置顶操作
+    'click #btn_maintainTop': function(e, value, row, index) {
+        window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
+        $.ajax({
+            "url": "http://192.168.0.106:8080/car-management/carMaintain/top.action",
+            "type": "get",
+            "data": {
+                "infoid": row.id
+            },
+            "dataType": "jsonp", //数据类型为jsonp  
+            "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+            "success": function(res) {
+                console.log(res);
+                if (res.ret) {
+                    loadMaintainList(1, 10, "", "");
+                }
+            },
+            "error": function(res) {
+                console.log(res);
+            }
+        })
+    },
+    // 修改维修状态操作
+    'click #btn_ChangeStatus': function(e, value, row, index) {
+        var mainArr = [];
+        mainArr.push(row.id);
+        var mainString = mainArr.join(",");
+        window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
+        $.ajax({
+            "url": "http://192.168.0.106:8080/car-management/carMaintain/startMaintain.action",
+            "type": "post",
+            "data": {
+                "ids": mainString
+            },
+            "dataType": "jsonp", //数据类型为jsonp  
+            "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+            "success": function(res) {
+                console.log(res);
+                if (res.ret) {
+                    toastr.success('维修状态修改成功', '维修', messageOpts);
+                    loadMaintainList(1, 10, "", "");
+                } else {
+                    toastr.warning('维修状态修改失败', '维修', messageOpts);
+                }
+            },
+            "error": function(res) {
+                console.log(res);
+            }
+        })
     }
 };
 $("#auditLit_search_btn").click(function() {
