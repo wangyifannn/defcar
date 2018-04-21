@@ -6,8 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-3.3.7.min.css">
-    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-
     <link href="../css/login.css" rel="stylesheet">
 </head>
 
@@ -72,5 +70,22 @@
 </body>
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../js/login.js"></script>
+<script>
+    // 点击判断浏览器类型
+    function isFF() {
+        return navigator.userAgent.indexOf("Firefox") != -1;
+    }
+
+    function isChrome() {
+        return navigator.userAgent.indexOf("Chrome") > -1;
+    }
+    isFF();
+    isChrome();
+    if (!isFF() && !isChrome()) {
+        // console.log();
+        // $("body").css("background", "red");
+        $("head").append("<link rel='stylesheet' type='text/css' href='../css/ie8login.css' / > ");
+    }
+</script>
 
 </html>

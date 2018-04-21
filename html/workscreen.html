@@ -64,19 +64,17 @@
     }
 
     function getList() {
+        $(".line").html("");
         $.ajax({
             "url": "http://192.168.0.106:8080/car-management/carMaintain/screen.action",
             // "url": "../json/datatable.json",
             "type": "get",
-            // "dataType": "jsonp", //数据类型为jsonp  
-            // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
             "success": function(res) {
                 if (res.total == 0) {
                     alert("未检索到维修车辆");
                     return;
                 }
-
-                console.log(res);
+                // console.log(res);
                 $(".maintain_countCar").html(res.count);
                 $(".maintain_completeCar").html(res.complete);
                 $(".maintain_currentCar").html(res.current);
@@ -98,7 +96,6 @@
                             size: 190,
                             color: "#E41937",
                             backgroundColor: "#505f76",
-                            // value: 55,
                             value: res.queuepercentage,
                             text: 0,
                             onDraw: function(el, circle) {
@@ -120,7 +117,6 @@
                             size: 190,
                             color: "#eace50",
                             backgroundColor: "#505f76",
-                            // value: 22,
                             value: res.completepercentage,
                             text: 0,
                             onDraw: function(el, circle) {
@@ -128,22 +124,33 @@
                             }
                         });
                     } else {
+                        $(".circleChart#0").circleChart({
+                            size: 70,
+                            color: "#E41937",
+                            backgroundColor: "#505f76",
+                            value: res.queuepercentage,
+                            text: 0,
+                            onDraw: function(el, circle) {
+                                circle.text(Math.round(circle.value) + "%");
+                            }
+                        });
                         $(".circleChart#1").circleChart({
                             size: 70,
                             color: "#2ff1cf",
                             backgroundColor: "#505f76",
-                            value: 30,
+                            value: res.currentpercentage,
                             text: 0,
                             top: 50,
                             onDraw: function(el, circle) {
                                 circle.text(Math.round(circle.value) + "%");
                             }
                         });
-                        $(".circleChart#0").circleChart({
+                        $(".circleChart#2").circleChart({
                             size: 70,
                             color: "#eace50",
                             backgroundColor: "#505f76",
-                            value: 50,
+                            // value: 22,
+                            value: res.completepercentage,
                             text: 0,
                             onDraw: function(el, circle) {
                                 circle.text(Math.round(circle.value) + "%");
@@ -165,7 +172,7 @@
                     } else if (obj[i].status == "2") {
                         a = '<span style="color:#2ff1cf;width:100%;weight:bold;">维修中</span>';
                     } else if (obj[i].status == "3") {
-                        a = '<span style="color:blue;width:100%;weight:bold;">已维修</span>';
+                        a = '<span style="color:yellow;width:100%;weight:bold;">已维修</span>';
                     } else {
                         a = '<span>已完成</span>';
                     }
@@ -223,13 +230,9 @@
         $(".data").html(formatterDate());
         $(".datatime").html(formatterDateTime());
     }, 1000);
-
     setInterval(function() {
         getList();
-        // $("#0").circleChart({
-        //     value: Math.random() * 100
-        // });
-    }, 60000); //1小时刷新一次 维修大屏列表和 百分比
+    }, 5000); //1小时刷新一次 维修大屏列表和 百分比
     // 早上刷新一次，下午刷新一次？
     // 字体大小变化
     if ($(document.body).width() >= 3800) {
@@ -261,7 +264,6 @@
     var myheight = $("ul.line li").height();
     $(".line").slideUp("", myheight);
     $("#btn").click(function() {
-        $("#full_mainlist").fullScreen();
         myheight = $("ul.line li").height();
         $(".line").slideUp("", myheight);
     })

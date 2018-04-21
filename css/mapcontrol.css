@@ -16,12 +16,11 @@
  
  #cmapcontainer,
  #amapcontainer {
-     min-width: 1300px;
-     min-height: 800px;
      height: 100%;
      width: 100%;
+     min-width: 1300px;
+     min-height: 950px;
      position: absolute;
-     /*border: 2px solid red;*/
      top: 0px;
      left: 0px;
  }
@@ -100,7 +99,6 @@
      left: 25%;
      margin-left: -8px;
      transition: all .2s ease-in-out;
-     /*border: 1px solid red;*/
  }
  
  .pointerTabRight {
@@ -112,12 +110,10 @@
      left: 75%;
      margin-left: -8px;
      transition: all .2s ease-in-out;
-     /*border: 1px solid red;*/
  }
  
  .current {
      width: 48%;
-     /*border: 1px solid red;*/
      display: inline-block;
      cursor: pointer;
      height: 50px;
@@ -141,7 +137,6 @@
      position: absolute;
      top: 0px;
      left: 0px;
-     /*display: none;*/
  }
  
  .input_box {
@@ -171,7 +166,6 @@
      height: 28px;
      outline: none;
      border: none;
-     /*border-right: 1px solid #D2D2D2;*/
      position: absolute;
      left: 9px;
      top: 2px;
@@ -209,7 +203,6 @@
  .mydata_input {
      width: 85%;
      margin-left: 10px;
-     /*height: */
      border: none !important;
      height: 84%;
      outline: none;

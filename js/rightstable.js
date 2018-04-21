@@ -1,6 +1,24 @@
+// 添加车辆分组
+$(".addGroup_btn").click(function() {
+    $.ajax({
+        "url": "http://192.168.0.106:8080/car-management/group/addGroup.action",
+        "type": "post",
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
+        "data": {
+            "groupName": $("#groupForm .groupName").val(),
+            "groupRemark": $("#groupForm .groupRemark").val()
+        },
+        "success": function(res) {
+            if (res.ret == true) {
+                toastr.success('车辆分组添加成功', '添加车辆分组', messageOpts);
+            } else {
+                toastr.warning('车辆分组添加失败', '添加车辆分组', messageOpts);
+            }
+        }
+    })
+});
 //加载 权限列表
-
-
 function loadRightsList() {
     $.ajax({
         "url": "http://192.168.0.106:8080/car-management/permission/permissionList.action",
@@ -14,7 +32,6 @@ function loadRightsList() {
                 "pid", "name", "keyWord", "remark", "operator", "createTime", true, true,
                 "权限编号", "名称", "关键字", "备注", "创建人", "创建日期",
                 true, rightsOperateEventsDel, rightsOperateFormatterDel, "client");
-            // createTable("#rightsList", "toolbar_rightsList", res, true, true, "uid");
             var addRightsbtn = document.getElementById("btn_add_rights");
             // 点击添加用戶按鈕
             addRightsbtn.onclick = function() {

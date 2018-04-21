@@ -74,6 +74,7 @@ laydate.render({
     value: todayDate,
     theme: '#041473' //授权终止日
 });
+$("#upkeepTime").val(todayDate);
 laydate.render({
     elem: '#upkeepTime',
     type: 'datetime', //精确到 时分秒
@@ -145,18 +146,18 @@ function requestTypein(paramsid, url, data, that, next) {
 }
 // 车辆录入-----------------------------------------------------------------------------------------
 // 车辆编号校验
-$("#carTypeIn #vSn").bind('input porpertychange', function() {
-    console.log($("#carTypeIn #vSn").val());
-    if ($("#carTypeIn #vSn").val() == null || $("#carTypeIn #vSn").val() == "") {
+$("#carTypeIn .vSn").bind('input porpertychange', function() {
+    console.log($("#carTypeIn .vSn").val());
+    if ($("#carTypeIn .vSn").val() == null || $("#carTypeIn .vSn").val() == "") {
         return;
     } else {
-        checkParams("/tempcar/check/" + $("#carTypeIn #vSn").val() + "/1.action", ".vSn_tips", ".cartypein_tips", "#carTypeIn_btn");
+        checkParams("/tempcar/check/" + $("#carTypeIn .vSn").val() + "/1.action", ".vSn_tips", ".cartypein_tips", "#carTypeIn_btn");
     }
 });
 // 车辆录入
 $("#carTypeIn_btn").click(function() {
     $(this).parent().attr("href", "#");
-    if ($("#carTypeIn #vSn").val() == "" || $("#carTypeIn #product_sn").val() == "" || $("#carTypeIn #vin").val() == "" || $("#carTypeIn #engineNumber").val() == "") {
+    if ($("#carTypeIn .vSn").val() == "" || $("#carTypeIn .product_sn").val() == "" || $("#carTypeIn .vin").val() == "" || $("#carTypeIn .engineNumber").val() == "") {
         alert("有必填项未填写！");
         return;
     }
@@ -167,31 +168,31 @@ $("#carTypeIn_btn").click(function() {
     // 有25个字段
     var carinfodata = {
         "id": id,
-        "vSn": $("#carTypeIn #vSn").val(), //试验车号
-        "vin": $("#carTypeIn #vin").val(), //车架号
-        "product_sn": $("#carTypeIn #product_sn").val(),
-        "product_name": $("#carTypeIn #product_name").val(),
-        "carName": $("#carTypeIn #carName").val(),
-        "vCarType": $("#carTypeIn #vCarType").val(),
-        "customer": $("#carTypeIn #customer").val(),
-        "projectEngineer": $("#carTypeIn #projectEngineer").val(),
-        "contactNumber": $("#carTypeIn #contactNumber").val(),
-        "engineType": $("#carTypeIn #engineType").val(),
-        "engineNumber": $("#carTypeIn #engineNumber").val(),
-        "engineCapacity": $("#carTypeIn #engineCapacity").val(),
-        "FuelType": $("#carTypeIn #FuelType").val(),
-        "oilspecification": $("#carTypeIn #oilspecification").val(),
-        "tyresize": $("#carTypeIn #tyresize").val(),
-        "GBTS": $("#carTypeIn #GBTS").val(), //变速箱油规格
-        "reaTireP": $("#carTypeIn #reaTireP").val(),
-        "frontTireP": $("#carTypeIn #frontTireP").val(),
+        "vSn": $("#carTypeIn .vSn").val(), //试验车号
+        "vin": $("#carTypeIn .vin").val(), //车架号
+        "product_sn": $("#carTypeIn .product_sn").val(),
+        "product_name": $("#carTypeIn .product_name").val(),
+        "carName": $("#carTypeIn .carName").val(),
+        "vCarType": $("#carTypeIn .vCarType").val(),
+        "customer": $("#carTypeIn .customer").val(),
+        "projectEngineer": $("#carTypeIn .projectEngineer").val(),
+        "contactNumber": $("#carTypeIn .contactNumber").val(),
+        "engineType": $("#carTypeIn .engineType").val(),
+        "engineNumber": $("#carTypeIn .engineNumber").val(),
+        "engineCapacity": $("#carTypeIn .engineCapacity").val(),
+        "FuelType": $("#carTypeIn .FuelType").val(),
+        "oilspecification": $("#carTypeIn .oilspecification").val(),
+        "tyresize": $("#carTypeIn .tyresize").val(),
+        "GBTS": $("#carTypeIn .GBTS").val(), //变速箱油规格
+        "reaTireP": $("#carTypeIn .reaTireP").val(),
+        "frontTireP": $("#carTypeIn .frontTireP").val(),
         "vehicleQuality": $("#carTypeIn #vehicleQuality").val(),
         "loadMethod": $("#carTypeIn #loadMethod").val(),
         "loadData": $("#carTypeIn #loadData").val(),
         "operator": "", //签字人、操作人,后台生成
         "makeTime": $("#carTypeIn #makeTime").val(), //makeTime
         "remark": $("#carTypeIn #remark").val(), //备注
-        "gid": $("#carTypeIn #gids").val() //车辆分组
+        "gid": $("#carTypeIn .gids").val() //车辆分组
     };
     var that = this;
     requestTypein(".cartypein_tips", "http://192.168.0.106:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
@@ -391,12 +392,9 @@ function getcnid(url, boxname) {
                     }
                 }
             }
-            // console.log(checkboxs);
             $(boxname).html(checkboxs);
             $(".statusy").prop("checked", true); //默认单选框选中是
-            console.log($("#sCheck .item27explain"));
-            $("#sCheck .item26explain").val("当前发动机编号为：" + getHashParameter("engineNumber"));
-            $("#sCheck .item27explain").val("当前车架号为：" + getHashParameter("vin"));
+            // $("#sCheck .item25explain").val("请确认检查车辆的发动机编号为：" + getHashParameter("engineNumber") + ",车架号为：" + getHashParameter("vin"));
         }
     });
 }
@@ -483,17 +481,18 @@ $("#sCheck_btn").click(function() {
         alert("有选项未选择");
         return;
     }
-    console.log(form2);
     $.ajax({
         type: "get",
-        url: "http://192.168.0.106:8080/car-management/car/saveClacyLindersss.action?tcarid=" + getHashParameter("id"),
+        url: "http://192.168.0.106:8080/car-management/car/saveClacyLindersss.action?vSn=" + getHashParameter("vSn"),
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         data: $(".pot_pressure").serializeObject(),
         success: function(res) {
             console.log(res);
-            if (res.ret == true) {} else {
-                $(".carsafe_tips").html("缸压提交失败");
+            if (res.ret == true) {
+                toastr.success('缸压提交成功', '缸压', messageOpts);
+            } else {
+                toastr.warning('缸压提交失败', '缸压', messageOpts);
                 return;
             }
         }
@@ -503,7 +502,7 @@ $("#sCheck_btn").click(function() {
     console.log(JSON.stringify(form2));
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("vSn") + ".action?",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
@@ -511,14 +510,14 @@ $("#sCheck_btn").click(function() {
         success: function(data) {
             console.log(data);
             if (data.ret == true) {
-                $(".carsafe_tips").html("表单提交成功");
+                toastr.success('表单提交成功，待审核', '安全/附件检查', messageOpts);
                 myformReset(); //表单重置
             } else {
-                $(".carsafe_tips").html(data.msg);
+                toastr.warning("表单提交失败，请确认填写的信息是否有误", '安全/附件检查', messageOpts);
             }
         },
         error: function(dat) {
-            $(".carsafe_tips").html("系统内部错误，请联系程序员小哥哥~");
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", '安全检查', messageOpts);
         }
     });
 });
@@ -544,7 +543,7 @@ $("#wiringCheck_btn").click(function() {
     console.log(JSON.stringify(sucArr));
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addHiCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addHiCheck/" + getHashParameter("vSn") + ".action?",
         dataType: "json",
         data: JSON.stringify(sucArr),
         async: false,
@@ -553,14 +552,14 @@ $("#wiringCheck_btn").click(function() {
         success: function(data) {
             console.log(data);
             if (data.ret == true) {
-                $(".wiring_tips").html("表单提交成功");
                 $("#wiringCheck input[type='text']").val("");
+                toastr.success('线束检查提交成功，待审核', '线束检查', messageOpts);
             } else {
-                $(".carsafe_tips").html(data.msg);
+                toastr.warning("线束检查提交失败，请联系管理员~", '线束检查', messageOpts);
             }
         },
         error: function(dat) {
-            $(".wiring_tips").html("系统内部错误，请联系程序员小哥哥~");
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", '线束检查', messageOpts);
         }
     });
 });
@@ -581,37 +580,27 @@ $("#bomCheck_btn").click(function() {
     var item2 = $("#bomCheck .bom_num");
     var item3 = $("#bomCheck .my_radio:checked");
     var item4 = $("#bomCheck .explain_input");
-    console.log(item1);
-    console.log(item2);
-    console.log(item3);
-    console.log(item4);
     var bomobjArrs = [];
     for (var i = 0; i < item1.length; i++) {
         var bomobj = {};
         bomobjArrs.push({ "bomName": item1[i].value, "partName": item2[i].value, "status": item3[i].value, "explanation": item4[i].value })
     }
-    console.log(bomobjArrs);
-    console.log(JSON.stringify(bomobjArrs));
-    // var form4 = $(".bomcheck_itembox").mychangeform();
-    // console.log(JSON.stringify(form4));
-
     $.ajax({
         type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("id") + ".action?",
+        url: "http://192.168.0.106:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("vSn") + ".action?",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
         data: JSON.stringify(bomobjArrs),
         success: function(data) {
             if (data.ret == true) {
-                $(".carbom_tips").html("表单提交成功");
-                $("#bomcheck_itembox input[type='text']").val("");
+                toastr.success("BOM检查提交成功，待审核~", 'BOM检查', messageOpts);
             } else {
-                $(".carbom_tips").html("表单提交失败");
+                toastr.warning("BOM检查提交成失败，请联系管理员~", 'BOM检查', messageOpts);
             }
         },
         error: function(dat) {
-            $(".carbom_tips").html("系统内部错误，请联系程序员~");
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", 'BOM检查', messageOpts);
         }
     });
 });
@@ -627,9 +616,6 @@ $(".resetreturncheck_btn").click(function() {
 $("#returncarCheck_btn").click(function() {
     var returncarCheckdata = {
         "carid": getHashParameter("id"), //数据库编号
-        // "vSn": getHashParameter("vSn"), //车辆编号
-        // "vin": getHashParameter("vin"), //车架号
-        // "engineNumber": getHashParameter("engineNumber"), //发动机编号
         "toolisrecycled": $("input[name='toolisrecycled']:checked").val(),
         "sparetyre": $("#returncarCheck #sparetyre").val(), //备用轮胎
         "tools": $("#returncarCheck #tools").val(),
@@ -645,10 +631,7 @@ $("#returncarCheck_btn").click(function() {
         "pick_card": $("#pick_card").val(),
         "trans_sn": $("#trans_sn").val(), //运输车号
         "time": $("input[name='receivecar']").val()
-            // "operator": $("#operator").val(), //操作人//总动生成
-            // "operator_time": $("#operator_time").val() //自动能够生产
     };
-    // console.log(carCheckdata);
     requestTypein(".returncarcheck_tips", "http://192.168.0.106:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
 });
 
@@ -755,3 +738,26 @@ $("#driverTypeIn_btn").click(function() {
 //         }
 //     });
 // });
+
+// 研发工具记录
+var toolnameArr = [{ "toolname": "12V电源" },
+    { "toolname": "CAN1开发接头" },
+    { "toolname": "前催化器载体温度" },
+    { "toolname": "空气比传感器座" },
+    { "toolname": "排方前采样管" },
+    { "toolname": "CAN0开发接头" },
+    { "toolname": "" },
+    { "toolname": "" },
+    { "toolname": "" }
+];
+
+function initToolRecord(name) {
+    var toolItem = '<div class="checktitle"><span>工具或设备名称</span><span>申请人</span><span>装备日期</span><span>拆除日期</span></div>';
+    for (var i = 0; i < toolnameArr.length; i++) {
+        toolItem += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].toolname + '">' +
+            '</span><span><input type="text" class="bom_num" value="">' +
+            '</span><span class="style1_radio">' +
+            '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
+    }
+    $(name).html(toolItem);
+}

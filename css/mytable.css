@@ -277,7 +277,7 @@ input.bom_num {
 }
 
 .form-group_text input {
-    width: 385px;
+    width: 337px;
     height: 25px;
     line-height: 25px;
     text-indent: 10px;
@@ -285,7 +285,6 @@ input.bom_num {
     border-radius: 4px;
     border: 1px solid #ccc;
     outline: none;
-    margin-right: 113px;
 }
 
 .col-sm-9.car_tools_check div {
@@ -383,6 +382,24 @@ span.car_group_name {
     width: 80px;
 }
 
+.operator_group {
+    padding-left: 70px;
+}
+
+form.form-horizontal.even_style.upkeepFormInfo {
+    border: 1px solid #ccc;
+    margin-top: 35px;
+    padding: 10px 0px;
+}
+
+#upkeepForm .form-horizontal {
+    width: 100%;
+}
+
+.upkeepFormInfo:first-child {
+    margin-top: 0px !important;
+}
+
 #carListtable_toolbar {
     width: 500px;
 }
@@ -478,6 +495,10 @@ select.form-control.status-mdoel_select {
 
 .form-control {
     width: 80%;
+}
+
+#upkeep_model .form-control {
+    width: 109%;
 }
 
 input.form-control {
@@ -595,6 +616,10 @@ input.form-control {
 
 .modal.in .modal-dialog {
     margin-top: 15%;
+}
+
+#upkeep_model .modal-dialog {
+    margin-top: 5% !important;
 }
 
 .radio_style {

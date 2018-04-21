@@ -25,9 +25,7 @@
       } else {
           $.ajax({
               "url": "http://192.168.0.106:8080/car-management/car/carData.action",
-              "type": "get",
-              "dataType": "jsonp", //数据类型为jsonp  
-              "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
+              "type": "post",
               "data": {
                   "vSn": $("#current_input").val()
               },
@@ -65,7 +63,6 @@
                       var convertor = new BMap.Convertor();
                       convertor.translate(pos, 1, 5, function(data) {
                           console.log(data);
-
                           if (data.status === 0) {
                               for (var i = 0; i < data.points.length; i++) {
                                   var new_point = new BMap.Point(data.points[i]);

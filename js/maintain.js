@@ -462,7 +462,6 @@ window.maintainListoperateEvents = {
 $("#auditLit_search_btn").click(function() {
     $('#tablescreen').bootstrapTable('destroy');
     loadMaintainList(1, 10, $(".mainList_vSn").val(), $("#mainList_status").val());
-    // loadCarList(s_data);
 });
 // 分页---------------------------------------------------------------------
 // 分页——————————————————————————————————————————————————————————————————————————————————————————————
@@ -516,7 +515,6 @@ function maintainPagings(maxPage, pageul, pageli) {
         maintainPagings(maxPage, ".pageMaintain ul", ".pageMaintain li");
         //更新URL的hash
         window.location.hash = "pagenum=" + mainpageNum;
-
     });
 }
 

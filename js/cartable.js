@@ -17,7 +17,6 @@ function loadCarList(data) {
                 "序号", "车辆编号", "车牌号", "车辆名称", "发动机编号", "创建日期",
                 true, caroperateEvents, caroperateFormatter, "client",
                 "cGroup", "所属分组", "status", "检查进度", "product_sn", "项目号");
-            // $('#carListtable').bootstrapTable('refreshOptions', { pageNumber: 1 });
         },
         "error": function(res) {
             console.log(res);
@@ -78,7 +77,7 @@ window.caroperateEvents = {
             "url": "http://192.168.0.106:8080/car-management/tempcar/delete.action",
             "type": "get",
             "data": {
-                "cids": row.id
+                "tcarid": row.id
             },
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
@@ -227,4 +226,29 @@ $(".caradd_btn").click(function() {
     $(".carTypeIn").addClass("active").siblings().removeClass("active");
     window.location.hash = "";
     $(this).attr("href", "#carTypeIn");
-})
+});
+
+
+// 车辆总表
+function loadsumCarList(data) {
+    $.ajax({
+        "url": "http://192.168.0.106:8080/car-management/car/pageQuery.action?page=1&size=1000",
+        "type": "post",
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
+        "success": function(res) {
+            console.log(res);
+
+            $('#sumCarListTable').bootstrapTable('destroy');
+            createcarTable("#sumCarListTable", "toolbar_sumCarListTable", res.rows,
+                "index", "vSn", "vCarSn", "carName", "engineNumber", "makeTime", true, true,
+                "序号", "车辆编号", "车牌号", "车辆名称", "发动机编号", "创建日期",
+                true, caroperateEvents, caroperateFormatter, "client",
+                "cGroup", "所属分组", "status", "检查进度", "product_sn", "项目号");
+            // $('#carListtable').bootstrapTable('refreshOptions', { pageNumber: 1 });
+        },
+        "error": function(res) {
+            console.log(res);
+        }
+    });
+}

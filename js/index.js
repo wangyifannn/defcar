@@ -490,7 +490,10 @@ function createAuditTable(boxname, toolbarid, res,
             field: row1,
             title: row1name,
             align: 'center',
-            sortable: true
+            sortable: true,
+            formatter: function(value, row, index) {
+                return index + 1;
+            }
         }, {
             field: row2,
             title: row2name,
@@ -551,14 +554,6 @@ function createAuditTable(boxname, toolbarid, res,
             title: row7name,
             align: 'center',
             sortable: true,
-            //获取日期列的值进行转换
-            formatter: function(value, row, index) {
-                if (value == "" || value == null) {
-                    return "";
-                } else {
-                    return value.remark;
-                }
-            }
         }, {
             field: 'operate',
             title: '操作',
@@ -572,3 +567,5 @@ function createAuditTable(boxname, toolbarid, res,
         $(boxname).bootstrapTable('hideColumn', 'operate');
     }
 }
+
+$("iframe").css("min-height", "930px");
