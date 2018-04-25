@@ -345,11 +345,11 @@ input.bom_num {
 }
 
 .fixed-table-container tbody .selected td {
-    background-color: #337AB7;
+    background-color: #eee;
 }
 
 .pull-right .form-control {
-    height: 22px;
+    height: 26px;
 }
 
 #driverList .import-mdoel_select {
@@ -618,6 +618,7 @@ input.form-control {
     margin-top: 15%;
 }
 
+#toolRecord_model .modal-dialog,
 #upkeep_model .modal-dialog {
     margin-top: 5% !important;
 }
@@ -826,10 +827,52 @@ label.audit_tips {
     width: 35%;
 }
 
+#toolForm .checktitle span:nth-child(3),
+#toolForm .checkitem span:nth-child(3),
+#toolRecord_model .checktitle span:nth-child(3),
+#toolRecord_model .checkitem span:nth-child(3) {
+    width: 35%;
+}
+
+#toolForm .checktitle span:nth-child(4),
+#toolForm .checkitem span:nth-child(4),
+#toolRecord_model .checktitle span:nth-child(4),
+#toolRecord_model .checkitem span:nth-child(4) {
+    width: 24%;
+}
+
+#toolRecord_model .checkitem span:nth-child(3) input {
+    border: none;
+    width: 99%;
+    vertical-align: middle;
+    text-align: center;
+    height: 100%;
+    margin-top: 6px;
+    outline: none;
+    box-shadow: none;
+}
+
+#toolForm .checktitle span:nth-child(2),
+#toolForm .checkitem span:nth-child(2),
+#toolRecord_model .checktitle span:nth-child(2),
+#toolRecord_model .checkitem span:nth-child(2) {
+    width: 17%;
+}
+
+.checktitle span:last-child,
+.checkitem span:last-child {
+    border-right: 1px solid #C7C7C7;
+}
+
+#toolRecord_model .checktitle:nth-child(2) span {
+    background: #eee;
+}
+
 .checktitle span,
 .checkitem span {
     display: inline-block;
     width: 24%;
+    min-height: 41px;
     height: auto;
     text-align: center;
     line-height: 40px !important;
@@ -917,7 +960,7 @@ span.item_child {
 
 .explain_input {
     border: none;
-    height: 34px;
+    /*height: 34px;*/
     width: 100%;
 }
 

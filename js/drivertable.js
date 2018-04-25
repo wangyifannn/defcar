@@ -5,10 +5,9 @@ $(".ReturnDriver").click(function() {
 });
 var driverpageNum = 1;
 
-//车辆管理模块： 车辆列表
 function loadDriverList(driverpageNum, size) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/carDriver/CarDriverList.action",
+        "url": "http://192.168.0.222:8080/car-management/carDriver/CarDriverList.action",
         "type": "get",
         "data": {
             "page": driverpageNum,
@@ -20,9 +19,9 @@ function loadDriverList(driverpageNum, size) {
         "success": function(res) {
             console.log(res);
             $('#DriverListtable').bootstrapTable('destroy');
-            createTable("#DriverListtable", "DriverListtable_toolbar", res.rows,
-                "id", "name", "allowStartTime", "allowEndTime", "iccard", "isallow", false, true,
-                "驾驶员编号", "姓名", "允许起始日期", "允许终止日期", "iccard", "是否授权",
+            createdriverTable("#DriverListtable", "DriverListtable_toolbar", res.rows,
+                "name", "sex", "isallow", "allowStartTime", "allowEndTime", "iccard", false, true,
+                "姓名", "性别", "是否授权", "授权起始日期", "授权终止日期", "iccard",
                 true, driveroperateEvents, driveroperateFormatter, "");
             var drivermaxPage = Math.ceil(res.total / size);
             // var drivermaxPage = 9;
@@ -50,51 +49,164 @@ $(function() {
 })
 
 function driveroperateFormatter(value, row, index) {
-    return [
-        '<button type="button" id="btn_driverdel" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
-        '<button type="button" id="btn_driverdetail" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">详情</button>',
-        '<button type="button" id="btn_driverimpower" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">授权</button>'
-    ].join('');
+    // 未授权
+    if (row.isallow == 1) {
+        return [
+            '<button type="button" id="btn_driverdel" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
+            '<button type="button" id="btn_driverup" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">修改</button>',
+            '<button type="button" id="btn_driverimpower" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">授权</button>'
+        ].join('');
+    } else if (row.isallow == 2) {
+        return [
+            '<button type="button" id="btn_driverdel" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">删除</button>',
+            '<button type="button" id="btn_driverup" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">修改</button>',
+            '<button type="button" id="btn_drivercancelimpower" class="my_btn btn btn-default  btn-sm" style="margin-right:15px;">取消授权</button>'
+        ].join('');
+    }
 }
 
 window.driveroperateEvents = {
     'click #btn_driverdel': function(e, value, row, index) {
-        console.log(row);
-        console.log(index);
-        console.log($(this).parent().parent());
         $(this).parent().parent().remove();
-        console.log(row.id);
         // 删除用户操作
+        deletedriver(row.id, index);
+    },
+    // 修改
+    'click #btn_driverup': function(e, value, row, index) {
+        console.log(row);
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/carDriver/delete.action",
-            "type": "get",
-            "data": {
-                "ids": row.id
+            url: "http://192.168.0.222:8080/car-management/carDriver/update.action",
+            type: "post",
+            data: {
+                ids: idArr
             },
-            "dataType": "jsonp", //数据类型为jsonp  
-            "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
-            "success": function(res) {
+            success: function(res) {
                 console.log(res);
-                if (res.ret) {
-                    var indexs = parseInt(index / 10);
-                    console.log(indexs);
-                    console.log(indexs + 1);
-                    loadDriverList(indexs + 1, 10);
+                if (res.ret == true) {
+                    toastr.success('修改成功', '驾驶员修改', messageOpts);
+                    // loadDriverList(1, 10);
+                } else {
+                    toastr.success('修改失败，请联系管理员', '驾驶员修改', messageOpts);
                 }
             },
-            "error": function(res) {
-                console.log(res);
+            error: function(res) {
+                toastr.warning('发生内部错误，请联系程序员', '驾驶员修改', messageOpts);
             }
         })
+
     },
-    'click .RoleOfB': function(e, value, row, index) {
-        // console.log(this.parentNode.parentNode.children[0].children[0].getAttribute("checked"));
-        // console.log(value);
-        console.log(row);
-        window.location = "../../bailian/汽车管理系统/html/DriverDetail.html";
+    // 授权
+    'click #btn_driverimpower': function(e, value, row, index) {
+        window.location.hash = "driverid=" + row.id;
+        $("#driverimpower_model").modal();
+        $(".driverimpower_model_Form .driver_name").val(row.name);
+    },
+    // 取消授权
+    'click #btn_drivercancelimpower': function(e, value, row, index) {
+        cancelimpower(row.id);
     }
 };
+// 取消授权
+function cancelimpower(idArr) {
+    $.ajax({
+        url: "http://192.168.0.222:8080/car-management/carDriver/cancelAuthorized.action",
+        type: "post",
+        data: {
+            ids: idArr
+        },
+        success: function(res) {
+            console.log(res);
+            if (res.ret == true) {
+                toastr.success('取消授权成功', '驾驶员授权', messageOpts);
+                loadDriverList(1, 10);
+            } else {
+                toastr.warning('取消授权失败，请联系管理员', '驾驶员授权', messageOpts);
+            }
+        },
+        error: function(res) {
+            toastr.error('发生内部错误，请联系程序员', '驾驶员授权', messageOpts);
+        }
+    })
+}
+//驾驶员删除
+function deletedriver(idArr, index) {
+    $.ajax({
+        "url": "http://192.168.0.222:8080/car-management/carDriver/delete.action",
+        "type": "get",
+        "data": {
+            "ids": idArr
+        },
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+        "success": function(res) {
+            console.log(res);
+            if (res.ret) {
+                toastr.success('删除成功', '驾驶员删除', messageOpts);
+                var indexs = parseInt(index / 10);
+                console.log(indexs);
+                console.log(indexs + 1);
+                loadDriverList(indexs + 1, 10);
+            } else {
+                toastr.warning('删除失败，请联系管理员', '驾驶员删除', messageOpts);
+            }
+        },
+        "error": function(res) {
+            toastr.error('发生内部错误，请联系程序员', '驾驶员删除', messageOpts);
+        }
+    })
+}
 
+
+$("#driverimpower_btn").click(function() {
+    $.ajax({
+        url: "http://192.168.0.222:8080/car-management/carDriver/authorized.action",
+        data: {
+            id: getHashParameter("driverid"),
+            startTime: $("#modal_allowStartTime").val(),
+            endTime: $("#modal_allowEndTime").val()
+        },
+        success: function(res) {
+            console.log(res);
+            if (res.ret == true) {
+                toastr.success('驾驶员授权成功', '驾驶员授权', messageOpts);
+            } else {
+                toastr.success('驾驶员授权失败，请联系管理员', '驾驶员授权', messageOpts);
+            }
+        },
+        error: function(res) {
+            toastr.warning('发生内部错误，请联系程序员', '驾驶员授权', messageOpts);
+        }
+    })
+});
+// 多项删除和取消授权
+function cancelAllDriver(a, name) {
+    // var a = $("#carLogTable").bootstrapTable('getSelections');
+    var delcarlogArr = [];
+    var delcarlogString = "";
+    if (a.length >= 1) {
+        for (var i = 0; i < a.length; i++) {
+            delcarlogArr.push(a[i].id)
+        }
+        delcarlogString = delcarlogArr.join(",");
+        if (name == "cancelimpower") {
+            cancelimpower(delcarlogString);
+        } else if (name == "driverdel") {
+            deletedriver(delcarlogString);
+        }
+    } else {
+        toastr.warning('最少选中一行', '驾驶员管理', messageOpts);
+    }
+}
+// 删除选中的驾驶员
+$("#del_driver_all").click(function() {
+    var driver_del_Arr = $("#DriverListtable").bootstrapTable('getSelections');
+    cancelAllDriver(driver_del_Arr, "driverdel");
+});
+// 取消 选中项授权
+$("#cancel_approve_all").click(function() {
+    var driver_del_Arr = $("#DriverListtable").bootstrapTable('getSelections');
+    cancelAllDriver(driver_del_Arr, "cancelimpower");
+});
 // 分页——————————————————————————————————————————————————————————————————————————————————————————————
 function dclickPagings(drivermaxPage) {
     var lis = "";
@@ -145,8 +257,7 @@ function dclickPagings(drivermaxPage) {
         driverpageNum = parseInt($(this).html());
 
         //调用ajax，切换分页按钮样式
-        console.log(driverpageNum);
-        loadDriverList(driverpageNum, 10)
+        loadDriverList(driverpageNum, 10);
         dclickPagings(drivermaxPage);
         //更新URL的hash
         window.location.hash = driverpageNum;

@@ -6,7 +6,7 @@ $("#maintainTypeIn .vSn").bind('input porpertychange', function() {
         return;
     } else {
         $.ajax({
-            url: "http://192.168.0.106:8080/car-management/car/check/" + $("#maintainTypeIn .vSn").val() + "/1.action",
+            url: "http://192.168.0.222:8080/car-management/car/check/" + $("#maintainTypeIn .vSn").val() + "/1.action",
             type: "get",
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -17,7 +17,7 @@ $("#maintainTypeIn .vSn").bind('input porpertychange', function() {
                     $("#send_btn").attr("disabled", false);
                     $.ajax({
                         type: "get",
-                        url: "http://192.168.0.106:8080/car-management/carMaintain/check/" + $("#maintainTypeIn .vSn").val() + ".action",
+                        url: "http://192.168.0.222:8080/car-management/carMaintain/check/" + $("#maintainTypeIn .vSn").val() + ".action",
                         "dataType": "jsonp", //数据类型为jsonp  
                         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
                         data: {},
@@ -47,7 +47,7 @@ function addmaintain(url, da, that, box) {
     console.log(da);
     $.ajax({
         type: "get",
-        url: "http://192.168.0.106:8080/car-management" + url,
+        url: "http://192.168.0.222:8080/car-management" + url,
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
         data: da,
@@ -105,7 +105,7 @@ function loadMaintainList(mainpageNum, size, vSn, status) {
             "vSn": vSn,
             "status": status
         }
-        url = "http://192.168.0.106:8080/car-management/carMaintain/pageQueryCarMaintain.action";
+        url = "http://192.168.0.222:8080/car-management/carMaintain/pageQueryCarMaintain.action";
     }
     console.log(data);
     $.ajax({
@@ -382,7 +382,7 @@ window.maintainListoperateEvents = {
         $(this).parent().parent().remove();
         // 删除维修列表操作
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/carMaintain/delete.action",
+            "url": "http://192.168.0.222:8080/car-management/carMaintain/delete.action",
             "type": "get",
             "data": {
                 "infoid": row.id
@@ -403,16 +403,16 @@ window.maintainListoperateEvents = {
     },
     'click #btn_maintainpeople': function(e, value, row, index) {
         myformReset();
+        $('#coord_model').modal();
         $("#coord_model #vSn").val(row.vSn);
         $("#coord_model #vSn").attr("readOnly", true);
-        $('#coord_model').modal();
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
     },
     // 置顶操作
     'click #btn_maintainTop': function(e, value, row, index) {
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/carMaintain/top.action",
+            "url": "http://192.168.0.222:8080/car-management/carMaintain/top.action",
             "type": "get",
             "data": {
                 "infoid": row.id
@@ -437,7 +437,7 @@ window.maintainListoperateEvents = {
         var mainString = mainArr.join(",");
         window.location.hash = "pagenum=" + getHashParameter("pagenum") + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/carMaintain/startMaintain.action",
+            "url": "http://192.168.0.222:8080/car-management/carMaintain/startMaintain.action",
             "type": "post",
             "data": {
                 "ids": mainString

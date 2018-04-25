@@ -6,7 +6,7 @@ var changecode = 0;
 $(".vercode").click(function() {
     changecode++;
     console.log(this.src);
-    this.src = "http://192.168.0.106:8080/car-management/user/code.action?changecode=" + changecode;
+    this.src = "http://192.168.0.222:8080/car-management/user/code.action?changecode=" + changecode;
     // this.src = "/car-management/user/code.action?changecode=" + changecode;
 })
 
@@ -24,18 +24,29 @@ $(document).ready(function() {
     }
     // 密码是否可见
     var flag = false;
+    var motionLogin = document.getElementsByName("autologin")[0];
 
     function LoginAjax() {
-        // 登录
-        $.ajax({
-            // url: "/car-management/user/login.action",
-            url: "http://192.168.0.106:8080/car-management/user/login.action",
-            type: "get",
-            data: {
+        var logindata = "";
+        if (motionLogin.checked) {
+            logindata = {
+                "autologin": "true",
                 username: $(".user_input").val(),
                 password: $(".pass_input").val(),
                 verifyCode: $(".vercode_input").val()
-            },
+            }
+        } else {
+            logindata = {
+                username: $(".user_input").val(),
+                password: $(".pass_input").val(),
+                verifyCode: $(".vercode_input").val()
+            }
+        }
+        // 登录
+        $.ajax({
+            url: "http://192.168.0.222:8080/car-management/user/login.action",
+            type: "get",
+            data: logindata,
             dataType: "jsonp", //数据类型为jsonp  
             jsonp: "jsonpCallback", //服务端用于接收callback调用的function名的参数  
             success: function(data) {
@@ -66,15 +77,11 @@ $(document).ready(function() {
     });
     $("#rember").prop("checked") == false;
     // 选择下次自动登陆。存入localStorage;
-    var motionLogin = document.getElementsByName("autologin")[0];
-    console.log(motionLogin);
-    console.log(motionLogin.checked);
     motionLogin.onclick = function() {
         if (motionLogin.checked) {
             console.log(true);
             users.name = $(".user_input").val();
             users.pass = $(".pass_input").val();
-            // users.pass = $.md5($(".pass_input").val());
             console.log(users);
             // localStorage只支持string类型的存储。
             window.localStorage.userinfo = JSON.stringify(users);

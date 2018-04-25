@@ -66,7 +66,7 @@
     function getList() {
         $(".line").html("");
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/carMaintain/screen.action",
+            "url": "http://192.168.0.222:8080/car-management/carMaintain/screen.action",
             // "url": "../json/datatable.json",
             "type": "get",
             "success": function(res) {
@@ -232,7 +232,7 @@
     }, 1000);
     setInterval(function() {
         getList();
-    }, 5000); //1小时刷新一次 维修大屏列表和 百分比
+    }, 111150000); //1小时刷新一次 维修大屏列表和 百分比
     // 早上刷新一次，下午刷新一次？
     // 字体大小变化
     if ($(document.body).width() >= 3800) {

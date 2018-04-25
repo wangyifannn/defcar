@@ -5,7 +5,7 @@
 		showData();
 
 		function showData() {
-		    $.get("http://192.168.0.106:8080/car-management/car/pageQuery.action?size=10&page=" + pageNum, function(response) {
+		    $.get("http://192.168.0.222:8080/car-management/car/pageQuery.action?size=10&page=" + pageNum, function(response) {
 		        var obj = JSON.parse(response);
 		        console.log(obj);
 		        var html = '';

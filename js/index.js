@@ -50,7 +50,7 @@ $(".glyphicon-off").click(function() {
     con = confirm("你确定要退出吗？");
     if (con) {
         window.localStorage.removeItem("successUser");
-        window.location.href = "http://192.168.0.106:8080/car-management/user/loginOut.action";
+        window.location.href = "http://192.168.0.222:8080/car-management/user/loginOut.action";
     }
 });
 // 点击判断浏览器类型
@@ -157,10 +157,6 @@ function createTable(boxname, toolbarid, res,
             title: row6name,
             align: 'center',
             sortable: true,
-            //获取日期列的值进行转换
-            // formatter: function(value, row, index) {
-            //     return changeDateFormat(value)
-            // }
         }, {
             field: 'operate',
             title: '操作',
@@ -174,7 +170,113 @@ function createTable(boxname, toolbarid, res,
         $(boxname).bootstrapTable('hideColumn', 'operate');
     }
 }
+// 驾驶员列表
+function createdriverTable(boxname, toolbarid, res,
+    row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
+    row1name, row2name, row3name, row4name, row5name, row6name,
+    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype) {
+    $(boxname).css({
+        "position": "relative"
+    });
+    // $(boxname).bootstrapTable('destroy');
+    $(boxname).bootstrapTable({
+        data: res,
+        toggle: "table",
+        toolbar: toolbarid,
+        pagination: ifpage, //是否显示分页（*）
+        sortable: false, //是否启用排序
+        sortOrder: "asc", //排序方式
+        sidePagination: pagetype, //分页方式：client客户端分页，server服务端分页（*）
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 10, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        search: true, //是否搜索查询
+        showColumns: true, //是否显示所有的列
+        showRefresh: ifrefresh, //是否显示刷新按钮
+        minimumCountColumns: 2, //最少允许的列数
+        clickToSelect: true, //是否启用点击选中行
+        searchOnEnterKey: true, //设置为 true时，按回车触发搜索方法
+        strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        showToggle: true, //是否显示切换视图（table/card）按钮
+        searchAlign: "right",
+        columns: [
+            [{
+                "title": "测试车辆-驾驶员管理列表",
+                "halign": "center",
+                "align": "center",
+                "colspan": 9
+            }],
+            [{
+                field: "status",
+                title: "全选",
+                checkbox: true,
+                align: 'center',
+                sortable: true
+            }, {
+                field: 'index',
+                title: "序号",
+                valign: "middle",
+                align: "center",
+                width: "5%",
+                formatter: function(value, row, index) {
+                    return index + 1;
+                }
+            }, {
+                field: row1,
+                title: row1name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row2,
+                title: row2name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row3,
+                title: row3name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    var a = "";
+                    if (value == null) {
+                        var a = '';
+                    } else if (value == "1") {
+                        var a = '<span style="color:red">未授权</span>';
+                    } else if (value == "2") {
+                        var a = '<span style="color:green">已授权</span>';
+                    }
+                    return a;
+                }
 
+            }, {
+                field: row4,
+                title: row4name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row5,
+                title: row5name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row6,
+                title: row6name,
+                align: 'center',
+                sortable: true,
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events: userOperateEventsDel,
+                formatter: userOperateFormatterDel
+            }]
+        ]
+    });
+    // 隐藏表格中的某一列
+    if (!ifoperate) {
+        $(boxname).bootstrapTable('hideColumn', 'operate');
+    }
+}
 // $(".add_box").hide();
 //转换日期格式(时间戳转换为datetime格式)
 function changeDateFormat(cellval) {
@@ -193,7 +295,7 @@ function changeDateFormat(cellval) {
 // 数据库 加载权限列表
 function loadrightsList(paramsid, namerid) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/permission/permissionList.action",
+        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -213,7 +315,7 @@ function loadrightsList(paramsid, namerid) {
 // 数据库 加载角色列表
 function loadrolesList(paramsid, namerid) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/role/roleList.action",
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -269,7 +371,7 @@ function getHashParameters() {
 // 参数校验接口
 function checkParams(url, params1, params2, btn) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management" + url,
+        "url": "http://192.168.0.222:8080/car-management" + url,
         "type": "get",
         "data": {},
         "async": false,

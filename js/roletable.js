@@ -1,11 +1,9 @@
 // 加载权限列表
-
 var checkmenu_val = [];
 var role_check_val = [];
-
 // 加载菜单列表
 $.ajax({
-    "url": "http://192.168.0.106:8080/car-management/menu/menuList.action",
+    "url": "http://192.168.0.222:8080/car-management/menu/menuList.action",
     "type": "get",
     "dataType": "jsonp", //数据类型为jsonp  
     "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -13,18 +11,18 @@ $.ajax({
         console.log(res);
         var MenuList = "";
         for (var i = 0; i < res.length; i++) {
-            MenuList = '<div mid=' + res[i].mid + ' class="MenuList' + i + ' menulist_height">' +
-                '<label for="">' + res[i].name + ':</label>&nbsp;&nbsp' +
-                '</div>';
-            // console.log(MenuList);
-            $(".role_menuList").append(MenuList);
-            var MenuList_checkbox = "";
-            for (var k = 0; k < res[i].childrenMenus.length; k++) {
-                // console.log("i=" + i, "k=" + k);
-                MenuList_checkbox += '&nbsp;&nbsp&nbsp;&nbsp;<input name="mid" mid="' + res[i].childrenMenus[k].mid + '" type="checkbox" value="' + res[i].childrenMenus[k].name + '">' + res[i].childrenMenus[k].name;
+            if (res[i].childrenMenus.length > 0) {
+                MenuList = '<div mid=' + res[i].mid + ' class="MenuList' + i + ' menulist_height">' +
+                    '<label for="">' + res[i].name + ':</label>&nbsp;&nbsp' +
+                    '</div>';
+                $(".role_menuList").append(MenuList);
+                var MenuList_checkbox = "";
+                for (var k = 0; k < res[i].childrenMenus.length; k++) {
+                    // console.log("i=" + i, "k=" + k);
+                    MenuList_checkbox += '&nbsp;&nbsp&nbsp;&nbsp;<input name="mid" mid="' + res[i].childrenMenus[k].mid + '" type="checkbox" value="' + res[i].childrenMenus[k].name + '">' + res[i].childrenMenus[k].name;
+                }
+                $(".MenuList" + i).append(MenuList_checkbox);
             }
-            $(".MenuList" + i).append(MenuList_checkbox);
-            // console.log(MenuList_checkbox);
         }
         // console.log(MenuList);
         // 判断选择菜单 多选选项
@@ -35,14 +33,10 @@ $.ajax({
                 console.log(this.checked);
                 if (this.checked) {
                     console.log(this.parentNode.getAttribute("mid"));
-                    // console.log(this.getAttribute("mid"));
                     checkmenu_val.push(this.getAttribute("mid"));
-                    // console.log(checkmenu_val);
                 } else {
-                    // console.log($.inArray(this.getAttribute("mid"), checkmenu_val));
                     if ($.inArray(this.getAttribute("mid"), checkmenu_val) != -1) {
                         checkmenu_val.remove(this.getAttribute("mid"));
-                        // console.log(checkmenu_val);
                     }
                 }
                 // 判断是否添加父级菜单id
@@ -51,13 +45,11 @@ $.ajax({
                 // var thisSiblings;
                 console.log($(this).parent().children("input"));
                 var menus_inputs = $(this).parent().children("input");
-                // var menus_inputs_false = $(this).parent().children("input");
                 var flagfalse = menus_inputs.length;
 
                 for (var n = 0; n < menus_inputs.length; n++) {
                     // 判断是否选择
                     if (menus_inputs[n].checked == false) {
-                        // flagfalse = flagfalse + 1;
                         // 如果没有找到，返回-1
                         if ($.inArray(this.parentNode.getAttribute("mid"), checkmenu_val) == -1) {
                             checkmenu_val.push(this.parentNode.getAttribute("mid"));
@@ -84,7 +76,7 @@ $.ajax({
 function loadRoleList() {
     //加载 角色列表
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/role/roleList.action",
+        "url": "http://192.168.0.222:8080/car-management/role/roleList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -130,7 +122,7 @@ function loadRoleList() {
                     console.log(checkmenu_val.toString());
                     console.log($("input[name='role_name']").val());
                     $.ajax({
-                        "url": "http://192.168.0.106:8080/car-management/role/addRole.action",
+                        "url": "http://192.168.0.222:8080/car-management/role/addRole.action",
                         "type": "get",
                         "data": {
                             "name": $("input[name='role_name']").val(),
@@ -191,7 +183,7 @@ window.roleOperateEventsDel = {
         console.log(roledelarr);
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/role/deleteRole.action",
+            "url": "http://192.168.0.222:8080/car-management/role/deleteRole.action",
             "type": "get",
             "data": {
                 "rids[]": roledelarr

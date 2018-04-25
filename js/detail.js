@@ -24,7 +24,7 @@ function addDetailMenu(boxname, num, href, firstcall) {
     if (firstcall == "firstcall") {}
     // 克隆录入表单到详情页面部分
     var res = [{ "id": 0, "name": "车辆录入信息" }, { "id": 1, "name": "接车点检信息" }, { "id": 2, "name": "安全检查信息" },
-        { "id": 3, "name": "线束检查信息" }, { "id": 4, "name": "BOM检查信息" }, { "id": 5, "name": "保养记录" }
+        { "id": 3, "name": "线束检查信息" }, { "id": 4, "name": "BOM检查信息" }, { "id": 5, "name": "保养记录" }, { "id": 6, "name": "研发工具装备记录" }
     ];
     var Ahref = "";
     var active = "";
@@ -47,29 +47,35 @@ function addDetailMenu(boxname, num, href, firstcall) {
     $('.detailitem1').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "carCheckForm");
-        FindCheckinfo("http://192.168.0.106:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheckForm");
+        FindCheckinfo("http://192.168.0.222:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheckForm");
     });
     $('.detailitem2').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "sCheckForm");
-        FindPotinfo("http://192.168.0.106:8080/car-management/car/findCldCheckByCar/" + getHashParameter("vSn") + ".action", "", ".pot_Form"); //缸压信息
-        FindSafeinfo("http://192.168.0.106:8080/car-management/car/findSafeCheckByCar/" + getHashParameter("vSn") + ".action", ".safe_Form");
+        FindPotinfo("http://192.168.0.222:8080/car-management/car/findCldCheckByCar/" + getHashParameter("vSn") + ".action", "", ".pot_Form"); //缸压信息
+        FindSafeinfo("http://192.168.0.222:8080/car-management/car/findSafeCheckByCar/" + getHashParameter("vSn") + ".action", ".safe_Form");
     });
     $('.detailitem3').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "wiringCheckForm");
-        findHiCheckByCar("http://192.168.0.106:8080/car-management/car/findHiCheckByCar/" + getHashParameter("vSn") + ".action", "#wiringCheckForm");
+        findHiCheckByCar("http://192.168.0.222:8080/car-management/car/findHiCheckByCar/" + getHashParameter("vSn") + ".action", "#wiringCheckForm");
     });
     $('.detailitem4').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "bomCheckForm");
-        Findbominfo("http://192.168.0.106:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action", "#bomCheckForm");
+        Findbominfo("http://192.168.0.222:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action", "#bomCheckForm");
     });
     // 保养记录
     $('.detailitem5').click(function() {
         $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
         $(this).attr("href", "#" + "upkeepForm");
         findUpkeep("#upkeepForm", getHashParameter("vSn"));
+    });
+    // 研发工具装备记录
+    $('.detailitem6').click(function() {
+        $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
+        $(this).attr("href", "#" + "toolForm");
+        initToolRecord("#toolForm", getHashParameter('vSn'), "detail");
     });
 }
 addDetailMenu(".detail_menu", 0, "carTypeInForm", "firstcall");
@@ -78,7 +84,7 @@ $(".detail_part input").attr("disabled", true);
 // 根据车辆编号，查看车辆录入的信息，信息回显-----------------------------------------------------------------
 function cartypein_info(vSn, boxname) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/tempcar/findTempCarByvSn.action",
+        "url": "http://192.168.0.222:8080/car-management/tempcar/findTempCarByvSn.action",
         "type": "get",
         "data": {
             "vSn": vSn
@@ -252,12 +258,13 @@ function Findbominfo(url, name) {
                 } else if (res[i].status == "N") {
                     res[i].status = "否";
                 }
-                checkboxs_info += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].bomName + '">' +
-                    '</span><span><input type="text" class="bom_num" value="' + res[i].partName + '">' +
-                    '</span><span class="style1_radio">"' + res[i].status + '"' +
-                    '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="' + res[i].explanation + '" name="explain' + i + '"></span></div>';
+                if (res[i].bomName !== "") {
+                    checkboxs_info += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].bomName + '">' +
+                        '</span><span><input type="text" class="bom_num" value="' + res[i].partName + '">' +
+                        '</span><span class="style1_radio">"' + res[i].status + '"' +
+                        '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="' + res[i].explanation + '" name="explain' + i + '"></span></div>';
+                }
             }
-
             $(name).html(checkboxs_info);
         },
         "error": function(res) {
@@ -304,7 +311,7 @@ function findHiCheckByCar(url, name) {
 // 查看保养记录
 function findUpkeep(name, vSn) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/car/maintenance/find.action",
+        "url": "http://192.168.0.222:8080/car-management/car/maintenance/find.action",
         "type": "get",
         "data": {
             "vSn": vSn
@@ -313,8 +320,8 @@ function findUpkeep(name, vSn) {
         crossDomain: true,
         "success": function(res) {
             console.log(res);
-            if (res == null || res == "" || res.length == 0) {
-                toastr.warning('保养记录为空', '保养记录', messageOpts);
+            if (res == null || res.length == 0) {
+                toastr.warning('保养记录为空,请先填写', '保养记录', messageOpts);
                 return;
             }
             var upkeepInfo = "";
@@ -365,55 +372,11 @@ function findUpkeep(name, vSn) {
         }
     });
 }
-// ----以下通过车辆编号查询茶凉信息的接口废了---------------------------
-// var carinfoArr = ["序号", "项目号", "项目名称", "车辆名称", "车牌号", "车辆编号", "车辆类型", "客户", "项目工程师", "联系电话",
-//     "发动机型号", "发动机号", "发动机排量", "燃油规格", "轮胎规格", "后轮胎压力", "前轮胎压力", "车辆整备质量", "加载方式", "加载数据",
-//     "车辆识别码", "填写人", "制作日期", "车辆行驶总时间", "经度", "维度", "行驶状态", "电瓶电压", "gps编号", " ic卡",
-//     "允许行驶开始时间", "允许行驶结束时间", "是否允许", "开始时间", "结束时间", "行驶速度", "当前检查项目", "警告", "所属分组", "车辆位置",
-//     "", "", "燃油规格", "变速箱邮箱规格式"
-// ];
+// 点击返回车辆列表按钮 vdwq
 
-// function findCarList(carid, carDetailForm) {
-//     $.ajax({
-//         "url": "http://192.168.0.106:8080/car-management/car/carData.action",
-//         "type": "get",
-//         "dataType": "jsonp", //数据类型为jsonp  
-//         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-//         "data": {
-//             "vSn": carid
-//         },
-//         "success": function(res) {
-//             console.log(res);
-//             var formgroup = "";
-//             if (res == null || res == "" || res == undefined) {
-//                 $(carDetailForm).html("未搜索到相关车辆信息，请确认输入的车辆编号无误！");
-//                 return;
-//             }
-//             var obj = res[0];
-//             // console.log(obj);
-//             for (var k in obj) {
-//                 //遍历对象，k即为key，obj[k]为当前k对应的值
-//                 // console.log(k);
-//                 // console.log(obj[k]);
-//                 if (k == "dAllowEndTm" || k == "dAllowStartTm" || k == "fromtime" || k == "lastTime" || k == "makeTime") {
-//                     obj[k] = changeDateFormat(obj[k]);
-//                 }
-//                 if (k == "cGroup") {
-//                     console.log(obj[k]);
-//                 }
-//                 formgroup += '<div class="form-group">' +
-//                     '<label for="inputEmail3" class="col-sm-5 control-label infolabel">' + k + '</label>' +
-//                     '<div class="col-sm-7">' +
-//                     '<input readonly="readonly" class="form-control" value="' + obj[k] + '" >' +
-//                     '</div></div>';
-//             }
-//             $(carDetailForm).html(formgroup);
-//             var infos = document.getElementsByClassName("infolabel");
-//             for (var n = 0; n < carinfoArr.length; n++) {
-//                 if (carinfoArr[n] != "") {
-//                     infos[n].innerText = carinfoArr[n];
-//                 }
-//             }
-//         }
-//     })
-// }
+$(".detail_returncarlist").click(function() {
+    addAuditMenu("#carList .auditMenus", 0);
+    loadCarList(JSON.stringify({
+        "vSn": null
+    }));
+});

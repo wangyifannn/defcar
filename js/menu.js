@@ -1,7 +1,6 @@
 $.ajax({
     // "url": "../../../car/CarMangae0/json/menu.json",
-    "url": "http://192.168.0.106:8080/car-management/menu/showMenu.action", //要登陆
-    // "url": "http://192.168.0.106:8080/car-management/menu/menuList.action",
+    "url": "http://192.168.0.222:8080/car-management/menu/showMenu.action", //要登陆
     "type": "get",
     "data": {},
     "dataType": "jsonp", //数据类型为jsonp  
@@ -66,6 +65,20 @@ $.ajax({
         $(".carList").click(function() {
             $(this).children().css({ color: "#1B6DDA" });
             $(this).siblings().children().css({ color: "white" });
+        })
+        $(".maintainLog").click(function() {
+            loadLog("http://192.168.0.222:8080/car-management/log/findCarMaintainLog.action", "日志列表", "#maintainLogTable", "#toolbar_maintainLogTable");
+        })
+        $(".dataLog").click(function() {
+            loadLog("http://192.168.0.222:8080/car-management/log/findCarSystemLog.action", "日志列表", "#sysLogTable", "#toolbar_sysLogTable");
+        });
+        // 车辆管理日志
+        $(".manageLog").click(function() {
+            loadLog("http://192.168.0.222:8080/car-management/log/findCarLog.action", "日志列表", "#carLogTable", "#toolbar_carLogTable");
+        });
+        // 驾驶员管理日志
+        $(".approveLog").click(function() {
+            loadLog("http://192.168.0.222:8080/car-management/log/findCarDriverLog.action", "日志列表", "#driverLogTable", "#toolbar_driverLogTable");
         })
         $(".carTypeIn").click(function() {
             $(this).children().css({ color: "#1B6DDA" });

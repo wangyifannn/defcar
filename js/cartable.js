@@ -3,7 +3,7 @@
 function loadCarList(data) {
     console.log(data);
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/tempcar/query.action",
+        "url": "http://192.168.0.222:8080/car-management/tempcar/query.action",
         "type": "post",
         "data": data,
         "async": false,
@@ -74,7 +74,7 @@ window.caroperateEvents = {
         $(this).parent().parent().remove();
         // 删除临时车辆操作
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/tempcar/delete.action",
+            "url": "http://192.168.0.222:8080/car-management/tempcar/delete.action",
             "type": "get",
             "data": {
                 "tcarid": row.id
@@ -182,8 +182,8 @@ function findGroupList(appendbox, url, limitinfo) {
     })
 }
 // findGroupList(".groupbox", "http://localhost/car/CarMangae0/json/grouplist.json");
-findGroupList(".groupbox", "http://192.168.0.106:8080/car-management/group/find.action");
-findGroupList(".cartypein_group", "http://192.168.0.106:8080/car-management/group/find.action", "limitinfo");
+findGroupList(".groupbox", "http://192.168.0.222:8080/car-management/group/find.action");
+findGroupList(".cartypein_group", "http://192.168.0.222:8080/car-management/group/find.action", "limitinfo");
 
 var statusobj = [{
     value: 0,
@@ -232,7 +232,7 @@ $(".caradd_btn").click(function() {
 // 车辆总表
 function loadsumCarList(data) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/car/pageQuery.action?page=1&size=1000",
+        "url": "http://192.168.0.222:8080/car-management/car/pageQuery.action?page=1&size=1000",
         "type": "post",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置

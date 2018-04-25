@@ -89,7 +89,7 @@ function searchcar() {
         alert("车辆编号不能为空");
     } else {
         $.ajax({
-            // "url": "http://192.168.0.106:8080/car-management/car/carData.action",
+            // "url": "http://192.168.0.222:8080/car-management/car/carData.action",
             "url": "../json/searchmap.json",
             "type": "get",
             // "dataType": "jsonp", //数据类型为jsonp  
@@ -163,7 +163,7 @@ $(".mapinfo img").click(function() {
 var mypoint = "";
 $.ajax({
     "url": "../json/map.json",
-    // "url": "http://192.168.0.106:8080/car-management/car/allcar.action",
+    // "url": "http://192.168.0.222:8080/car-management/car/allcar.action",
     "type": "get",
     // "dataType": "jsonp", //数据类型为jsonp  
     // "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  

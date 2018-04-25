@@ -62,6 +62,7 @@ laydate.render({
     value: todayDate,
     theme: '#041473' //完成日期
 });
+
 laydate.render({
     elem: '#allowEndTime',
     type: 'datetime', //精确到 时分秒
@@ -87,6 +88,19 @@ laydate.render({
     value: dateend,
     theme: '#041473' //下次保养日期
 });
+laydate.render({
+    elem: '#modal_allowStartTime',
+    type: 'datetime', //精确到 时分秒
+    value: todayDate,
+    theme: '#041473' //驾驶员授权模态框——起始
+});
+laydate.render({
+    elem: '#modal_allowEndTime',
+    type: 'datetime', //精确到 时分秒
+    value: dateend,
+    theme: '#041473' //驾驶员授权模态框——终止
+});
+
 // 数据库 加载权限列表
 function requestTypein(paramsid, url, data, that, next) {
     console.log(url);
@@ -195,7 +209,7 @@ $("#carTypeIn_btn").click(function() {
         "gid": $("#carTypeIn .gids").val() //车辆分组
     };
     var that = this;
-    requestTypein(".cartypein_tips", "http://192.168.0.106:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
+    requestTypein(".cartypein_tips", "http://192.168.0.222:8080/car-management/tempcar/addTcar.action", carinfodata, that, "carCheck");
 });
 // 接车点检-----------------------------------------------------------------------------------------
 // 接车点检初始化表单
@@ -268,7 +282,7 @@ $("#carCheck_btn").click(function() {
     };
     console.log(carCheckdata);
     var that = this;
-    requestTypein(".carcheck_tips", "http://192.168.0.106:8080/car-management/car/upcheck.action", carCheckdata, that, "sCheck");
+    requestTypein(".carcheck_tips", "http://192.168.0.222:8080/car-management/car/upcheck.action", carCheckdata, that, "sCheck");
 });
 // 接车点检返回到车辆录入界面，数据回显
 $("#carcheck_return").click(function() {
@@ -279,13 +293,13 @@ $("#carcheck_return").click(function() {
 // 安全检查---------------------------------------------------------------
 // 安全检查上一步
 $("#carWiring_return").click(function() {
-    FindCheckinfo("http://192.168.0.106:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheck");
+    FindCheckinfo("http://192.168.0.222:8080/car-management/car/findUpcheck.action?vSn=" + getHashParameter("vSn"), "#carCheck");
     $(".carcheck_tips").html("");
 });
-// 页面检查菜单
+// 页面检查菜单（安全检测、线束检查、bom检查等）
 function addMenu(boxname, num) {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/car/findAllCheckName.action",
+        "url": "http://192.168.0.222:8080/car-management/car/findAllCheckName.action",
         "type": "get",
         "success": function(res) {
             console.log(res);
@@ -326,10 +340,10 @@ function getcnid(url, boxname) {
     // 安全检查
     $.ajax({
         // "url": "http://localhost/car/CarMangae0/json/item" + url + ".json",
-        "url": "http://192.168.0.106:8080/car-management/car/findAllParentItem.action?CNID=" + url,
+        "url": "http://192.168.0.222:8080/car-management/car/findAllParentItem.action?CNID=" + url,
         "type": "get",
         "success": function(res) {
-            console.log(res);
+            // console.log(res);
             if (url == 1 || url == 3) {
                 if (url == 1) {
                     var checkboxs = '<div class="checktitle"><span>检查项目</span><span>要求</span><span>状态</span><span>说明（注明问题不能解决的原因）</span></div>';
@@ -474,6 +488,25 @@ function isAllChecked(radioLength) {
     }
     return true;
 }
+
+function potAjax(type, url, dat, sucdata, faildata, tit) {
+    $.ajax({
+        type: type,
+        url: url,
+        data: dat,
+        success: function(data) {
+            console.log(data);
+            if (data.ret == true) {
+                toastr.success(sucdata, tit, messageOpts);
+            } else {
+                toastr.warning(faildata, tit, messageOpts);
+            }
+        },
+        error: function(res) {
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", messageOpts, messageOpts);
+        }
+    });
+}
 // 安全检查提交
 $("#sCheck_btn").click(function() {
     // 单选框的值不能为空，否则不能提交
@@ -483,37 +516,51 @@ $("#sCheck_btn").click(function() {
     }
     $.ajax({
         type: "get",
-        url: "http://192.168.0.106:8080/car-management/car/saveClacyLindersss.action?vSn=" + getHashParameter("vSn"),
-        "dataType": "jsonp", //数据类型为jsonp  
-        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
-        data: $(".pot_pressure").serializeObject(),
-        success: function(res) {
-            console.log(res);
-            if (res.ret == true) {
-                toastr.success('缸压提交成功', '缸压', messageOpts);
-            } else {
-                toastr.warning('缸压提交失败', '缸压', messageOpts);
-                return;
-            }
-        }
-    });
-
-    var form2 = $(".check_itembox").mychangeform();
-    console.log(JSON.stringify(form2));
-    $.ajax({
-        type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("vSn") + ".action?",
+        url: "http://192.168.0.222:8080/car-management/car/findCldCheckByCar/" + getHashParameter("vSn") + ".action",
         dataType: "json",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
-        data: JSON.stringify(form2),
         success: function(data) {
             console.log(data);
-            if (data.ret == true) {
-                toastr.success('表单提交成功，待审核', '安全/附件检查', messageOpts);
-                myformReset(); //表单重置
+            if (data == null) {
+                console.log($(".pot_pressure").serializeObject());
+                var pot_obj = $(".pot_pressure").serializeObject();
+                potAjax("get", "http://192.168.0.222:8080/car-management/car/saveClacyLindersss.action?vSn=" + getHashParameter('vSn'),
+                    pot_obj, "缸压提交成功，待审核", "缸压提交失败，请联系管理员", "缸压");
             } else {
-                toastr.warning("表单提交失败，请确认填写的信息是否有误", '安全/附件检查', messageOpts);
+                var potData = $(".pot_pressure").serializeObject();
+                potData.id = data.id;
+                console.log(potData);
+                potAjax("get", "http://192.168.0.222:8080/car-management/car/updateCldCheckByCar/" + getHashParameter("vSn") + ".action",
+                    potData, "缸压更新成功，待审核~", "缸压更新失败，请联系管理员~", "缸压");
+
+            }
+        },
+        error: function(dat) {
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", '安全检查', messageOpts);
+        }
+    });
+    // 安全检测表
+    var form2 = $(".check_itembox").mychangeform();
+    $.ajax({
+        type: "get",
+        url: "http://192.168.0.222:8080/car-management/car/findSafeCheckByCar/" + getHashParameter("vSn") + ".action",
+        dataType: "json",
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        data: {},
+        success: function(data) {
+            console.log(data);
+            if (data == null || data.length == 0) {
+                Dataport("http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(form2), "安全/附件检查", "安全/附件检查提交成功，待审核~", "安全/附件检查提交失败，请联系管理员~");
+                // myformReset(); //表单重置
+            } else {
+                for (var i = 0; i < data.length; i++) {
+                    form2[i].uuid = data[i].uuid;
+                }
+                Dataport("http://192.168.0.222:8080/car-management/car/updateSafeCheckByCar/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(form2), "安全/附件检查", "安全/附件检查更新成功，待审核~", "安全/附件检查更新失败，请联系管理员~");
             }
         },
         error: function(dat) {
@@ -537,29 +584,32 @@ $("#wiringCheck_btn").click(function() {
     var sucArr = [];
     for (var i = 0; i < item1.length; i++) {
         var sucobj = {};
-        // sucArr.push({ "\"status\"": item1[i].value, "\"explanation\"": item2[i].value })//将不带“”的key转换为带有key值的
         sucArr.push({ "status": item1[i].value, "explanation": item2[i].value })
     }
     console.log(JSON.stringify(sucArr));
+    // 先判断线束表单是否已经提交
     $.ajax({
-        type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addHiCheck/" + getHashParameter("vSn") + ".action?",
-        dataType: "json",
-        data: JSON.stringify(sucArr),
-        async: false,
+        "url": "http://192.168.0.222:8080/car-management/car/findHiCheckByCar/" + getHashParameter("vSn") + ".action",
+        "type": "get",
+        "data": {},
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
-        success: function(data) {
-            console.log(data);
-            if (data.ret == true) {
-                $("#wiringCheck input[type='text']").val("");
-                toastr.success('线束检查提交成功，待审核', '线束检查', messageOpts);
+        "success": function(res) {
+            console.log(res);
+            if (res == null || res.length == 0) {
+                Dataport("http://192.168.0.222:8080/car-management/car/addHiCheck/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(sucArr), "线束检查", "线束检查提交成功，待审核~", "BOM检查提交失败，请联系管理员~");
+
             } else {
-                toastr.warning("线束检查提交失败，请联系管理员~", '线束检查', messageOpts);
+                for (var i = 0; i < res.length; i++) {
+                    sucArr[i].uuid = res[i].uuid;
+                }
+                Dataport("http://192.168.0.222:8080/car-management/car/updateHiCheckByCar/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(sucArr), "线束检查", "线束检查更新成功，待审核~", "BOM检查更新失败，请联系管理员~");
             }
         },
-        error: function(dat) {
-            toastr.warning("系统内部错误，请联系程序员小哥哥~", '线束检查', messageOpts);
+        "error": function(res) {
+            toastr.warning('发生内部错误，请联系程序员', '查看安全/附件检查信息', messageOpts);
         }
     });
 });
@@ -584,26 +634,60 @@ $("#bomCheck_btn").click(function() {
     for (var i = 0; i < item1.length; i++) {
         var bomobj = {};
         bomobjArrs.push({ "bomName": item1[i].value, "partName": item2[i].value, "status": item3[i].value, "explanation": item4[i].value })
+            // if (item1[i].value != null && item1[i].value != "") {
+            //     console.log(bomobjArrs[i]);
+            // }
     }
+    console.log(bomobjArrs);
+    // 先检查是否已提交如果未提交则提交否则更新
     $.ajax({
-        type: "POST",
-        url: "http://192.168.0.106:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("vSn") + ".action?",
-        dataType: "json",
+        "url": "http://192.168.0.222:8080/car-management/car/findEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action",
+        "type": "get",
+        "data": {},
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true,
-        data: JSON.stringify(bomobjArrs),
-        success: function(data) {
-            if (data.ret == true) {
-                toastr.success("BOM检查提交成功，待审核~", 'BOM检查', messageOpts);
+        "success": function(res) {
+            console.log(res);
+            if (res == null || res.length == 0) {
+                // 提交接口
+                Dataport("http://192.168.0.222:8080/car-management/car/addEmsAndBomCheck/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(bomobjArrs), "BOM检查", "BOM检查提交成功，待审核~", "BOM检查提交失败，请联系管理员~");
             } else {
-                toastr.warning("BOM检查提交成失败，请联系管理员~", 'BOM检查', messageOpts);
+                // 更新接口
+                for (var i = 0; i < res.length; i++) {
+                    bomobjArrs[i].uuid = res[i].uuid;
+                }
+                Dataport("http://192.168.0.222:8080/car-management/car/updateEmsAndBomCheckByCar/" + getHashParameter("vSn") + ".action",
+                    "post", JSON.stringify(bomobjArrs), "BOM检查", "BOM检查更新成功，待审核~", "BOM检查更新失败，请联系管理员~");
             }
         },
-        error: function(dat) {
-            toastr.warning("系统内部错误，请联系程序员小哥哥~", 'BOM检查', messageOpts);
+        "error": function(res) {
+            toastr.warning('发生内部错误，请联系程序员', '查看安全/附件检查信息', messageOpts);
         }
     });
 });
+//安全、线束、bom 提交和更新接口封装
+function Dataport(url, type, dat, tiptitle, tipcontent_suc, tipcontent_fail) {
+    console.log(dat);
+    $.ajax({
+        type: type,
+        url: url,
+        contentType: 'application/json;charset=UTF-8', //contentType很重要 
+        crossDomain: true,
+        data: dat,
+        success: function(data) {
+            console.log(data);
+            if (data.ret == true) {
+                toastr.success(tipcontent_suc, tiptitle, messageOpts);
+            } else {
+                toastr.warning(tipcontent_fail, tiptitle, messageOpts);
+            }
+        },
+        error: function(res) {
+            toastr.warning("系统内部错误，请联系程序员小哥哥~", messageOpts, messageOpts);
+        }
+    });
+}
 
 // 还车点检----------------------------------------------------------------------------------------
 // 这个按钮从列表来
@@ -632,7 +716,7 @@ $("#returncarCheck_btn").click(function() {
         "trans_sn": $("#trans_sn").val(), //运输车号
         "time": $("input[name='receivecar']").val()
     };
-    requestTypein(".returncarcheck_tips", "http://192.168.0.106:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
+    requestTypein(".returncarcheck_tips", "http://192.168.0.222:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
 });
 
 // 还车点检返回
@@ -706,7 +790,7 @@ $("#driverTypeIn_btn").click(function() {
         "remark": $("#carTypeIn_remake").val()
     }
     var that = this;
-    requestTypein(".drivetypein_tips", "http://192.168.0.106:8080/car-management/carDriver/add.action", driverCheckdata, that, "driverList");
+    requestTypein(".drivetypein_tips", "http://192.168.0.222:8080/car-management/carDriver/add.action", driverCheckdata, that, "driverList");
 });
 
 
@@ -728,7 +812,7 @@ $("#driverTypeIn_btn").click(function() {
 //     var form5 = $(".partcheck_itembox").mychangeform();
 //     $.ajax({
 //         type: "POST",
-//         url: "http://192.168.0.106:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
+//         url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
 //         dataType: "json",
 //         contentType: 'application/json;charset=UTF-8', //contentType很重要 
 //         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
@@ -738,26 +822,3 @@ $("#driverTypeIn_btn").click(function() {
 //         }
 //     });
 // });
-
-// 研发工具记录
-var toolnameArr = [{ "toolname": "12V电源" },
-    { "toolname": "CAN1开发接头" },
-    { "toolname": "前催化器载体温度" },
-    { "toolname": "空气比传感器座" },
-    { "toolname": "排方前采样管" },
-    { "toolname": "CAN0开发接头" },
-    { "toolname": "" },
-    { "toolname": "" },
-    { "toolname": "" }
-];
-
-function initToolRecord(name) {
-    var toolItem = '<div class="checktitle"><span>工具或设备名称</span><span>申请人</span><span>装备日期</span><span>拆除日期</span></div>';
-    for (var i = 0; i < toolnameArr.length; i++) {
-        toolItem += '<div class="checkitem"><span><input type="text" class="bom_name" value="' + res[i].toolname + '">' +
-            '</span><span><input type="text" class="bom_num" value="">' +
-            '</span><span class="style1_radio">' +
-            '</span><span> <input type="text" class="item' + i + 'explain explain_input" value="" name="explain' + i + '"></span></div>';
-    }
-    $(name).html(toolItem);
-}

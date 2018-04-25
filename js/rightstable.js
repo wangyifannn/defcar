@@ -1,7 +1,7 @@
 // 添加车辆分组
 $(".addGroup_btn").click(function() {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/group/addGroup.action",
+        "url": "http://192.168.0.222:8080/car-management/group/addGroup.action",
         "type": "post",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
@@ -21,7 +21,7 @@ $(".addGroup_btn").click(function() {
 //加载 权限列表
 function loadRightsList() {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/permission/permissionList.action",
+        "url": "http://192.168.0.222:8080/car-management/permission/permissionList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -40,7 +40,7 @@ function loadRightsList() {
                 // 确认添加权限
                 $(".addrights_btn").click(function() {
                     $.ajax({
-                        "url": "http://192.168.0.106:8080/car-management/permission/addPermission.action",
+                        "url": "http://192.168.0.222:8080/car-management/permission/addPermission.action",
                         "type": "get",
                         "data": {
                             "name": $("input[name='rights_name']").val(),
@@ -101,7 +101,7 @@ window.rightsOperateEventsDel = {
         $(this).parent().parent().remove();
         // 删除权限操作
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/permission/deletePermission.action",
+            "url": "http://192.168.0.222:8080/car-management/permission/deletePermission.action",
             "type": "get",
             "data": {
                 "pids[]": rightsdelarr

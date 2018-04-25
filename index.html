@@ -63,9 +63,6 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul id="myTab" class="ul_box">
-                        <!--bomCheck-->
-                        <!--<li class=""><a href="#bomCheck" data-toggle="tab" class="">bom检测</a> </li>-->
-                        <li class=""><a href="#toolRecord" data-toggle="tab" class="">研发工具装备记录</a> </li>
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -100,8 +97,8 @@
                     <div class="tab-pane" id="sentry">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="sentrytable" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#sentrytoolbar" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <table id="sentrytable" data-toggle="table" data-url="http://192.168.0.222:8080/car-management/log/findCarMaintainLog.action" data-show-export="true" data-toolbar="#sentrytoolbar" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json"
+                                    data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
                                     <div id="sentrytoolbar" class="toolbar">
                                         <span style="font-weight:bolder">门岗</span>
                                     </div>
@@ -257,16 +254,6 @@
                             </div>
                         </form>
                     </div>
-                    <!--研发工具记录-->
-                    <div class="tab-pane" id="rd_record">
-                        <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-7">
-                                <button type="button" class="btn btn-default btn-primary" id="rd_record_btn">提交</button>
-                                <a href="#finishAuditList" data-toggle="tab"> <button type="button" class="btn btn-default btn-primary">返回</button></a>
-                            </div>
-                        </div>
-                    </div>
-
                     <!--还车点检-->
                     <div class="tab-pane" id="returncarCheck">
                         <div class="road_menu">
@@ -581,7 +568,7 @@
                             <div class="tab-pane form_style2 form_width_style " id="wiringCheckForm"></div>
                             <div class="tab-pane form_width_style" id="bomCheckForm"></div>
                             <div class="tab-pane form_width_style" id="upkeepForm"></div>
-                            <!--<div class="tab-pane form_style4 form_width_style " id="partCheckForm"></div>-->
+                            <div class="tab-pane form_width_style" id="toolForm"></div>
                         </div>
                     </div>
                     <!--车辆/安全/附件检查-->
@@ -770,7 +757,22 @@
                                 <table id="DriverListtable" data-show-export="true">
                                     <div id="DriverListtable_toolbar" class="btn-group tablelistbox">
                                         <!--<h3>驾驶员列表</h3>-->
-                                        <a href="#driverTypeIn" data-toggle="tab" class="driveradd_btn"><button>驾驶员录入</button></a>
+                                        <!--<a href="#driverTypeIn" data-toggle="tab" class="driveradd_btn"><button>驾驶员录入</button></a>-->
+                                        <a href="#driverTypeIn" data-toggle="tab" class="">
+                                            <button id="" type="button" class="btn btn-default" style="margin-right:10px;">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>驾驶员录入
+                                         </button>
+                                        </a>
+                                        <a href="#" data-toggle="tab" class="">
+                                            <button id="del_driver_all" type="button" class="btn btn-default" style="margin-right:10px;">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除选中项
+                                         </button>
+                                        </a>
+                                        <a href="#" data-toggle="tab" class="">
+                                            <button id="cancel_approve_all" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>取消授权
+                                         </button>
+                                        </a>
                                         <span class="export_title">导出模式：</span>
                                         <select class="form-control import-mdoel_select">
                                                     <option value="">导出当前页数据</option>
@@ -833,8 +835,8 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">授权</label>
                                 <div class="col-sm-5">
-                                    <input type="radio" name="isallow" value="1">是 &nbsp; &nbsp; &nbsp;
-                                    <input type="radio" name="isallow" value="2">否
+                                    <input type="radio" name="isallow" value="2">是 &nbsp; &nbsp; &nbsp;
+                                    <input type="radio" name="isallow" value="1">否
                                 </div>
                             </div>
                             <div class="form-group">
@@ -876,7 +878,7 @@
                     <div class="tab-pane" id="maintainScreen">
                         <div class="panel-body">
                             <div class="maintainScreen">
-                                <iframe class="iframebgs" src="./html/workscreen.html" width="100%" height="800px" scrolling="no" frameborder="no" border="0"></iframe>
+                                <!--<iframe class="iframebgs" src="./html/workscreen.html" width="100%" height="800px" scrolling="no" frameborder="no" border="0"></iframe>-->
                             </div>
                         </div>
                     </div>
@@ -972,10 +974,6 @@
                             </div>
                         </div>
                         <!--////////////////////////////////////////////////////////////////////////////////-->
-                        <!--维修协调员填写-->
-                        <!--<div class="maintainform" id="maintainPeopleTypeIn">
-                            
-                        </div>-->
                     </div>
                     <!--e 维修管理-->
                     <!--s 数据管理-->
@@ -983,8 +981,8 @@
                     <div class="tab-pane" id="currentData">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table4" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar4" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <table id="table4" data-toggle="table" data-url="http://192.168.0.222:8080/car-management/log/findCarMaintainLog.action" data-show-export="true" data-toolbar="#toolbar4" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json"
+                                    data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
                                     <div id="toolbar4" class="toolbar" style="display: inline-block">
                                         <h3>实时数据</h3>
                                     </div>
@@ -1006,8 +1004,8 @@
                     <div class="tab-pane" id="beforeData">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table5" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar5" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                <table id="table5" data-toggle="table" data-url="http://192.168.0.222:8080/car-management/log/findCarMaintainLog.action" data-show-export="true" data-toolbar="#toolbar5" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json"
+                                    data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
                                     <div id="toolbar5" class="toolbar" style="display: inline-block">
                                         <h3>历史数据</h3>
                                     </div>
@@ -1052,76 +1050,44 @@
                     </div>
                     <!--e 数据管理-->
                     <!--s 日志管理-->
-                    <!--系统日志-->
-                    <div class="tab-pane" id="dataLog">
+                    <!--驾驶员日志-->
+                    <div class="tab-pane" id="approveLog">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table6" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar6" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar6" class="toolbar" style="display: inline-block">
-                                        <h3>数据管理日志</h3>
+                                <table id="driverLogTable" data-toggle="table" data-show-export="true" data-checkbox="true" data-sort-name="id">
+                                    <div id="toolbar_driverLogTable" class="btn-group">
+                                        <span>驾驶员管理日志</span>
+                                        <a href="#" data-toggle="tab">
+                                            <button id="deldriverlog_all" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除选中项
+                                            </button>
+                                        </a>
                                     </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">维修原因</th>
-                                            <th data-field="name" data-align="center" data-width="8%">申请人</th>
-                                            <th data-field="id" data-align="center" data-width="15%">申请日期</th>
-                                            <!--<th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsdrive data-formatter=operateFormatterdriver>操作 </th>-->
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
                     </div>
                     <!--告警日志-->
-                    <div class="tab-pane" id="warningLog">
+                    <!--<div class="tab-pane" id="warningLog">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="tablewarning" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbarwarning" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar6" class="toolbar" style="display: inline-block">
-                                        <h3>告警日志</h3>
-                                    </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">告警编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">告警类型</th>
-                                            <th data-field="id" data-align="center" data-width="15%">告警日期</th>
-                                            <!--<th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsdrive data-formatter=operateFormatterdriver>操作 </th>-->
-                                        </tr>
-                                    </thead>
-                                </table>
+                             
                             </div>
                         </div>
-                    </div>
-                    <!--驾驶员管理日志-->
-                    <div class="tab-pane" id="approveLog">
+                    </div>-->
+                    <!--系统管理日志-->
+                    <div class="tab-pane" id="dataLog">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table7" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar7" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar7" class="toolbar" style="display: inline-block">
-                                        <h3>驾驶员管理日志</h3>
+                                <table id="sysLogTable" data-toggle="table" data-show-export="true" data-checkbox="true" data-sort-name="id">
+                                    <div id="toolbar_sysLogTable" class="btn-group">
+                                        <span>系统管理日志</span>
+                                        <a href="#" data-toggle="tab">
+                                            <button id="delsyslog_all" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除选中项
+                                            </button>
+                                        </a>
                                     </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">维修原因</th>
-                                            <th data-field="name" data-align="center" data-width="8%">申请人</th>
-                                            <th data-field="id" data-align="center" data-width="15%">申请日期</th>
-                                            <th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsdrive data-formatter=operateFormatterdriver>操作 </th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
@@ -1130,58 +1096,43 @@
                     <div class="tab-pane" id="maintainLog">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table8" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar8" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar8" class="toolbar" style="display: inline-block">
-                                        <h3>维修日志</h3>
+                                <table id="maintainLogTable" data-toggle="table" data-show-export="true" data-checkbox="true" data-sort-name="id" data-show-pagination-switch="true">
+                                    <div id="toolbar_maintainLogTable" class="btn-group">
+                                        <span>维修管理日志</span>
+                                        <a href="#" data-toggle="tab">
+                                            <button id="delmaintainlog_all" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除选中项
+                                            </button>
+                                        </a>
                                     </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">维修原因</th>
-                                            <th data-field="name" data-align="center" data-width="8%">申请人</th>
-                                            <th data-field="id" data-align="center" data-width="15%">申请日期</th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <!--管理日志-->
+                    <!--车辆管理日志-->
                     <div class="tab-pane" id="manageLog">
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="table9" data-toggle="table" data-url="./json/datatable.json" data-show-export="true" data-toolbar="#toolbar9" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true"
-                                    data-show-columns="true" data-sort-name="id" data-page-list="[15, 30, 45, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
-                                    <div id="toolbar9" class="toolbar" style="display: inline-block">
-                                        <h3>车辆管理日志</h3>
+                                <table id="carLogTable" data-toggle="table" data-show-export="true" data-toolbar="#toolbar_carLogTable" data-checkbox="true" data-show-columns="true" data-search="true" data-data-type="json" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                    data-sort-name="id" data-page-list="[10, 15, 30, All]" data-page-size="12" data-side-pagination="client" data-pagination="true" data-show-pagination-switch="true">
+                                    <div id="toolbar_carLogTable" class="btn-group">
+                                        <span>车辆管理日志</span>
+                                        <a href="#" data-toggle="tab">
+                                            <button id="delcarlog_all" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除选中项
+                                            </button>
+                                        </a>
                                     </div>
-                                    <thead>
-                                        <tr>
-                                            <!--<th data-field="state" data-checkbox="true" data-width="2%" data-select-item-name="选中"></th>-->
-                                            <th data-field="id" data-align="center" data-width="8%" data-height="10">序号</th>
-                                            <th data-field="carid" data-align="center" data-width="8%" data-height="10">车辆编号</th>
-                                            <th data-field="carid" data-align="center" data-width="10%">车牌号</th>
-                                            <th data-field="maintainCause" data-align="center" data-width="10%">操作类型</th>
-                                            <th data-field="name" data-align="center" data-width="8%">操作人</th>
-                                            <th data-field="id" data-align="center" data-width="15%">日期</th>
-                                            <th data-field="operate" data-align="center" data-width="10%" data-events=operateEventsdrive data-formatter=operateFormatterdriver>操作 </th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <!--e 日志管理-->
+                    <!--end 日志管理-->
                     <!--权限管理-->
                     <div class="tab-pane" id="rights">
                         <!--权限授予-->
                         <div class="rightbox" id="rights_list">
                             <img class="table_footer" src="./img/index/greycar.png" alt="">
-                            <!--<img class="table_header" src="./img/index/table_header.png" alt="">-->
                             <div class="tablerolebox">
                                 <table id="rightsList">
                                     <div id="rightslist_toolbar" class="btn-group">
@@ -1310,22 +1261,6 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <!--研发工具装备记录-->
-                    <div class="tab-pane" id="toolRecord">
-
-                    </div>
-                    <!--分组管理-->
-                    <div class="tab-pane" id="groupMenu">
-                        <!--<div class="tablelistbox">
-                            <table id="userList">
-                                <div id="userlist_toolbar" class="btn-group">
-                                    <button id="btn_add" type="button" class="btn btn-default">
-                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                                        </button>
-                                </div>
-                            </table>
-                        </div>-->
                     </div>
                     <!--用户管理-->
                     <div class="tab-pane" id="user">
@@ -1484,8 +1419,6 @@
                         </form>
                     </div>
                 </div>
-                <!--<div class="content_footer">
-                </div>-->
             </div>
         </main>
         <!-- page-content" -->
@@ -1494,6 +1427,59 @@
             <img src="./img/index/loading.gif" alt="">
         </div>
         <!--end 图片懒加载-->
+    </div>
+    <!--驾驶员授权模态框-->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="driverimpower_model" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header model_title">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">驾驶员授权</h4>
+                </div>
+                <div class="modal-body tool_Form">
+                    <form class="form-horizontal driverimpower_model_Form">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">驾驶员姓名：</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control col-sm-7 driver_name" placeholder="驾驶员姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">授权起始日：</label>
+                            <div class="col-sm-6 car_tools_check">
+                                <input placeholder="授权起始日" name="" class="form-control layer-date mydata_input" id="modal_allowStartTime">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">授权终止日：</label>
+                            <div class="col-sm-6">
+                                <input placeholder="授权终止日" name="" class="form-control layer-date mydata_input" id="modal_allowEndTime">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-7">
+                                <button type="button" class="btn btn-default btn-primary" id="driverimpower_btn">确定授权</button>
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">取消授权</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--研发工具装备记录模态框-->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="toolRecord_model" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header model_title">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">研发工具装备记录</h4>
+                </div>
+                <div class="modal-body tool_Form">
+
+                </div>
+            </div>
+        </div>
     </div>
     <!-- page-wrapper   审核是否通过模态框 -->
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="audit_model" aria-labelledby="myLargeModalLabel">
@@ -1636,58 +1622,59 @@
                 </div>
             </div>
         </div>
-        <!--保养记录模态框结束-->
-        <!-- page-wrapper   维修协调员填写模态框 -->
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="coord_model" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header model_title">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">维修协调员填写</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal maintain_form finish_form">
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="vSn" name="vSn" placeholder="请输入车辆编号">
-                                </div>
+    </div>
+    <!--保养记录模态框结束-->
+    <!-- page-wrapper   维修协调员填写模态框 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="coord_model" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header model_title">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">维修协调员填写</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal maintain_form finish_form">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">车辆编号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="vSn" name="vSn" placeholder="请输入车辆编号">
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="finish_park" placeholder="请输入车辆停放地点">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">停放地点</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="finish_park" placeholder="请输入车辆停放地点">
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">工作内容</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="work" placeholder="请填写工作内容">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">工作内容</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="work" placeholder="请填写工作内容">
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">完成日期</label>
-                                <div class="col-sm-9">
-                                    <input placeholder="请选择日期" name="finish_time" class="form-control layer-date mydata_input" id="complete_time">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">完成日期</label>
+                            <div class="col-sm-9">
+                                <input placeholder="请选择日期" name="finish_time" class="form-control layer-date mydata_input" id="complete_time">
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="remark" placeholder="其他信息">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="remark" placeholder="其他信息">
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-6">
-                                    <button type="button" class="btn btn-default btn-primary" data-dismiss="modal" id="m_cancel_btn">取消</button>
-                                    <button type="button" class="btn btn-default btn-primary" data-dismiss="" id="m_submit_btn">提交</button>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="modal" id="m_cancel_btn">取消</button>
+                                <button type="button" class="btn btn-default btn-primary" data-dismiss="" id="m_submit_btn">提交</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 <script type="text/javascript" src="./assets/js/jquery-1.11.0.min.js"></script>
 <!--模态框-->
@@ -1707,6 +1694,7 @@
 <script type="text/javascript" src="./js/audittable.js"></script>
 <!--驾驶员列表-->
 <script type="text/javascript" src="./js/drivertable.js"></script>
+<script type="text/javascript" src="./js/logtable.js"></script>
 <!--侧边动态菜单-->
 <script type="text/javascript" src="./js/menu.js"></script>
 <script type="text/javascript" src="assets/js/custom.js"></script>

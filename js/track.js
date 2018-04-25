@@ -24,7 +24,7 @@
           alert("车辆编号不能为空");
       } else {
           $.ajax({
-              "url": "http://192.168.0.106:8080/car-management/car/carData.action",
+              "url": "http://192.168.0.222:8080/car-management/car/carData.action",
               "type": "post",
               "data": {
                   "vSn": $("#current_input").val()

@@ -261,7 +261,7 @@
             alert("车辆编号不能为空");
         } else {
             $.ajax({
-                "url": "http://192.168.0.106:8080/car-management/car/carData.action",
+                "url": "http://192.168.0.222:8080/car-management/car/carData.action",
                 "type": "post",
                 "data": {
                     "vSn": $("#suggestId").val()
@@ -329,7 +329,7 @@
     var mypoint = "";
     // 加载页面，加载全部车辆
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/car/allcar.action",
+        "url": "http://192.168.0.222:8080/car-management/car/allcar.action",
         "type": "get",
         "success": function(res) {
             console.log(res);

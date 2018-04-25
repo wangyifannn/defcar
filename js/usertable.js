@@ -3,7 +3,7 @@ var user_role_check_val = [];
 //用户管理模块： 用户列表
 function loadUserList() {
     $.ajax({
-        "url": "http://192.168.0.106:8080/car-management/user/userList.action",
+        "url": "http://192.168.0.222:8080/car-management/user/userList.action",
         "type": "get",
         "dataType": "jsonp", //数据类型为jsonp  
         "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数  
@@ -127,7 +127,7 @@ $("input[name='user_name']").bind('input porpertychange', function() {
         // tips.style.display = 'block';
         $(".username_tips").html("格式正确");
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/user/check/" + $("input[name='user_name']").val() + "/1.action",
+            "url": "http://192.168.0.222:8080/car-management/user/check/" + $("input[name='user_name']").val() + "/1.action",
             "type": "get",
             "dataType": "jsonp", //数据类型为jsonp  
             "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
@@ -168,7 +168,7 @@ window.userOperateEventsDel = {
         $(this).parent().parent().remove();
         // 删除用户操作
         $.ajax({
-            "url": "http://192.168.0.106:8080/car-management/car-management/user/delete.action",
+            "url": "http://192.168.0.222:8080/car-management/car-management/user/delete.action",
             "type": "get",
             "data": {
                 "ids[]": userdelarr
