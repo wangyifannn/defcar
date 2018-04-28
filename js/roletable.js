@@ -18,7 +18,6 @@ $.ajax({
                 $(".role_menuList").append(MenuList);
                 var MenuList_checkbox = "";
                 for (var k = 0; k < res[i].childrenMenus.length; k++) {
-                    // console.log("i=" + i, "k=" + k);
                     MenuList_checkbox += '&nbsp;&nbsp&nbsp;&nbsp;<input name="mid" mid="' + res[i].childrenMenus[k].mid + '" type="checkbox" value="' + res[i].childrenMenus[k].name + '">' + res[i].childrenMenus[k].name;
                 }
                 $(".MenuList" + i).append(MenuList_checkbox);

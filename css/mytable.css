@@ -54,11 +54,17 @@ table {
     height: 25px;
 }
 
-#maintainList .btn-default:hover {
+.btn-default:hover {
     background: #010B52;
+    color: white;
 }
 
-#maintainList .my_btn {
+#auditList td.bs-checkbox input {
+    text-align: center;
+    margin-left: 10px;
+}
+
+.my_btn {
     border: none;
     color: white;
     border-radius: 10px;
@@ -191,14 +197,19 @@ span.export_title {
     margin-left: 0px;
 }
 
-button#driverTypeIn_btn,
-.ReturnDriver {
-    margin-top: 16px;
-    margin-left: 28px;
-}
-
 label.drivetypein_tips {
     padding-left: 200px;
+}
+
+select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 26px;
+    font-size: 12px;
+}
+
+a.a_select span {
+    font-size: 12px;
 }
 
 .vSn_tips,
@@ -230,7 +241,7 @@ label.drivetypein_tips {
     outline: none;
     text-align: center;
     font-size: 13px;
-    left: 424px;
+    left: 353px;
     border-radius: 10px;
 }
 
@@ -315,26 +326,6 @@ input.bom_num {
     padding: 2px 10px;
 }
 
-.driveradd_btn button,
-.caradd_btn button {
-    width: 70px;
-    background: #1A1D3E;
-    padding: 4px 7px;
-    color: white;
-    border: none;
-    position: absolute;
-    top: -16px;
-    outline: none;
-    font-size: 13px;
-    left: 0px;
-    border-radius: 10px;
-}
-
-.driveradd_btn button {
-    width: 88px;
-    top: -7px;
-}
-
 .form-group-btn {
     margin-top: 30px;
 }
@@ -353,7 +344,7 @@ input.bom_num {
 }
 
 #driverList .import-mdoel_select {
-    top: -5px;
+    top: 1px;
 }
 
 .import-mdoel_select {
@@ -367,19 +358,25 @@ input.bom_num {
 
 span.car_group_name {
     position: absolute;
-    left: 312px;
-    top: 2px;
+    left: 250px;
+    top: 5px;
     width: 72px;
 }
 
 .groupbox {
+    min-width: 410px;
     position: absolute;
-    left: 79px;
-    top: -14px;
+    left: 345px;
+    top: 3px;
+    font-size: 12px;
 }
 
 #group_carvSn {
-    width: 80px;
+    width: 67px;
+    height: 25px;
+    outline: none;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 .operator_group {
@@ -406,7 +403,7 @@ form.form-horizontal.even_style.upkeepFormInfo {
 
 .group-mdoel_select {
     position: absolute;
-    left: 350px;
+    left: 281px;
     top: -2px;
     font-size: 10px;
     width: 70px !important;
@@ -414,11 +411,11 @@ form.form-horizontal.even_style.upkeepFormInfo {
 }
 
 select.form-control.status-mdoel_select {
-    width: 106px;
+    width: 80px;
     height: 26px;
     font-size: 10px;
     position: absolute;
-    left: 199px;
+    left: 163px;
     top: -2px;
 }
 
@@ -477,10 +474,16 @@ select.form-control.status-mdoel_select {
     color: #D80000 !important;
 }
 
-.table-responsive span {
-    /*color: #1471EE;*/
-    color: #1A1D3E;
-    margin-top: -2px;
+#sumcar_search_form input {
+    width: 99px;
+    height: 27px;
+    margin-right: 20px;
+}
+
+form#sumcar_search_form {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 .tablelistbox h3 {
@@ -506,11 +509,11 @@ input.form-control {
 }
 
 #maintainList table td:nth-child(9) {
-    background: #BFEBEB;
+    background: #eee;
 }
 
 #maintainList table thead tr:nth-child(2) th:nth-child(3) {
-    background: #BFEBEB;
+    background: #eee;
 }
 
 .role_check_box label,
@@ -629,9 +632,6 @@ input.form-control {
 
 .model_title {
     background: #eee;
-    /*text-align: left;*/
-    /*padding: 10px 5px;*/
-    /*margin: 0px !important;*/
     color: #0078D7;
 }
 
@@ -641,9 +641,7 @@ input.form-control {
 
 .detail_part {
     width: 100%;
-    /*margin: 0 auto;*/
     margin-top: 20px;
-    /*padding: 0px 20px;*/
 }
 
 .datail_title {
@@ -709,12 +707,6 @@ input.form-control {
 #menulist_toolbar,
 #childmenulist_toolbar {
     color: #1B6DDA;
-}
-
-#auditList .fixed-table-pagination,
-table#auditTable {
-    width: 95%;
-    margin: 0 auto;
 }
 
 .fixed-table-container {
@@ -805,16 +797,9 @@ label.audit_tips {
     border: none;
 }
 
-.checkitem p:last-child {
-    /*border-top: none;*/
-}
-
 .checktitle span {
-    /*margin-top: 20px;*/
     background: #DBDBDB;
     border: 2px solid #C7C7C7;
-    /*vertical-align: middle;*/
-    /*margin: 0 auto;*/
 }
 
 .checktitle span:nth-child(2),

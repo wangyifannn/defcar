@@ -1,13 +1,16 @@
 // 详情页添加各个表单内容,安全检查、线束、bom等内容在修改页面信息，进行数据回显的函数里面，第一步调用添加了。
-var node0 = document.querySelector("#carTypeIn form").cloneNode(true);;
+var node0 = document.querySelector("#carTypeIn form").cloneNode(true);
 document.getElementById("carTypeInForm").appendChild(node0);
-var node1 = document.querySelector("#carCheck form").cloneNode(true);;
+var node1 = document.querySelector("#carCheck form").cloneNode(true);
 document.getElementById("carCheckForm").appendChild(node1);
 $("#carCheckForm button").css("display", "none");
 $("#carTypeInForm button").css("display", "none");
 $("#carTypeInForm .checkbox").css("display", "none");
 $("#carTypeInForm .cartypein_tips").css("display", "none");
-
+// 还车点检
+var node2 = document.querySelector("#returncarCheck form").cloneNode(true);
+document.getElementById("returncarForm").appendChild(node2);
+$("#returncarForm button").css("display", "none");
 // 详情页搜索
 $("#detail_search_btn").click(function() {
     if ($(".detail_input").val() == "") {
@@ -24,7 +27,8 @@ function addDetailMenu(boxname, num, href, firstcall) {
     if (firstcall == "firstcall") {}
     // 克隆录入表单到详情页面部分
     var res = [{ "id": 0, "name": "车辆录入信息" }, { "id": 1, "name": "接车点检信息" }, { "id": 2, "name": "安全检查信息" },
-        { "id": 3, "name": "线束检查信息" }, { "id": 4, "name": "BOM检查信息" }, { "id": 5, "name": "保养记录" }, { "id": 6, "name": "研发工具装备记录" }
+        { "id": 3, "name": "线束检查信息" }, { "id": 4, "name": "BOM检查信息" }, { "id": 5, "name": "保养记录" },
+        { "id": 6, "name": "研发工具装备记录" }, { "id": 7, "name": "还车点检信息" }
     ];
     var Ahref = "";
     var active = "";
@@ -77,9 +81,14 @@ function addDetailMenu(boxname, num, href, firstcall) {
         $(this).attr("href", "#" + "toolForm");
         initToolRecord("#toolForm", getHashParameter('vSn'), "detail");
     });
+    // 还车点检信息
+    $('.detailitem7').click(function() {
+        $(this).addClass("checkitem_active").siblings().removeClass("checkitem_active");
+        $(this).attr("href", "#" + "returncarForm");
+        FindReturnCar("http://192.168.0.222:8080/car-management/car/findbackCheck.action", "#returncarForm");
+    });
 }
 addDetailMenu(".detail_menu", 0, "carTypeInForm", "firstcall");
-//将详情页面的input全部设置为readonly
 $(".detail_part input").attr("disabled", true);
 // 根据车辆编号，查看车辆录入的信息，信息回显-----------------------------------------------------------------
 function cartypein_info(vSn, boxname) {
@@ -371,6 +380,55 @@ function findUpkeep(name, vSn) {
             console.log(res);
         }
     });
+}
+
+// 查看还车点检信息
+function FindReturnCar(url, name) {
+    $.ajax({
+        "url": "http://192.168.0.222:8080/car-management/tempcar/findTempreturnCarByvSn.action",
+        "type": "get",
+        "data": {
+            "vSn": vSn
+        },
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+        "success": function(res) {
+            console.log(res);
+            if (res == null) {
+                toastr.warning('未检索到相关车辆信息', '查看车辆基本信息', messageOpts);
+                return;
+            }
+            $(boxname + " .vSn").val(res.vSn);
+            $(boxname + " .vin").val(res.vin); //车架号
+            $(boxname + " .product_sn").val(res.product_sn);
+            $(boxname + " .product_name").val(res.product_name);
+            $(boxname + " .engineNumber").val(res.engineNumber);
+            $(boxname + " .carName").val(res.carName);
+            $(boxname + " .vCarType").val(res.vCarType);
+            $(boxname + " .customer").val(res.customer);
+            $(boxname + " .projectEngineer").val(res.projectEngineer);
+            $(boxname + " .contactNumber").val(res.contactNumber);
+            $(boxname + " .engineType").val(res.engineType);
+            $(boxname + " .engineCapacity").val(res.engineCapacity);
+            $(boxname + " .FuelType").val(res.fuelType);
+            $(boxname + " .oilspecification").val(res.oilspecification);
+            $(boxname + " .tyresize").val(res.tyresize);
+            $(boxname + " .GBTS").val(res.gbts); //变速箱油规格
+            $(boxname + " .reaTireP").val(res.reaTireP);
+            $(boxname + " .frontTireP").val(res.frontTireP);
+            $(boxname + " .vehicleQuality").val(res.vehicleQuality);
+            $(boxname + " .loadMethod").val(res.loadMethod);
+            $(boxname + " .loadData").val(res.loadData);
+            $(boxname + " .operator").val(res.operator); //签字人、操作人
+            $(boxname + " .makeTime").val(changeDateFormat(res.makeTime)); //makeTime
+            $(boxname + " .remark").val(res.remark); //备注
+            if (res.cGroup == null) {
+                $("#carTypeIn .gids").val("") //车辆分组
+            } else {
+                $("#carTypeIn .gids").val(res.cGroup.id) //车辆分组
+            }
+        }
+    })
 }
 // 点击返回车辆列表按钮 vdwq
 

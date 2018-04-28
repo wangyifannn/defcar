@@ -1,106 +1,36 @@
 var todayDate = new Date();
 var dateend = new Date(todayDate);
-dateend.setDate(todayDate.getDate() + 30);
-laydate.render({
-    elem: '#receiverdata', //接车日期
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd', //精确到 年月日
-    value: todayDate,
-    theme: '#041473' //自定义颜色主题
+dateend.setDate(todayDate.getDate() + 90);
+// 同时绑定多个div
+//同时绑定多个
+lay('.much-date').each(function() {
+    laydate.render({
+        elem: this,
+        trigger: 'click',
+        type: 'datetime', //精确到 时分秒
+        value: null,
+        theme: '#041473' //自定义颜色主题
+    });
 });
-// 车辆录入表制作日期
-laydate.render({
-    elem: '#makeTime', //设置只读模式
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd', //精确到 年月日
-    value: todayDate,
-    trigger: 'click',
-    theme: '#041473' //自定义颜色主题
-
+// ---------------------------------------------------
+lay('.today-date').each(function() {
+    laydate.render({
+        elem: this,
+        trigger: 'click',
+        type: 'datetime', //精确到 时分秒
+        value: todayDate,
+        theme: '#041473' //自定义颜色主题
+    });
 });
-// 驾驶员录入相关日期
-laydate.render({
-    elem: '#birthday',
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd',
-    theme: '#041473' //驾驶员出生年月
+lay('.future-date').each(function() {
+    laydate.render({
+        elem: this,
+        trigger: 'click',
+        type: 'datetime', //精确到 时分秒
+        value: dateend,
+        theme: '#041473' //自定义颜色主题
+    });
 });
-
-laydate.render({
-    elem: '#LStartTime',
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd',
-    value: todayDate,
-    theme: '#041473' //驾照有效日起
-});
-
-laydate.render({
-    elem: '#LEndTime',
-    value: dateend,
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd',
-    theme: '#041473' //驾照有效日止
-});
-laydate.render({
-    elem: '#allowStartTime',
-    // format: 'yyyy-MM-dd',
-    type: 'datetime', //精确到 时分秒
-    value: todayDate,
-    theme: '#041473' //授权起始日
-});
-laydate.render({
-    elem: '#discuss_time',
-    type: 'datetime', //精确到 时分秒
-    // format: 'yyyy-MM-dd',
-    theme: '#041473' //协商日期
-});
-
-laydate.render({
-    elem: '#complete_time',
-    // format: 'yyyy-MM-dd',
-    type: 'datetime', //精确到 时分秒
-    value: todayDate,
-    theme: '#041473' //完成日期
-});
-
-laydate.render({
-    elem: '#allowEndTime',
-    type: 'datetime', //精确到 时分秒
-    value: dateend,
-    theme: '#041473' //授权终止日
-});
-laydate.render({
-    elem: '#time',
-    type: 'datetime', //精确到 时分秒
-    value: todayDate,
-    theme: '#041473' //授权终止日
-});
-$("#upkeepTime").val(todayDate);
-laydate.render({
-    elem: '#upkeepTime',
-    type: 'datetime', //精确到 时分秒
-    value: todayDate,
-    theme: '#041473' //保养日期
-});
-laydate.render({
-    elem: '#nextupkeepTime',
-    type: 'datetime', //精确到 时分秒
-    value: dateend,
-    theme: '#041473' //下次保养日期
-});
-laydate.render({
-    elem: '#modal_allowStartTime',
-    type: 'datetime', //精确到 时分秒
-    value: todayDate,
-    theme: '#041473' //驾驶员授权模态框——起始
-});
-laydate.render({
-    elem: '#modal_allowEndTime',
-    type: 'datetime', //精确到 时分秒
-    value: dateend,
-    theme: '#041473' //驾驶员授权模态框——终止
-});
-
 // 数据库 加载权限列表
 function requestTypein(paramsid, url, data, that, next) {
     console.log(url);
@@ -113,7 +43,8 @@ function requestTypein(paramsid, url, data, that, next) {
         "data": data,
         "success": function(res) {
             console.log(res);
-            $(paramsid).html(res.msg);
+            // $(paramsid).html(res.msg);
+            toastr.success(res.msg, '提示', messageOpts);
             var id, vSn, vin, engineNumber;
             id = getHashParameter("id");
             vSn = getHashParameter("vSn");
@@ -143,7 +74,9 @@ function requestTypein(paramsid, url, data, that, next) {
                 } else if (next == "initReturnCarCheck") {
                     initReturnCarCheck(""); //初始化还车检点
                 } else if (next == "driverList") {
+                    // $("#driverTypeIn_model").modal();
                     loadDriverList(1, 10);
+                    return;
                 }
                 $(that).parent().attr("href", "#" + next);
                 $('a[href="#' + next + '"]').tab('show');
@@ -690,7 +623,6 @@ function Dataport(url, type, dat, tiptitle, tipcontent_suc, tipcontent_fail) {
 }
 
 // 还车点检----------------------------------------------------------------------------------------
-// 这个按钮从列表来
 $(".resetreturncheck_btn").click(function() {
     formReset();
     $("#returncarCheck #vSn").val(getHashParameter("vSn")); //车辆编号
@@ -698,31 +630,35 @@ $(".resetreturncheck_btn").click(function() {
     $("#returncarCheck #engineNumber").val(getHashParameter("engineNumber")); //发动机编号
 });
 $("#returncarCheck_btn").click(function() {
+    if ($("#returncarCheck .trans_sn").val() == "" || $("#returncarCheck .forpeople").val() == "") {
+        toastr.warning('有选项为空', '还车点检', messageOpts);
+        return;
+    }
     var returncarCheckdata = {
-        "carid": getHashParameter("id"), //数据库编号
-        "toolisrecycled": $("input[name='toolisrecycled']:checked").val(),
-        "sparetyre": $("#returncarCheck #sparetyre").val(), //备用轮胎
-        "tools": $("#returncarCheck #tools").val(),
-        "jack": $("#returncarCheck #jack").val(),
-        "warningboard": $("#returncarCheck #warningboard").val(), //紧急停车牌
-        "fire": $("#returncarCheck #fire").val(),
-        "keyy": $("#returncarCheck #keyy").val(), //钥匙数量
-        "odometer": $("#returncarCheck #ododmeter").val(),
-        "proposer": $("#returncarCheck #proposer").val(),
-        "forpeople": $("#returncarCheck #forpeople").val(), //交车人
-        "pickone": $("#returncarCheck #pickone").val(),
-        "pick_tel": $("#pick_tel").val(), //接车人电话
-        "pick_card": $("#pick_card").val(),
-        "trans_sn": $("#trans_sn").val(), //运输车号
-        "time": $("input[name='receivecar']").val()
+        "vSn": $("#returncarCheck .vSn").val(),
+        "toolisrecycled": $("#returncarCheck input[name='toolisrecycled']:checked").val(),
+        "sparetyre": $("#returncarCheck .sparetyre").val(), //备用轮胎
+        "tools": $("#returncarCheck .tools").val(),
+        "jack": $("#returncarCheck .jack").val(),
+        "warningboard": $("#returncarCheck .warningboard").val(), //紧急停车牌
+        "fire": $("#returncarCheck .fire").val(),
+        "keyy": $("#returncarCheck .keyy").val(), //钥匙数量
+        "odometer": $("#returncarCheck .ododmeter").val(),
+        "proposer": $("#returncarCheck .proposer").val(),
+        "forpeople": $("#returncarCheck .forpeople").val(), //交车人
+        "pickone": $("#returncarCheck .pickone").val(),
+        "pick_tel": $("#returncarCheck .pick_tel").val(), //接车人电话
+        "pick_card": $("#returncarCheck .pick_card").val(),
+        "trans_sn": $("#returncarCheck .trans_sn").val(), //运输车号
+        "time": $("#returncarCheck input[name='receivecar']").val()
     };
-    requestTypein(".returncarcheck_tips", "http://192.168.0.222:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
+    requestTypein("", "http://192.168.0.222:8080/car-management/car/backCheck.action", returncarCheckdata, "", "");
 });
 
 // 还车点检返回
 $(".returncarcheck_return").click(function() {
     $('#carListtable').bootstrapTable('destroy');
-    loadCarList(getHashParameter("pagenum"), 10);
+    loadCarList(1, 10);
 });
 
 // 查看还车点检信息
@@ -771,7 +707,7 @@ function FindreturnCheckinfo(id, url) {
 }
 
 // 驾驶员录入：
-$("#driverTypeIn_btn").click(function() {
+$(".add_driver").click(function() {
     if ($("#drivername").val() == "") {
         alert("有必填项未填写！");
         return;
@@ -790,35 +726,33 @@ $("#driverTypeIn_btn").click(function() {
         "remark": $("#carTypeIn_remake").val()
     }
     var that = this;
-    requestTypein(".drivetypein_tips", "http://192.168.0.222:8080/car-management/carDriver/add.action", driverCheckdata, that, "driverList");
+    requestTypein("", "http://192.168.0.222:8080/car-management/carDriver/add.action", driverCheckdata, that, "driverList");
+    $(this).attr({ "data-dismiss": "modal", "aria-label": "Close" });
 });
+// 驾驶员更新：
+$(".update_driver").click(function() {
+    console.log("update");
+    if ($("#drivername").val() == "") {
+        alert("有必填项未填写！");
+        return;
+    }
+    // 有22个字段
+    var driveupdata = {
+        "id": getHashParameter("driverid"),
+        "name": $("#drivername").val(), //驾驶员姓名
+        "sex": $("input[name='driversex']:checked").val(),
+        "age": $("#driverage").val(),
+        "telephone": $("#telephone").val(),
+        "birthday": $("#birthday").val(),
+        "iccard": $("#iccard").val(),
+        "isallow": $("input[name='isallow']:checked").val(), //是否授权
+        "allowStartTime": $("#allowStartTime").val(),
+        "allowEndTime": $("#allowEndTime").val(),
+        "remark": $("#carTypeIn_remake").val()
+    }
+    console.log(driveupdata);
+    var that = this;
+    requestTypein("", "http://192.168.0.222:8080/car-management/carDriver/update.action", driveupdata, that, "driverList");
+    $(this).attr({ "data-dismiss": "modal", "aria-label": "Close" });
 
-
-//part初始化 -------------------------------------------------------------------------------------------------------------
-// initPartCheck();//现在不需要部件状态检查这一步了
-// function initPartCheck(box1) {
-//     addMenu("#partCheck .checkMenus", 4);
-//     // 初始化检查项目表
-//     getcnid(4, ".partcheck_itembox");
-// }
-// initPartCheck();
-// // 部件检查提交
-// $("#partCheck_btn").click(function() {
-//     // 单选框的值不能为空，否则不能提交
-//     if (isAllChecked() == false) {
-//         alert("有选项未选择");
-//         return;
-//     }
-//     var form5 = $(".partcheck_itembox").mychangeform();
-//     $.ajax({
-//         type: "POST",
-//         url: "http://192.168.0.222:8080/car-management/car/addSafeCheck/" + getHashParameter("id") + ".action?",
-//         dataType: "json",
-//         contentType: 'application/json;charset=UTF-8', //contentType很重要 
-//         crossDomain: true, //cors解决post跨域问题，后台要进行相关配置
-//         data: JSON.stringify(form5),
-//         success: function(data) {
-//             console.log(data);
-//         }
-//     });
-// });
+});

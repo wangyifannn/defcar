@@ -29,21 +29,27 @@ function initAudit(res, toolbarid) {
         toggle: "table",
         toolbar: toolbarid,
         pagination: true,
+        pageSize: 10, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        pageNumber: 1, //初始化加载第一页，默认第一页
         sidePagination: "client",
-        editable: true,
         columns: [
             [{
                 "title": "测试车辆-待审核列表",
                 "halign": "center",
                 "align": "center",
-                "colspan": 7
+                "colspan": 8
             }],
             [{
-                field: "status",
+                field: "checkbox",
                 title: "全选",
                 checkbox: true,
                 align: 'center',
-                sortable: true
+                sortable: true,
+                colspan: 1,
+                rowspan: 2,
+                width: "2%",
             }, {
                 field: 'index',
                 title: "序号",
@@ -63,7 +69,7 @@ function initAudit(res, toolbarid) {
                 align: "center",
                 colspan: 1,
                 rowspan: 2,
-                width: "7%"
+                width: "8%"
 
             }, {
                 title: "车辆安全检查",
@@ -154,8 +160,8 @@ function initAudit(res, toolbarid) {
 
 // 页面检查菜单
 function addAuditMenu(boxname, num) {
-    var res = [{ "id": 0, "name": "临时车辆列表" }, { "id": 1, "name": "待审核车辆列表" }, { "id": 2, "name": "审核失败车辆列表" },
-        { "id": 3, "name": "车辆列表" }
+    var res = [{ "id": 0, "name": "临时车辆列表" }, { "id": 1, "name": "待审核列表" }, { "id": 2, "name": "审核失败列表" },
+        { "id": 3, "name": "审核成功列表" }
     ];
     // console.log(res);
     var Ahref = "";
@@ -208,23 +214,7 @@ function auditFormatter(value, row, index) {
 window.auditoperateEvents = {
     'click #btn_auditlistdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
-        $.ajax({
-            url: "http://192.168.0.222:8080/car-management/car/deleteReview/" + row.id + ".action",
-            type: "get",
-            data: {},
-            success: function(res) {
-                console.log(res);
-                if (res.ret == true) {
-                    toastr.success('待审核列表数据删除成功', '待审核列表', messageOpts);
-                    loadAuditList();
-                } else {
-                    toastr.warning('待审核列表数据删除失败', '待审核列表', messageOpts);
-                }
-            },
-            "error": function(res) {
-                toastr.error('程序内部错误', '待审核列表删除', messageOpts);
-            }
-        })
+        delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", row.id, "get", "auditlistdel", "待审核列表", "车辆删除失败", "车辆删除成功");
     },
     'click #ifaudit_btn': function(e, value, row, index) {
         window.sessionStorage.ifauditinfo = JSON.stringify(row);
@@ -286,7 +276,7 @@ function loadsucAudit(params) {
             createAuditTable("#finishAuditTable", "#toolbar_finishAuditTable", res,
                 "index", "vSn", "safeCheck", "systemCheck", "reviewer", "reviewer", "remark", true, true,
                 "序号", "车辆编号", "安全检查人", "系统检查人", "审核人", "审核日期", "审核说明",
-                true, finishAuditOperateEvents, finishAuditOperateFormatter, "client")
+                true, finishAuditOperateEvents, finishAuditOperateFormatter, "client", "审核成功车辆列表")
         },
         "error": function(res) {
             console.log(res);
@@ -306,7 +296,7 @@ function loadFailAudit(params) {
             createAuditTable("#failAuditTable", "#toolbar_failAuditTable", res,
                 "index", "vSn", "safeCheck", "systemCheck", "reviewer", "reviewer", "remark", true, true,
                 "序号", "车辆编号", "安全检查人", "系统检查人", "审核人", "审核日期", "审核说明",
-                true, failAuditOperateEvents, failAuditOperateFormatter, "client")
+                true, failAuditOperateEvents, failAuditOperateFormatter, "client", "审核失败车辆列表")
         },
         "error": function(res) {
             toastr.error('程序内部错误', '审核失败列表', messageOpts);
@@ -326,23 +316,7 @@ function finishAuditOperateFormatter(value, row, index) {
 window.finishAuditOperateEvents = {
     'click #btn_finauditdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
-        $.ajax({
-            url: "http://192.168.0.222:8080/car-management/car/deleteReview/" + row.id + ".action",
-            type: "get",
-            data: {},
-            success: function(res) {
-                console.log(res);
-                if (res.ret == true) {
-                    toastr.success('车辆删除成功', '车辆列表', messageOpts);
-                    loadsucAudit();
-                } else {
-                    toastr.warning('车辆删除失败', '车辆列表', messageOpts);
-                }
-            },
-            "error": function(res) {
-                toastr.error('程序内部错误', '车辆列表', messageOpts);
-            }
-        })
+        delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", row.id, "get", "finauditdel", "审核成功列表", "车辆删除失败", "车辆删除成功");
     },
     // 保养记录按钮
     'click #upkeep_record_btn': function(e, value, row, index) {
@@ -366,7 +340,8 @@ window.finishAuditOperateEvents = {
         cartypein_info(row.vSn, "#carTypeInForm");
     },
     'click #finaudit_returncar_btn': function(e, value, row, index) {
-
+        $("#returncarCheck .vSn").val(row.vSn);
+        // $("")
     }
 };
 // 保养记录提交
@@ -385,7 +360,6 @@ $("#upkeep_btn").click(function() {
     var upkeep_saveurl = "http://192.168.0.222:8080/car-management/car/maintenance/save/" + $(".upkeepForm .vSn").val() + "/" +
         $(".upkeepForm .upkeep_odm").val() + "/" + $(".upkeepForm .nextupkeepTime").val() + ".action";
     $.ajax({
-        // decodeURI(val)
         "url": decodeURI(upkeep_saveurl),
         "type": "post",
         contentType: 'application/json;charset=UTF-8', //contentType很重要 
@@ -413,23 +387,7 @@ function failAuditOperateFormatter(value, row, index) {
 window.failAuditOperateEvents = {
     'click #btn_failauditdel': function(e, value, row, index) {
         $(this).parent().parent().remove();
-        $.ajax({
-            url: "http://192.168.0.222:8080/car-management/car/deleteReview/" + row.id + ".action",
-            type: "get",
-            data: {},
-            success: function(res) {
-                console.log(res);
-                if (res.ret == true) {
-                    toastr.success('车辆删除成功', '审核失败列表', messageOpts);
-                    loadFailAudit();
-                } else {
-                    toastr.warning('车辆删除失败', '审核失败列表', messageOpts);
-                }
-            },
-            "error": function(res) {
-                toastr.error('程序内部错误', '审核', messageOpts);
-            }
-        })
+        delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", row.id, "get", "failauditdel", "审核失败列表", "车辆删除失败", "车辆删除成功");
     },
     'click #failaudit_edit': function(e, value, row, index) {
         window.location.hash = "pagenum=" + 1 + "&id=" + row.id + "&vSn=" + row.vSn; //车辆数据库编号
@@ -487,13 +445,11 @@ function initToolRecord(name, vSn, page) {
                 '</form>';
                 $(name).html(savetoolItem);
                 $("#tool_submit_btn").click(function() {
-                    // toolNameArr.push();
                     var toolNameArr = $(".tool_Form input[name='toolname']:checked");
                     var toolArr = [];
                     for (var i = 0; i < toolNameArr.length; i++) {
                         toolArr.push({ "toolName": toolNameArr[i].value });
                     }
-                    // console.log(toolArr);
                     // 申请研发
                     $.ajax({
                         url: "http://192.168.0.222:8080/car-management/car/develop/save/" + vSn + ".action",
@@ -523,13 +479,16 @@ function initToolRecord(name, vSn, page) {
                     optname = "操作人";
                     $(name + " input").attr("disabled", "disabled");
                 }
-
                 var toolItem = '<div class="checktitle"><span style="width:41%;">研发工具申请信息</span><span style="width:59%;">研发工具装备信息</span></div>';
                 toolItem += '<div class="checktitle"><span>工具或设备名称</span><span>申请人</span><span>装备日期</span><span>' + optname + '</span></div>';
                 for (var i = 0; i < res.length; i++) {
                     if (page == "detail") {
                         optcontent = res[i].operator;
                         datecontent = res[i].equippedDate;
+                        if (res[i].operator == "") {
+                            optcontent = "--";
+                            datecontent = "--";
+                        }
                     } else {
                         datecontent = '<input placeholder="请选择日期"  id="installtoolTime' + i + '" class="form-control col-sm-7 layer-date">';
                     }
@@ -559,7 +518,6 @@ function initToolRecord(name, vSn, page) {
                     console.log($(this).parent().siblings().children(".layer-date").val());
                     // 申请编号，装备日期
                     toolDataArr.push({ id: $(this).parent().parent().attr("id"), "equippedDate": $(this).parent().siblings().children(".layer-date").val() });
-
                     $.ajax({
                         url: "http://192.168.0.222:8080/car-management/car/develop/update/" + vSn + ".action",
                         type: "post",
@@ -588,3 +546,25 @@ function initToolRecord(name, vSn, page) {
     })
 
 }
+
+// 删除选中项
+// 删除临时车辆
+$("#del_tempcarlist_all").click(function() {
+    var e = $("#carListtable").bootstrapTable('getSelections');
+    deletAllLog(e, "tempcarlist");
+});
+// 删除待审核
+$("#del_auditlist_all").click(function() {
+    var f = $("#auditTable").bootstrapTable('getSelections');
+    deletAllLog(f, "auditlistdel");
+});
+// 删除审核失败
+$("#del_faillist_all").click(function() {
+    var g = $("#failAuditTable").bootstrapTable('getSelections');
+    deletAllLog(g, "failauditdel");
+});
+// 删除审核成功
+$("#del_suclist_all").click(function() {
+    var h = $("#finishAuditTable").bootstrapTable('getSelections');
+    deletAllLog(h, "finauditdel");
+});

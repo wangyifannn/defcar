@@ -35,7 +35,7 @@ function createLogTable(boxname, toolbarid, res,
                 "colspan": 11
             }],
             [{
-                field: "status",
+                field: "checkbox",
                 title: "全选",
                 checkbox: true,
                 align: 'center',
@@ -269,28 +269,7 @@ function deletemaintainLog(idsArr) {
     })
 }
 
-function deletAllLog(a, name) {
-    // var a = $("#carLogTable").bootstrapTable('getSelections');
-    var delcarlogArr = [];
-    var delcarlogString = "";
-    if (a.length >= 1) {
-        for (var i = 0; i < a.length; i++) {
-            delcarlogArr.push(a[i].id)
-        }
-        delcarlogString = delcarlogArr.join(",");
-        if (name == "car") {
-            deletecarLog(delcarlogString);
-        } else if (name == "driver") {
-            deletedriverLog(delcarlogString);
-        } else if (name == "sys") {
-            deletesysLog(delcarlogString);
-        } else if (name = "maintain") {
-            deletemaintainLog(delcarlogString);
-        }
-    } else {
-        toastr.warning('最少选中一行', '删除日志', messageOpts);
-    }
-}
+
 // 删除所有车辆管理日志
 $("#delcarlog_all").click(function() {
     var a = $("#carLogTable").bootstrapTable('getSelections');

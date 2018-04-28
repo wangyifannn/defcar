@@ -109,6 +109,7 @@ $.ajax({
                 }
             }
         });
+
         //驾驶员管理
         $(".driverList ").click(function() {
             $("#driverTypeIn").removeClass("active");
@@ -118,6 +119,10 @@ $.ajax({
         // 车辆录入
         $(".carTypeIn").click(function() {
             window.location.hash = "";
+        });
+        // 车辆总表
+        $(".sumCarList").click(function() {
+            loadsumCarList("");
         });
         // 临时车辆列表
         $(".carList").click(function() {
@@ -145,7 +150,6 @@ $.ajax({
             loadRightsList();
             $("#rights_list").show();
             $("#add_rights_form").hide();
-            // $("html").append("<script type='text/javascript' src='./js/rightstable.js'></script>");
         });
         $(".role").click(function() {
             loadRoleList();
@@ -157,15 +161,12 @@ $.ajax({
             //----解决用户列表点解添加按钮，再点击角色管理等其他选项，再回来点击用户管理时页面失效问题------------------------------------------------------
             $("#user .form-horizontal").hide();
             $("#user_rightbox").show();
-            //----------------------------------------------------------
             loadrolesList(".user_check_box", "rolepid");
             loadUserList();
-            // $("html").append("<script type='text/javascript' src='./js/usertable.js'></script>");
         });
         $(".menu").click(function() {
             $("#menu .form-horizontal").hide();
             loadMenuList();
-            // $("html").append("<script type='text/javascript' src='./js/menutable.js'></script>");
         });
         // 点击维修申请，重置申请表单
         $(".maintainTypeIn").click(function() {
@@ -174,7 +175,7 @@ $.ajax({
         })
     },
     "error": function(data) {
-        console.log("cuo" + data);
+        window.location.href = "../../../car/CarMangae0/html/login.html";
     }
 })
 

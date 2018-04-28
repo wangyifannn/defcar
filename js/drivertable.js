@@ -1,5 +1,3 @@
-// 车辆列表
-//信号量
 $(".ReturnDriver").click(function() {
     loadDriverList(1, 10);
 });
@@ -24,10 +22,7 @@ function loadDriverList(driverpageNum, size) {
                 "姓名", "性别", "是否授权", "授权起始日期", "授权终止日期", "iccard",
                 true, driveroperateEvents, driveroperateFormatter, "");
             var drivermaxPage = Math.ceil(res.total / size);
-            // var drivermaxPage = 9;
-
             if (drivermaxPage >= 9) {
-                // console.log("大于等于9");
                 dclickPagings(drivermaxPage);
             } else {
                 dclickPaging(drivermaxPage, driverpageNum - 1);
@@ -74,35 +69,19 @@ window.driveroperateEvents = {
     // 修改
     'click #btn_driverup': function(e, value, row, index) {
         console.log(row);
-        $.ajax({
-            url: "http://192.168.0.222:8080/car-management/carDriver/update.action",
-            type: "post",
-            data: {
-                ids: idArr
-            },
-            success: function(res) {
-                console.log(res);
-                if (res.ret == true) {
-                    toastr.success('修改成功', '驾驶员修改', messageOpts);
-                    // loadDriverList(1, 10);
-                } else {
-                    toastr.success('修改失败，请联系管理员', '驾驶员修改', messageOpts);
-                }
-            },
-            error: function(res) {
-                toastr.warning('发生内部错误，请联系程序员', '驾驶员修改', messageOpts);
-            }
-        })
-
+        window.location.hash = "driverid=" + row.id + "&pageindex=" + index;
+        findDriverInfo(row.id, "#driverTypeIn_model");
+        $("#driverTypeIn_model").modal();
     },
     // 授权
     'click #btn_driverimpower': function(e, value, row, index) {
-        window.location.hash = "driverid=" + row.id;
+        window.location.hash = "driverid=" + row.id + "&pageindex=" + index;
         $("#driverimpower_model").modal();
         $(".driverimpower_model_Form .driver_name").val(row.name);
     },
     // 取消授权
     'click #btn_drivercancelimpower': function(e, value, row, index) {
+        window.location.hash = "driverid=" + row.id + "&pageindex=" + index;
         cancelimpower(row.id);
     }
 };
@@ -128,6 +107,50 @@ function cancelimpower(idArr) {
         }
     })
 }
+// 驾驶员数据回显
+function findDriverInfo(id, boxname) {
+    $.ajax({
+        url: "http://192.168.0.222:8080/car-management/carDriver/edit.action",
+        type: "post",
+        data: {
+            "id": id
+        },
+        success: function(res) {
+            console.log(res);
+            if (res == null) {
+                toastr.success('数据为空', '驾驶员数据', messageOpts);
+                $(".update_driver")[0].style.display = "none";
+                $(".add_driver")[0].style.display = "inline-block";
+                return;
+            } else {
+                if (res.isallow == 2) { //已授权
+                    $(boxname + " input[name='isallow']:first-child").prop("checked", "checked");
+                } else {
+                    $(boxname + " input[name='isallow']:last-child").prop("checked", "checked");
+                }
+                $(boxname + " input[value=" + res.sex + "]").prop("checked", "checked");
+                $(boxname + " #drivername").val(res.name);
+                $(boxname + " #driverage").val(res.age);
+                $(boxname + " #birthday").val(res.birthday);
+                $(boxname + " #telephone").val(res.telephone);
+                $(boxname + " #iccard").val(res.iccard);
+                $(boxname + " #allowStartTime").val(res.allowStartTime);
+                $(boxname + " #allowEndTime").val(res.allowEndTime);
+                $(boxname + " #carTypeIn_remake").val(res.remark);
+                $(".update_driver")[0].style.display = "inline-block";
+                $(".add_driver")[0].style.display = "none";
+            }
+        },
+        error: function(res) {
+            toastr.warning('发生内部错误，请联系程序员', '驾驶员信息', messageOpts);
+        }
+    })
+}
+$("#driver_add_btn").click(function() {
+    $(".update_driver")[0].style.display = "none";
+    $(".add_driver")[0].style.display = "inline-block";
+    $("#driverTypeIn_model").modal();
+});
 //驾驶员删除
 function deletedriver(idArr, index) {
     $.ajax({
@@ -159,9 +182,9 @@ function deletedriver(idArr, index) {
 
 $("#driverimpower_btn").click(function() {
     $.ajax({
-        url: "http://192.168.0.222:8080/car-management/carDriver/authorized.action",
+        url: "http://192.168.0.222:8080/car-management/carDriver/authorized.action?id=" + getHashParameter("driverid"),
+        type: "post",
         data: {
-            id: getHashParameter("driverid"),
             startTime: $("#modal_allowStartTime").val(),
             endTime: $("#modal_allowEndTime").val()
         },
@@ -169,7 +192,10 @@ $("#driverimpower_btn").click(function() {
             console.log(res);
             if (res.ret == true) {
                 toastr.success('驾驶员授权成功', '驾驶员授权', messageOpts);
+                $("#driverTypeIn_model").modal();
+                loadDriverList(1, 10);
             } else {
+                $("#driverTypeIn_model").modal();
                 toastr.success('驾驶员授权失败，请联系管理员', '驾驶员授权', messageOpts);
             }
         },
@@ -191,7 +217,7 @@ function cancelAllDriver(a, name) {
         if (name == "cancelimpower") {
             cancelimpower(delcarlogString);
         } else if (name == "driverdel") {
-            deletedriver(delcarlogString);
+            deletedriver(delcarlogString, $(".driverpage .cur").text());
         }
     } else {
         toastr.warning('最少选中一行', '驾驶员管理', messageOpts);

@@ -207,7 +207,7 @@ function createdriverTable(boxname, toolbarid, res,
                 "colspan": 9
             }],
             [{
-                field: "status",
+                field: "checkbox",
                 title: "全选",
                 checkbox: true,
                 align: 'center',
@@ -407,9 +407,11 @@ function checkParams(url, params1, params2, btn) {
 }
 // 车辆列表
 function createcarTable(boxname, toolbarid, res,
-    row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
+    tit, row2, row3, row4, row5, row6, ifpage, ifrefresh,
     row1name, row2name, row3name, row4name, row5name, row6name,
     ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype, row7, row7name, row8, row8name, row9, row9name) {
+    console.log(row8);
+    console.log(res);
     $(boxname).css({
         "position": "relative"
     });
@@ -434,92 +436,105 @@ function createcarTable(boxname, toolbarid, res,
         strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
         showToggle: true, //是否显示切换视图（table/card）按钮
         searchAlign: "right",
-        columns: [{
-                field: row1,
-                title: row1name,
-                align: 'center',
-                sortable: true,
-                formatter: function(value, row, index) {
-                    return index + 1;
-                }
-            }, {
-                field: row2,
-                title: row2name,
-                align: 'center',
-                sortable: true
-            }, {
-                field: row3,
-                title: row3name,
-                align: 'center',
-                sortable: true
-            }, {
-                field: row4,
-                title: row4name,
-                align: 'center',
-                sortable: true
-            }, {
-                field: row5,
-                title: row5name,
-                align: 'center',
-                sortable: true
-            }, {
-                field: row7,
-                title: row7name,
-                align: 'center',
-                sortable: true,
-                formatter: function(value, row, index) {
-                    // return changeDateFormat(value)
-                    // console.log(value);
-                    if (value == "" || value == null) {
-                        return "未分组";
-                    } else {
-                        return value.name;
+        columns: [
+            [{
+                "title": tit,
+                "halign": "center",
+                "align": "center",
+                "colspan": 11
+            }],
+            [{
+                    field: "checkbox",
+                    title: "全选",
+                    checkbox: true,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: "index",
+                    title: "序号",
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        return index + 1;
                     }
-                }
-            },
-            {
-                field: row8,
-                title: row8name,
-                align: 'center',
-                sortable: true,
-                formatter: function(value, row, index) {
-                    // return changeDateFormat(value)
-                    if (value == 0) {
-                        return "已录入";
-                    } else if (value == 1) {
-                        return "已接车点检";
-                    } else if (value == 2) {
-                        return "已安全检查";
-                    } else if (value == 3) {
-                        return "已线束检查";
-                    } else if (value == 4) {
-                        return "已bom检查";
-                    } else if (value == 5) {
-                        return "已还车点检";
-                    } else {
-                        return "已检查完毕";
+                }, {
+                    field: row2,
+                    title: row2name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row3,
+                    title: row3name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row4,
+                    title: row4name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row5,
+                    title: row5name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row7,
+                    title: row7name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "未分组";
+                        } else {
+                            return value.name;
+                        }
                     }
+                },
+                {
+                    field: row8,
+                    title: row8name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        // return changeDateFormat(value)
+                        console.log(value);
+                        if (value == 0) {
+                            return "已录入";
+                        } else if (value == 1) {
+                            return "已接车点检";
+                        } else if (value == 2) {
+                            return "已安全检查";
+                        } else if (value == 3) {
+                            return "已线束检查";
+                        } else if (value == 4) {
+                            return "已bom检查";
+                        } else if (value == 5) {
+                            return "已还车点检";
+                        } else {
+                            return "已检查完毕";
+                        }
+                    }
+                },
+                {
+                    field: row9,
+                    title: row9name,
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field: row6,
+                    title: row6name,
+                    align: 'center',
+                    sortable: true
+                },
+                {
+                    field: 'operate',
+                    title: '操作',
+                    align: 'center',
+                    events: userOperateEventsDel,
+                    formatter: userOperateFormatterDel
                 }
-            },
-            {
-                field: row9,
-                title: row9name,
-                align: 'center',
-                sortable: true
-            },
-            {
-                field: row6,
-                title: row6name,
-                align: 'center',
-                sortable: true
-            },
-            {
-                field: 'operate',
-                title: '操作',
-                align: 'center',
-                events: userOperateEventsDel,
-                formatter: userOperateFormatterDel
-            }
+            ]
         ]
     });
     // 隐藏表格中的某一列
@@ -563,7 +578,7 @@ getloadMenu("#returncarCheck .road_menu", 5);
 function createAuditTable(boxname, toolbarid, res,
     row1, row2, row3, row4, row5, row6, row7, ifpage, ifrefresh,
     row1name, row2name, row3name, row4name, row5name, row6name, row7name,
-    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype) {
+    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype, tit) {
     $(boxname).css({
         "position": "relative"
     });
@@ -588,81 +603,95 @@ function createAuditTable(boxname, toolbarid, res,
         strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
         showToggle: true, //是否显示切换视图（table/card）按钮
         searchAlign: "right",
-        columns: [{
-            field: row1,
-            title: row1name,
-            align: 'center',
-            sortable: true,
-            formatter: function(value, row, index) {
-                return index + 1;
-            }
-        }, {
-            field: row2,
-            title: row2name,
-            align: 'center',
-            sortable: true
-        }, {
-            field: row3,
-            title: row3name,
-            align: 'center',
-            sortable: true,
-            formatter: function(value, row, index) {
-                if (value == "" || value == null) {
-                    return "";
-                } else {
-                    return value.operator;
+        columns: [
+            [{
+                "title": tit,
+                "halign": "center",
+                "align": "center",
+                "colspan": 9
+            }],
+            [{
+                field: "checkbox",
+                title: "全选",
+                checkbox: true,
+                align: 'center',
+                sortable: true
+            }, {
+                field: status,
+                title: "序号",
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    return index + 1;
                 }
-            }
-        }, {
-            field: row4,
-            title: row4name,
-            align: 'center',
-            sortable: true,
-            formatter: function(value, row, index) {
-                if (value == "" || value == null) {
-                    return "";
-                } else {
-                    return value.operator;
+            }, {
+                field: row2,
+                title: row2name,
+                align: 'center',
+                sortable: true
+            }, {
+                field: row3,
+                title: row3name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    if (value == "" || value == null) {
+                        return "";
+                    } else {
+                        return value.operator;
+                    }
                 }
-            }
-        }, {
-            field: row5,
-            title: row5name,
-            align: 'center',
-            sortable: true,
-            formatter: function(value, row, index) {
-                if (value == "" || value == null) {
-                    return "";
-                } else {
-                    return value.operator;
+            }, {
+                field: row4,
+                title: row4name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    if (value == "" || value == null) {
+                        return "";
+                    } else {
+                        return value.operator;
+                    }
                 }
-            }
-        }, {
-            field: row6,
-            title: row6name,
-            align: 'center',
-            sortable: true,
-            //获取日期列的值进行转换
-            formatter: function(value, row, index) {
-                if (value == "" || value == null) {
-                    return "";
-                } else {
-                    return value.ReviewerTime;
-                    // return changeDateFormat(value.reviewerTime);
+            }, {
+                field: row5,
+                title: row5name,
+                align: 'center',
+                sortable: true,
+                formatter: function(value, row, index) {
+                    if (value == "" || value == null) {
+                        return "";
+                    } else {
+                        return value.operator;
+                    }
                 }
-            }
-        }, {
-            field: row7,
-            title: row7name,
-            align: 'center',
-            sortable: true,
-        }, {
-            field: 'operate',
-            title: '操作',
-            align: 'center',
-            events: userOperateEventsDel,
-            formatter: userOperateFormatterDel
-        }]
+            }, {
+                field: row6,
+                title: row6name,
+                align: 'center',
+                sortable: true,
+                //获取日期列的值进行转换
+                formatter: function(value, row, index) {
+                    if (value == "" || value == null) {
+                        return "";
+                    } else {
+                        return value.ReviewerTime;
+                        // return changeDateFormat(value.reviewerTime);
+                    }
+                }
+            }, {
+                field: row7,
+                title: row7name,
+                align: 'center',
+                sortable: true,
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events: userOperateEventsDel,
+                formatter: userOperateFormatterDel
+            }]
+        ]
     });
     // 隐藏表格中的某一列
     if (!ifoperate) {
@@ -671,3 +700,295 @@ function createAuditTable(boxname, toolbarid, res,
 }
 
 $("iframe").css("min-height", "930px");
+// 删除所有接口
+function deletAllLog(a, name) {
+    // var a = $("#carLogTable").bootstrapTable('getSelections');
+    var delcarlogArr = [];
+    var delcarlogString = "";
+    if (a.length >= 1) {
+        for (var i = 0; i < a.length; i++) {
+            delcarlogArr.push(a[i].id)
+        }
+        delcarlogString = delcarlogArr.join(",");
+        console.log(name);
+        if (name == "car") {
+            deletecarLog(delcarlogString);
+        } else if (name == "driver") {
+            deletedriverLog(delcarlogString);
+        } else if (name == "sys") {
+            deletesysLog(delcarlogString);
+        } else if (name == "maintain") {
+            deletemaintainLog(delcarlogString);
+        } else if (name == "tempcarlist") {
+            delCarList("http://192.168.0.222:8080/car-management/tempcar/delete.action", delcarlogString, "get", "tempcarlist",
+                "临时车辆列表", "删除失败", "删除成功");
+        } else if (name == "auditlistdel") {
+            delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", delcarlogString, "get", "auditlistdel", "待审核列表", "车辆删除失败", "车辆删除成功");
+        } else if (name == "failauditdel") {
+            delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", delcarlogString, "get", "failauditdel", "审核失败列表", "车辆删除失败", "车辆删除成功");
+        } else if (name == "finauditdel") {
+            delCarList("http://192.168.0.222:8080/car-management/car/deleteReview.action", delcarlogString, "get", "finauditdel", "审核成功列表", "车辆删除失败", "车辆删除成功");
+        } else if (name == "sumCarListTable") {
+            delCarList("http://192.168.0.222:8080/car-management/car/delete.action", delcarlogString, "get", "sumCarList",
+                "车辆总表", "删除失败", "删除成功");
+        }
+    } else {
+        toastr.warning('最少选中一行', '删除', messageOpts);
+    }
+}
+// 删除接口
+function delCarList(url, dat, type, name, tit, filToa, sucToa) {
+    $.ajax({
+        url: url,
+        type: type,
+        data: {
+            "ids": dat
+        },
+        "dataType": "jsonp", //数据类型为jsonp  
+        "jsonp": "jsonpCallback", //服务端用于接收callback调用的function名的参数
+        success: function(res) {
+            console.log(res);
+            if (res.ret == true) {
+                toastr.success(sucToa, tit, messageOpts);
+                if (name == "failauditdel") {
+                    loadFailAudit();
+                } else if (name == "finauditdel") {
+                    loadsucAudit();
+                } else if (name == "auditlistdel") {
+                    loadAuditList();
+                } else if (name == "tempcarlist") {
+                    loadCarList(JSON.stringify({
+                        "vSn": null
+                    }));
+                } else if (name == "sumCarList") {
+                    loadsumCarList("");
+                }
+            } else {
+                toastr.warning(filToa, tit, messageOpts);
+            }
+        },
+        "error": function(res) {
+            toastr.error('程序内部错误', tit, messageOpts);
+        }
+    })
+}
+
+
+// 车辆总表
+function createsumcarTable(boxname, toolbarid, res,
+    row1, row2, row3, row4, row5, row6, ifpage, ifrefresh,
+    row1name, row2name, row3name, row4name, row5name, row6name,
+    row7, row7name, row8, row8name, row9, row9name, row10, row10name,
+    row11, row11name, row12, row12name, row13, row13name,
+    row14, row14name, row15, row15name,
+    row16, row16name, row17, row17name, row18, row18name,
+    ifoperate, userOperateEventsDel, userOperateFormatterDel, pagetype, tit) {
+    $(boxname).css({
+        "position": "relative"
+    });
+    $(boxname).bootstrapTable('destroy');
+    $(boxname).bootstrapTable({
+        data: res,
+        toggle: "table",
+        toolbar: toolbarid,
+        pagination: ifpage, //是否显示分页（*）
+        sortable: false, //是否启用排序
+        sortOrder: "asc", //排序方式
+        sidePagination: pagetype, //分页方式：client客户端分页，server服务端分页（*）
+        pageNumber: 1, //初始化加载第一页，默认第一页
+        pageSize: 10, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        search: true, //是否搜索查询
+        showColumns: true, //是否显示所有的列
+        showRefresh: ifrefresh, //是否显示刷新按钮
+        minimumCountColumns: 2, //最少允许的列数
+        clickToSelect: true, //是否启用点击选中行
+        searchOnEnterKey: true, //设置为 true时，按回车触发搜索方法
+        strictSearch: false, //设置为 true启用全匹配搜索， 否则为模糊搜索
+        showToggle: true, //是否显示切换视图（table/card）按钮
+        searchAlign: "right",
+        columns: [
+            [{
+                "title": tit,
+                "halign": "center",
+                "align": "center",
+                "colspan": 21
+            }],
+            [{
+                    field: "checkbox",
+                    title: "全选",
+                    checkbox: true,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: "index",
+                    title: "序号",
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        return index + 1;
+                    }
+                }, {
+                    field: row1,
+                    title: row1name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row2,
+                    title: row2name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row3,
+                    title: row3name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row4,
+                    title: row4name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row5,
+                    title: row5name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row6,
+                    title: row6name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row7,
+                    title: row7name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row8,
+                    title: row8name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row9,
+                    title: row9name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row10,
+                    title: row10name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row11,
+                    title: row11name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row12,
+                    title: row12name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row13,
+                    title: row13name,
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: row14,
+                    title: row14name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "--";
+                        } else {
+                            return value.no;
+                        }
+                    }
+                }, {
+                    field: row15,
+                    title: row15name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "--";
+                        } else {
+                            return value.startTime;
+                        }
+                    }
+                }, {
+                    field: row16,
+                    title: row16name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "--";
+                        } else if (value.endTime == "") {
+                            return value.endTime;
+                        } else {
+                            var now = new Date;
+                            var d = new Date(value.endTime);
+                            if (now > d) {
+                                return '<span style="color:red;">' + value.endTime + '</span>';
+                            } else if (now < d) {
+                                return '<span>' + value.endTime + '</span>';
+                            } else {
+                                return '<span>' + value.endTime + '</span>';
+                            }
+                        }
+                    }
+                },
+                {
+                    field: row17,
+                    title: row17name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "--";
+                        } else if (value.licenseEndTime == "") {
+                            return value.licenseEndTime;
+                        } else {
+                            var now = new Date;
+                            var d = new Date(value.licenseEndTime);
+                            if (now > d) {
+                                return '<span style="color:red;">' + value.licenseEndTime + '</span>';
+                            } else if (now < d) {
+                                return '<span>' + value.licenseEndTime + '</span>';
+                            } else {
+                                return '<span>' + value.licenseEndTime + '</span>';
+                            }
+                        }
+                    }
+                },
+                {
+                    field: row18,
+                    title: row18name,
+                    align: 'center',
+                    sortable: true,
+                    formatter: function(value, row, index) {
+                        if (value == "" || value == null) {
+                            return "--";
+                        } else {
+                            return value.licenseNo;
+                        }
+                    }
+                },
+                {
+                    field: 'operate',
+                    title: '操作',
+                    width: "10%",
+                    align: 'center',
+                    events: userOperateEventsDel,
+                    formatter: userOperateFormatterDel
+                }
+            ]
+        ]
+    });
+    // 隐藏表格中的某一列
+    if (!ifoperate) {
+        $(boxname).bootstrapTable('hideColumn', 'operate');
+    }
+}
